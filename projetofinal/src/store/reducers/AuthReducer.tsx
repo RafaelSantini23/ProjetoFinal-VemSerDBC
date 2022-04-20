@@ -1,3 +1,4 @@
+import { AnyAction} from "redux";
 import { AuthDTO } from "../../models/AuthDTO";
 
 export const INITIAL_STATE = {
@@ -9,21 +10,15 @@ export const INITIAL_STATE = {
     }
 }
 
-const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: any) => {
+
+const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_TOKEN') {
         return {
             ...state,
-            auth: {
-                login: action.login,
-                senha: action.senha,
-                token: action.token,
-                loading: false
-            }
-            
+            auth: action.auth
         }
-        
     }
-    console.log(state);
+
     return state;
 
 }

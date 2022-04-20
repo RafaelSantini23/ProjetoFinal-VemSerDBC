@@ -2,22 +2,34 @@
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { AppDispatch } from "..";
+import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
 
-export const setToken = (dispatch: AppDispatch ) => {
-    const user = {
-        type: 'SET_TOKEN',
-        auth: {
-            login: "admin",
-            senha: "admin",
-            token: "123456789",
-            loading: false
-        }
-    }
+export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'] ) => {
+    console.log(values);
+    
+    try {
+        const { data } = await api.post('/auth', values);
+        
+        console.log(data);
+        
 
-    
-    
-    dispatch(user);  
+        const user = {
+            type: 'SET_TOKEN',
+            auth: {
+                login: values.login,
+                senha: values.senha,
+                token: 'dasdsadasdasdasd', 
+                loading: false
+            }
+        }
+        
+        dispatch(user);  
+
+    } catch (error) {
+        console.log(error);
+        
+    }
 
     
 }
