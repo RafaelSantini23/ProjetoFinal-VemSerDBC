@@ -1,9 +1,11 @@
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 import { connect } from "react-redux"
-import { RootState } from "../../store"
 import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Link } from "react-router-dom";
+import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/AuthAction"
+import { ContainerFormUser, ContainerGlobal } from "../../Global.styles";
 
 
 
@@ -12,18 +14,12 @@ import { handleLogin } from "../../store/actions/AuthAction"
 
 function Login({auth, dispatch}: any) {
 
-
-  
-  useEffect(() => {
     
-  }, [])
   
-
-  
-
-    
   return (
-    <div>
+    <ContainerGlobal>
+        <ContainerFormUser>
+
          <Formik
                 initialValues={{
                     login: '',
@@ -46,11 +42,13 @@ function Login({auth, dispatch}: any) {
                         <label htmlFor='senha'>Password</label>
                         <Field name="senha" id="senha"  placeholder="Digite a sua senha" />
                     </div>
-                    <button  type='submit'>Log in  </button>
+                    <button  type='submit'>Entrar</button>
                 </Form>            
             {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
-    </div>
+            <Link to="/register">Não possuo cadastro</Link>
+        </ContainerFormUser>
+    </ContainerGlobal>
   )
 }
 
