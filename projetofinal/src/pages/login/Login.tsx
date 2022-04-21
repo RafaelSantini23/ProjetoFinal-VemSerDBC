@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/AuthAction"
-import { ContainerFormUser, ContainerGlobal } from "../../Global.styles";
+import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
+import Logo from '../../imgs/logo.svg'
 
 
 
@@ -13,8 +14,7 @@ import { ContainerFormUser, ContainerGlobal } from "../../Global.styles";
 
 
 function Login({auth, dispatch}: any) {
-
-    
+ 
   
   return (
     <ContainerGlobal>
@@ -34,19 +34,22 @@ function Login({auth, dispatch}: any) {
                     }}
                     >
                 <Form>
+                    <LogoDiv>
+                        <img src={Logo} height={'200px'} alt="Logo" />
+                    </LogoDiv>
                     <div>
-                        <label htmlFor='login'>Usuário</label>
-                        <Field  name="login" id="login" placeholder="Digite o nome do usuário" />
+                        <LabelForm htmlFor='login'>Usuário</LabelForm>
+                        <InputStyle  name="login" id="login" placeholder="Digite o nome do usuário" />
                     </div>
                     <div>
-                        <label htmlFor='senha'>Password</label>
-                        <Field name="senha" id="senha"  placeholder="Digite a sua senha" />
+                        <LabelForm htmlFor='senha'>Password</LabelForm>
+                        <InputStyle name="senha" id="senha"  placeholder="Digite a sua senha" />
                     </div>
-                    <button  type='submit'>Entrar</button>
+                    <ButtonForm  type='submit'>Entrar</ButtonForm>
                 </Form>            
             {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
-            <Link to="/register">Não possuo cadastro</Link>
+            <LinkStyle to="/register">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
     </ContainerGlobal>
   )
