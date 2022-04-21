@@ -6,6 +6,7 @@ export const INITIAL_STATE = {
         login: '',
         senha: '',
         token: '',
+        isLogged: false,
         loading: true
     }
 }
@@ -13,6 +14,13 @@ export const INITIAL_STATE = {
 
 const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_TOKEN') {
+        return {
+            ...state,
+            auth: action.auth
+        }
+    }
+
+    if(action.type === 'IS_LOGGED') {
         return {
             ...state,
             auth: action.auth

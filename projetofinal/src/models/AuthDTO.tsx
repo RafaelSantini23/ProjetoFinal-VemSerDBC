@@ -3,5 +3,7 @@ export interface AuthDTO {
         login: string;
         senha: string;
         token?: string;
+        isLogged?: boolean;
+        loading?: boolean;
     }
 }
