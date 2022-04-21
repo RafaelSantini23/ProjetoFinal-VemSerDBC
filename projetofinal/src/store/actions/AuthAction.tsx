@@ -1,6 +1,4 @@
 
-import { Dispatch } from "react";
-import { AnyAction } from "redux";
 import { AppDispatch } from "..";
 import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
