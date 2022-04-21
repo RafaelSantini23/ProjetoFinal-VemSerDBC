@@ -14,12 +14,14 @@ const Theme = {
         height: '100vh',
     },
     containerForm: {
-        width: '380px',
+        width: '50%',
         height: '500px',
         margin: '0 auto',
+    },
+
+    labelForm: { 
+        fontSize: '18px',
     }
-
-
 }
 
 export default Theme
