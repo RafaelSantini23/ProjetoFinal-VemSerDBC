@@ -1,5 +1,6 @@
 import moment from "moment";
 import 'moment/locale/pt-br';
+import { NavigateFunction } from "react-router-dom";
 
 // Regex
 export const validaNome = /^[a-zA-Z]+$/;
@@ -49,3 +50,14 @@ export const formataCorTotal = (meta: number, total: number) => {
   }
   return cor;
 }
+
+export const isLoggedin = (navigate: NavigateFunction) => {
+    const token = localStorage.getItem('token');
+
+    if(!token) {
+        navigate('/');
+    }
+
+}
+
+

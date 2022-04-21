@@ -1,17 +1,28 @@
 import { useEffect } from "react"
-import { connect } from "react-redux"
+import { connect, DispatchProp } from "react-redux"
 import { Form, Formik, FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/AuthAction"
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
+import { useNavigate } from "react-router-dom";
 
 
-function Login({auth, dispatch}: any) {
- const navigate = useNavigate()
-  
+function Login({auth, dispatch}: AuthDTO & DispatchProp) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if(token) {
+           navigate('/campanhas')
+        } else {
+            navigate('/')
+        }
+    },[])
+
+
   return (
     <ContainerGlobal>
         <ContainerFormUser>
@@ -43,7 +54,6 @@ function Login({auth, dispatch}: any) {
                     </div>
                     <ButtonForm  type='submit'>Entrar</ButtonForm>
                 </Form>            
-            {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
             <LinkStyle to="/registrar">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>

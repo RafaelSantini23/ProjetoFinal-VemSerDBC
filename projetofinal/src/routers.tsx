@@ -1,18 +1,43 @@
+import { useEffect } from 'react';
+import { connect, DispatchProp } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
+import api from './api';
+import Header from './components/header/Header';
+import { AuthDTO } from './models/AuthDTO';
+import CreateCampanhas from './pages/createCampanhas/CreateCampanhas';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import { RootState } from './store';
+import { isAuth } from './store/actions/AuthAction';
 
-function Routers() {
+function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if(token) {
+      api.defaults.headers.common['Authorization'] = token;
+      isAuth(dispatch)
+    }
+  }, [])
+
   return (
     <BrowserRouter>
+    <Header />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/registrar" element={<Register />} />
         <Route path="/campanhas" element={<Home />} />
+        <Route path="/create-campanhas" element={<CreateCampanhas />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default Routers;
+const mapStateToProps = (state: RootState) => ({
+  auth: state.AuthReducer.auth  
+})
+
+
+export default connect(mapStateToProps)(Routers);
