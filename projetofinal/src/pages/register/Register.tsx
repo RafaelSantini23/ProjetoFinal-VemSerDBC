@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as Yup from 'yup';
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { validaNome, validaSenha, validaEmail } from "../../Utils/Utils";
+import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
 
 function Register() {
   const SignupSchema = Yup.object().shape({
