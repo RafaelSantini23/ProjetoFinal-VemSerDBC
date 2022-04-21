@@ -1,7 +1,7 @@
-import { ReactNode, useEffect } from "react"
+import { useEffect } from "react"
 import { connect } from "react-redux"
-import { Field, Form, Formik, FormikHelpers } from "formik";
-import { Link } from "react-router-dom";
+import { Form, Formik, FormikHelpers } from "formik";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/AuthAction"
@@ -9,12 +9,8 @@ import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, 
 import Logo from '../../imgs/logo.svg'
 
 
-
-
-
-
 function Login({auth, dispatch}: any) {
- 
+ const navigate = useNavigate()
   
   return (
     <ContainerGlobal>
@@ -29,7 +25,7 @@ function Login({auth, dispatch}: any) {
                     values: AuthDTO["auth"],
                     { setSubmitting }: FormikHelpers<AuthDTO['auth']>
                     ) => {
-                        handleLogin(dispatch,values)
+                        handleLogin(dispatch,values, navigate)
                         setSubmitting(false);
                     }}
                     >
@@ -49,7 +45,7 @@ function Login({auth, dispatch}: any) {
                 </Form>            
             {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
-            <LinkStyle to="/register">Não possuo cadastro</LinkStyle>
+            <LinkStyle to="/registrar">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
     </ContainerGlobal>
   )
