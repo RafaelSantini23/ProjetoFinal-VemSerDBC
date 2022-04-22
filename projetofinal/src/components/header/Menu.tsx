@@ -1,13 +1,13 @@
-import { Lista } from "./Header.styles"
+import { Lista, NavBar } from "./Header.styles"
 import Item from "./Item"
 
 function Menu() {
   return (
-    <nav>
+    <NavBar>
         <Lista>
             <Item />
         </Lista>
-    </nav>
+    </NavBar>
   )
 }
 export default Menu

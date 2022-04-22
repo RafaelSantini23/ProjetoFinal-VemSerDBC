@@ -23,7 +23,7 @@ export const ContainerFormUser = styled.div`
     
 `
 
-export const ButtonForm = styled.button`
+export const ButtonForm = styled.button<{marginTop?: string}>`
     width: 100%;
     height: 40px;
     border-radius: 8px;
@@ -37,7 +37,7 @@ export const ButtonForm = styled.button`
     cursor: pointer;
     border: 0;
     transition: filter 0.2s;
-    margin-top: 20px;
+    margin-top: ${props => props.marginTop};
     &:hover {
         filter: brightness(0.9);
     }
@@ -66,14 +66,16 @@ export const LogoDiv = styled.div`
     margin-bottom: 85px;
 `
 
-export const LinkStyle = styled(Link)`
+export const LinkStyle = styled(Link)<{mT?: string}>`
     color: ${Theme.colors.dark};
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
-    margin-top: 20px;
+    margin-top: ${props => props.mT};
     :hover {
         text-decoration: underline;
     }
 `
+
+
 

@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from "react"
-import { ButtonStyles } from "./Button.styles"
+import { ButtonForm } from "../../Global.styles"
+
 
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -9,7 +10,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 function Button({ onClick, children}: ButtonProps) {
   return (
-    <ButtonStyles onClick={onClick}> {children} </ButtonStyles>
+    <ButtonForm onClick={onClick}> {children} </ButtonForm>
   )
 }
 

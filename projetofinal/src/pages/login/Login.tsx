@@ -79,11 +79,11 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                         <LabelForm htmlFor='senha'>Password</LabelForm>
                         <InputStyle name="senha" id="senha"  placeholder="Digite a sua senha" />
                     </div>
-                    <ButtonForm  type='submit'>Entrar</ButtonForm>
+                    <ButtonForm marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            
             {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
-            <LinkStyle to="/register">Não possuo cadastro</LinkStyle>
+            <LinkStyle mT='20px' to="/register">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
     </ContainerGlobal>
   )

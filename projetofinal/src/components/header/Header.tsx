@@ -7,7 +7,7 @@ import { RootState } from "../../store";
 function Header({auth}: AuthDTO) {
   console.log(auth);
 
-  const { isLogged, loading }: AuthDTO['auth']  = auth;
+  const { isLogged }: AuthDTO['auth']  = auth;
   
   console.log(isLogged);
   
