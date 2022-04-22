@@ -28,7 +28,7 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
     <Header />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/registrar" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/campanhas" element={<Home />} />
         <Route path="/create-campanhas" element={<CreateCampanhas />} />
         <Route path="/details" element={<Details />}>

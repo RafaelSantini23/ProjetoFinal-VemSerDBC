@@ -5,7 +5,9 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 
+
 function Register() {
+
   const SignupSchema = Yup.object().shape({
     nome: Yup.string()
       .min(4, 'Minimo 4 caracteres!')
