@@ -4,8 +4,8 @@ import { IoMdClose } from "react-icons/io"
 
 export const ModalContainer = styled.div`
     width: 100%;
-    height: 100vh;
-    position: absolute;
+    min-height: 100vh;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
 
 export const BackGroundModal = styled.div`
     background: rgb(71, 71, 71);
-    height: 100vh;
+    min-height: 100vh;
 `
 
 export const ButtonClose = styled.button`

@@ -1,10 +1,19 @@
 import { ButtonHTMLAttributes } from "react"
-import { ButtonClose, ColabInfo, ColabName, Content, HeaderModal, IconClose, ImgModal, ModalColab, ModalContainer, ModalPrincipal } from "./Modal.styles"
-import { IoMdClose } from "react-icons/io"
+import { ButtonClose,
+    Content,
+    ImgModal,
+    ColabName,
+    ColabInfo,
+    IconClose,
+    ModalColab,
+    HeaderModal,
+    ModalContainer,
+    ModalPrincipal,
+} from "./Modal.styles"
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode,
-    colabs: {
+    colabs?: {
         id: string,
         name: string,
         photo: string;
@@ -24,10 +33,10 @@ function Modal({  onClick, colabs }: ButtonProps ) {
         </HeaderModal>
 
         <Content>
-                {colabs.map((child) => (
+                {colabs?.map((child) => (
                     <ModalColab>
                         <ColabInfo>
-                            <ImgModal width='250px' src={child.photo} alt="" />
+                            <ImgModal width='250px' src={child.photo} alt="profile" />
                             <ColabName>
                                 {child.name}
                             </ColabName>

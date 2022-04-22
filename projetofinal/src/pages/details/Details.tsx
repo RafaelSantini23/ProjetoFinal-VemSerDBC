@@ -1,3 +1,5 @@
+import { useState } from "react";
+import Modal from "../../components/modal/Modal";
 import { converteNumber,
   somaTotal,
   formataTags,
@@ -18,6 +20,8 @@ import { Container,
 } from "./Details.styles"
 
 function Details() {
+  const [isVisibel, setIsVisibel] = useState(false);
+
 
   const Campanhas = {
     id: 1,
@@ -29,11 +33,27 @@ function Details() {
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48'),
     descricao: "Ajude o supernatural...",
-    apoiadores: [{}, {}, {}]
+    apoiadores: [{
+      id: "1",
+            name: "João",
+            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
+    }, {
+      id: "2",
+            name: "Jão",
+            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
+    }, {
+      id: "3",
+            name: "Jão",
+            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
+    }]
   }
 
   return (
     <Container>
+      {  isVisibel && (
+            <div>
+                <Modal colabs={Campanhas.apoiadores} onClick={() => setIsVisibel(false)} />
+            </div> )   }
       <h1>{Campanhas.titulo}</h1>
       <ContainerDetails>
         <DivCampanha>
@@ -54,7 +74,7 @@ function Details() {
             <p>Meta</p>
             <h2>{converteBRL(Campanhas.meta)}</h2>
             <p>Apoiadores</p>
-            <h2>{Campanhas.apoiadores.length}</h2>
+            <a onClick={() => setIsVisibel(true)}>{Campanhas.apoiadores.length}</a>
           </InfoCampanha>
       </ContainerDetails>
     </Container>

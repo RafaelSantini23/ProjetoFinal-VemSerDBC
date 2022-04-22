@@ -40,7 +40,7 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  auth: state.AuthReducer.auth  
+  auth: state.authReducer.auth  
 })
 
 

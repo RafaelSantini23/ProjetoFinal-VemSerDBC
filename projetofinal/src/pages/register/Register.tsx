@@ -14,14 +14,11 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
   
-  const handleUpload = (event: React.ChangeEvent , setFieldValue: Function) => {
+  const handleUpload = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const files = target.files?.[0];
 
     console.log(files);
-    
-    
-    setFieldValue('profilePhoto', files);
   }
   
   console.log(user);
@@ -58,7 +55,6 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       name: '',
                       password: '',
                       confirmPassword: '',   
-                      // profilePhoto: ''
                   }}
                   // validationSchema={SignupSchema}
                   onSubmit={(
@@ -111,7 +107,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       <div>
                             
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="file" onChange={(event:  React.ChangeEvent) => handleUpload(event, props.setFieldValue)}/>
+                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="file" onChange={(event:  React.ChangeEvent) => handleUpload(event)}/>
                             {props.errors.profilePhoto && props.touched.profilePhoto ? (
                               <span>{props.errors.profilePhoto}</span>
                               ) : null}
@@ -134,7 +130,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  user: state.UserReducer.user
+  user: state.userReducer.user
 });  
 
 

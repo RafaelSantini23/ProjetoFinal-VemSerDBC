@@ -11,7 +11,7 @@ export const INITIAL_STATE = {
 
 }
 
-const UserReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) => {
+const userReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) => {
     if (action.type === 'SET_USER') {
         return {
             ...state,
@@ -22,4 +22,4 @@ const UserReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) =
     return state
 }
 
-export default UserReducer;
+export default userReducer;

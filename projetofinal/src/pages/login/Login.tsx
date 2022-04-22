@@ -49,8 +49,8 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                         <InputStyle  name="login" id="login" placeholder="Digite o nome do usuário" />
                     </div>
                     <div>
-                        <LabelForm htmlFor='senha'>Password</LabelForm>
-                        <InputStyle name="senha" id="senha"  placeholder="Digite a sua senha" />
+                        <LabelForm htmlFor='password'>Password</LabelForm>
+                        <InputStyle name="password" id="password"  placeholder="Digite a sua senha" />
                     </div>
                     <ButtonForm marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            
@@ -62,7 +62,7 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    auth: state.AuthReducer.auth
+    auth: state.authReducer.auth
 })
 
 
