@@ -6,10 +6,12 @@ import {
   ImgCampanha,
   DivCampanha,
   DivCategoria,
+  LinkContainer,
   TituloCampanhas,
   ContainerCampanhas
 } from "./Home.styles";
 import 'moment/locale/pt-br'
+import { Link } from "react-router-dom";
 
 function Home() {
 
@@ -47,21 +49,23 @@ function Home() {
       <TituloCampanhas>Campanhas Recentes</TituloCampanhas>
       <ContainerCampanhas>
         {Campanhas.map((item) => (
-          <DivCampanha key={item.id}>
-            <ImgCampanha src={item.foto} alt="foto" />
-            <h2>{item.titulo}</h2>
-            <DivCategoria>
-              <span>{item.categoria}</span>
-              <small>ID da campanha: {item.id}</small>
-            </DivCategoria>
-            <h4>{item.criador}</h4>
-            <p>Total Arrecadado: 
-              <TotalSpan color={formataCorTotal(item.meta, item.total)}>
-              {converteBRL(item.total)}</TotalSpan>
-              </p>
-            <p>Meta: <span>{converteBRL(item.meta)}</span></p>
-            <small>Última data de alteração: {item.data}</small>
-          </DivCampanha>
+          <LinkContainer key={item.id} to={`/details/${item.id}`}>
+            <DivCampanha>
+              <ImgCampanha src={item.foto} alt="foto" />
+              <h2>{item.titulo}</h2>
+              <DivCategoria>
+                <span>{item.categoria}</span>
+                <small>ID da campanha: {item.id}</small>
+              </DivCategoria>
+              <h4>{item.criador}</h4>
+              <p>Total Arrecadado: 
+                <TotalSpan color={formataCorTotal(item.meta, item.total)}>
+                {converteBRL(item.total)}</TotalSpan>
+                </p>
+              <p>Meta: <span>{converteBRL(item.meta)}</span></p>
+              <small>Última data de alteração: {item.data}</small>
+            </DivCampanha>
+          </LinkContainer>
         ))}
       </ContainerCampanhas>
     </Container>

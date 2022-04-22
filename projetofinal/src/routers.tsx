@@ -10,6 +10,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import { RootState } from './store';
 import { isAuth } from './store/actions/AuthAction';
+import Details from './pages/details/Details';
 
 function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 
@@ -30,6 +31,9 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
         <Route path="/registrar" element={<Register />} />
         <Route path="/campanhas" element={<Home />} />
         <Route path="/create-campanhas" element={<CreateCampanhas />} />
+        <Route path="/details" element={<Details />}>
+          <Route path=":id" element={<Details />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
