@@ -9,7 +9,7 @@ import CreateCampanhas from './pages/createCampanhas/CreateCampanhas';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import { RootState } from './store';
-import { isAuth } from './store/actions/AuthAction';
+import { isAuth } from './store/actions/authAction';
 import Details from './pages/details/Details';
 
 function Routers({auth, dispatch}: AuthDTO & DispatchProp) {

@@ -4,7 +4,7 @@ import { AuthDTO } from "../../models/AuthDTO";
 export const INITIAL_STATE = {
     auth: {
         login: '',
-        senha: '',
+        password: '',
         token: '',
         isLogged: false,
         loading: true
@@ -27,6 +27,7 @@ const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
         }
     }
 
+   
     return state;
 
 }

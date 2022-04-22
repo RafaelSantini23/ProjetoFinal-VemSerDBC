@@ -16,7 +16,7 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
             type: 'SET_TOKEN',
             auth: {
                 login: values.login,
-                senha: values.senha,
+                password: values.password,
                 isLogged: true,
                 token: data, 
                 loading: false
@@ -46,7 +46,7 @@ export const handleLogout = (dispatch: AppDispatch, navigate: NavigateFunction) 
         type: 'SET_TOKEN',
         auth: {
             login: '',
-            senha: '',
+            password: '',
             isLogged: false,
             token: '', 
             loading: false
@@ -74,4 +74,6 @@ export const isAuth = (dispatch: AppDispatch) => {
 
         dispatch(user); 
 }
+
+
 

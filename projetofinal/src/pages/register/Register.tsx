@@ -4,59 +4,81 @@ import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
+import { registerUser } from "../../store/actions/usersAction";
+import { RootState } from "../../store";
+import { connect, DispatchProp } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
-function Register() {
+function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
+  const navigate = useNavigate();
 
-  const SignupSchema = Yup.object().shape({
-    nome: Yup.string()
-      .min(4, 'Minimo 4 caracteres!')
-      .max(50, 'Too Long!')
-      .matches(validaNome, 'Nome inválido!')
-      .required('Campo Obrigatório!'),
+  
+  const handleUpload = (event: React.ChangeEvent , setFieldValue: Function) => {
+    const target = event.target as HTMLInputElement;
+    const files = target.files?.[0];
 
-    email: Yup.string()
-      .email('Email inválido!')
-      .matches(validaEmail, 'Email incorreto!').trim()
-      .required('Campo Obrigatório!'),
+    console.log(files);
+    
+    
+    setFieldValue('profilePhoto', files);
+  }
+  
+  console.log(user);
 
-    senha: Yup.string()
-      .matches(validaSenha, 'Senha inválida!')
-      .required('Campo Obrigatório!'),
+  // const SignupSchema = Yup.object().shape({
+  //   nome: Yup.string()
+  //     .min(4, 'Minimo 4 caracteres!')
+  //     .max(50, 'Too Long!')
+  //     .matches(validaNome, 'Nome inválido!')
+  //     .required('Campo Obrigatório!'),
 
-    confirmasenha: Yup.string()
-      .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
-      .required('Campo Obrigatório!')
-  });
+  //   email: Yup.string()
+  //     .email('Email inválido!')
+  //     .matches(validaEmail, 'Email incorreto!').trim()
+  //     .required('Campo Obrigatório!'),
+
+  //   senha: Yup.string()
+  //     .matches(validaSenha, 'Senha inválida!')
+  //     .required('Campo Obrigatório!'),
+
+  //   confirmasenha: Yup.string()
+  //     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
+  //     .required('Campo Obrigatório!'),
+  //     profilePhoto: Yup.string().required('Campo Obrigatório!')
+  // });
 
   return (
     <ContainerGlobal>
       <ContainerFormUser>
-        <LinkStyle to="/">Voltar ao login</LinkStyle>
+        <LinkStyle mT="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
-                      nome: '',
                       email: '',
-                      senha: '',
-                      confirmasenha: ''
+                      name: '',
+                      password: '',
+                      confirmPassword: '',   
+                      // profilePhoto: ''
                   }}
-                  validationSchema={SignupSchema}
+                  // validationSchema={SignupSchema}
                   onSubmit={(
-                      values: UsersCreateDTO['userCreate'],
-                      { setSubmitting }: FormikHelpers<UsersCreateDTO['userCreate']>
+                      values: UsersCreateDTO['user'],
+                      { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
                       ) => {
-                          setSubmitting(false);
+                        const user = {
+                          email: values.email,
+                          name: values.name,
+                          password: values.password,
+                          profilePhoto: values.profilePhoto
+                        }
+                        console.log('entrei');
+                        
+                        registerUser(dispatch, user, navigate);
+                        setSubmitting(false);
                       }}
                       >
                   {props => (
                   <Form>
-                      <div>
-                          <LabelForm htmlFor='nome'>Nome</LabelForm>
-                          <InputStyle  name="nome" id="nome" placeholder="Digite o seu nome" />
-                          {props.errors.nome && props.touched.nome ? (
-                            <span>{props.errors.nome}</span>
-                            ) : null}
-                      </div>
                       <div>
                           <LabelForm htmlFor="email">Email</LabelForm>
                           <InputStyle id="email" name="email" placeholder="Digite o seu e-mail" type="email"/>
@@ -65,19 +87,42 @@ function Register() {
                             ) : null}
                       </div>
                       <div>
-                          <LabelForm htmlFor='senha'>Senha</LabelForm>
-                          <InputStyle name="senha" id="senha"  placeholder="Digite a sua senha"/>
-                          <PasswordStrengthBar password={props.values.senha} />
-                          {props.errors.senha && props.touched.senha ? (
-                            <span>{props.errors.senha}</span>
+                          <LabelForm htmlFor='name'>Nome</LabelForm>
+                          <InputStyle  name="name" id="name" placeholder="Digite o seu nome" />
+                          {props.errors.name && props.touched.name ? (
+                            <span>{props.errors.name}</span>
                             ) : null}
                       </div>
                       <div>
-                          <LabelForm htmlFor='confirmasenha'>Confirme a Senha</LabelForm>
-                          <InputStyle name="confirmasenha" id="confirmasenha"  placeholder="Digite novamente a sua senha" />
-                          {props.errors.confirmasenha && props.touched.confirmasenha ? (
-                            <span>{props.errors.confirmasenha}</span>
+                          <LabelForm htmlFor='password'>Senha</LabelForm>
+                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
+                          <PasswordStrengthBar password={props.values.password} />
+                          {props.errors.password && props.touched.password ? (
+                            <span>{props.errors.password}</span>
                             ) : null}
+                      </div>
+                      <div>
+                          <LabelForm htmlFor='confirmPassword'>Confirme a Senha</LabelForm>
+                          <InputStyle name="confirmPassword" id="confirmPassword"  placeholder="Digite novamente a sua senha" />
+                          {props.errors.confirmPassword && props.touched.confirmPassword ? (
+                            <span>{props.errors.confirmPassword}</span>
+                            ) : null}
+                      </div>
+                      <div>
+                            
+                            <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
+                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="file" onChange={(event:  React.ChangeEvent) => handleUpload(event, props.setFieldValue)}/>
+                            {props.errors.profilePhoto && props.touched.profilePhoto ? (
+                              <span>{props.errors.profilePhoto}</span>
+                              ) : null}
+
+                          {/* <LabelForm htmlFor='profilePhoto'>Foto: </LabelForm>
+                          <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="mande o link da imagem" />
+                          {props.errors.profilePhoto && props.touched.profilePhoto ? (
+                            <span>{props.errors.profilePhoto}</span>
+                            ) : null} */}
+                          
+
                       </div>
                       <ButtonForm type='submit'>Cadastrar</ButtonForm>
                   </Form>  
@@ -87,4 +132,10 @@ function Register() {
     </ContainerGlobal>
   )
 }
-export default Register
+
+const mapStateToProps = (state: RootState) => ({
+  user: state.UserReducer.user
+});  
+
+
+export default connect(mapStateToProps)(Register)
