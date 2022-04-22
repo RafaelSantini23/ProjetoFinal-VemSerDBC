@@ -3,7 +3,7 @@ import { connect, DispatchProp } from "react-redux"
 import { Form, Formik, FormikHelpers } from "formik";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
-import { handleLogin } from "../../store/actions/AuthAction"
+import { handleLogin } from "../../store/actions/authAction"
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
          <Formik
                 initialValues={{
                     login: '',
-                    senha: ''
+                    password: ''
                 }}
                 onSubmit={(
                     values: AuthDTO["auth"],

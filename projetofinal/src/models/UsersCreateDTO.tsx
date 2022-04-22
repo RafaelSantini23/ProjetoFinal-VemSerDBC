@@ -1,9 +1,9 @@
 export interface UsersCreateDTO {
-  userCreate: {
-      nome: string;
+  user: {
       email: string;
-      senha: string;
-      confirmasenha?: string;
-      foto?: string;
+      name: string;
+      password: string;
+      confirmPassword?: string;
+      profilePhoto?: string;
   }
 }
