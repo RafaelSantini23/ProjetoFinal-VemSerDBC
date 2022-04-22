@@ -80,3 +80,5 @@ export const TotalTitle = styled.h1<{
   color: ${props => props.color};
   font-size: 38px;
 `;
+
+

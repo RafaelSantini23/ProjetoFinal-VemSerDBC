@@ -55,7 +55,9 @@ function Details() {
             <h2>{converteBRL(Campanhas.meta)}</h2>
             <p>Apoiadores</p>
             <h2>{Campanhas.apoiadores.length}</h2>
+
           </InfoCampanha>
+          
       </ContainerDetails>
     </Container>
   )

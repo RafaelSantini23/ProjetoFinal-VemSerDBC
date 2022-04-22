@@ -8,7 +8,6 @@ export const INITIAL_STATE = {
         password: '',
         profilePhoto: '',
     }
-
 }
 
 const UserReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) => {

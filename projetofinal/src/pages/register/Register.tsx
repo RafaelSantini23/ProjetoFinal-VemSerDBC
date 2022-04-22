@@ -8,6 +8,7 @@ import { registerUser } from "../../store/actions/usersAction";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 
 
 
@@ -16,15 +17,19 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
   
-  const handleUpload = (event: React.ChangeEvent , setFieldValue: Function) => {
+  const handleUpload = (event: React.ChangeEvent ) => {
     const target = event.target as HTMLInputElement;
     const files = target.files?.[0];
 
     console.log(files);
     
     
-    setFieldValue('profilePhoto', files);
-  }
+    // setFieldValue('profilePhoto', files);
+  }  
+
+  useEffect(() => {
+    // registerUser(dispatch, user, navigate);
+  },[])
   
   console.log(user);
 
@@ -59,21 +64,18 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       email: '',
                       name: '',
                       password: '',
-                      confirmPassword: '',   
-                      profilePhoto: ''
+                      confirmPassword: '', 
+                      
+                    
                   }}
                   // validationSchema={SignupSchema}
-                  onSubmit={(
-                      values: UsersCreateDTO['user'],
-                      { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
-                      ) => {
+                  onSubmit={ ( values: UsersCreateDTO['user'], { setSubmitting }: FormikHelpers<UsersCreateDTO['user']> ) => {
                         const user = {
                           email: values.email,
                           name: values.name,
                           password: values.password,
-                          profilePhoto: values.profilePhoto
+                          
                         }
-                        console.log('entrei');
                         
                         registerUser(dispatch, user, navigate);
                         setSubmitting(false);
@@ -113,10 +115,10 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       <div>
                             
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="file" onChange={(event:  React.ChangeEvent) => handleUpload(event, props.setFieldValue)}/>
-                            {props.errors.profilePhoto && props.touched.profilePhoto ? (
+                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="text"/>
+                            {/* {props.errors.profilePhoto && props.touched.profilePhoto ? (
                               <span>{props.errors.profilePhoto}</span>
-                              ) : null}
+                              ) : null} */}
 
                           {/* <LabelForm htmlFor='profilePhoto'>Foto: </LabelForm>
                           <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="mande o link da imagem" />

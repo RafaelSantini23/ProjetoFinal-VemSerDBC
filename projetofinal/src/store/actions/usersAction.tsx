@@ -9,21 +9,19 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     try {
         console.log('Entrei no try');
 
-        const { data } = await api.post('/user', values);
-        
-        console.log(data);
-        
+        const { data } = await api.post('/user/register', values);
+
         const user = {
             type: 'SET_USER',
             user: data
         }
-
+        console.log(data);
+        
+        
         dispatch(user);
 
-        console.log(user);
-        
+        navigate('/');
 
-        navigate('/')
     } catch (error) {
         console.log(error);
         
