@@ -29,7 +29,7 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
 
          api.defaults.headers.common['Authorization'] = data;
 
-        navigate('/create-campanhas');
+        navigate('/campanhas');
 
     } catch (error) {
         console.log(error);

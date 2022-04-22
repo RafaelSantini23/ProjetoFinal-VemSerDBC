@@ -4,7 +4,7 @@ import {  useNavigate } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import { AuthDTO } from "../../models/AuthDTO";
 import { RootState } from "../../store";
-import { isLoggedin } from "../../Utils/Utils";
+import { isLoggedin } from "../../utils/Utils";
 
 
 

@@ -1,19 +1,16 @@
-import { ReactNode, useEffect } from "react"
+import { useEffect } from "react"
 import { connect, DispatchProp } from "react-redux"
-import { Field, Form, Formik, FormikHelpers } from "formik";
-import { Link } from "react-router-dom";
+import { Form, Formik, FormikHelpers } from "formik";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/AuthAction"
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
 
-
-
 function Login({auth, dispatch}: AuthDTO & DispatchProp) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -26,30 +23,6 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
     },[])
 
 
-    const navigate = useNavigate();
-    const campanhas = [
-        {
-            id: 1,
-            nome: 'Campanha 1',
-            descricao: 'Descrição da campanha 1',
-            dataInicio: '01/01/2020',
-            dataFim: '01/01/2020',
-            valor: '10,00',
-            status: 'Em andamento',
-            imagem: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'
-        },
-    ]
-    
-    
-
-
-    const hora = moment().locale('pt-br')
-
-    console.log(hora);
-    
-    
-    
-  
   return (
     <ContainerGlobal>
         <ContainerFormUser>
@@ -81,7 +54,6 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                     </div>
                     <ButtonForm marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            
-            {/* <SignUp> Don’t have an account? <a href="#">Sign Up</a> </SignUp>    */}
             </Formik>
             <LinkStyle mT='20px' to="/register">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
