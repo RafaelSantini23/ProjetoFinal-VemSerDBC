@@ -1,14 +1,14 @@
 import { AnyAction } from "redux"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
+import { FileDTO } from "../../models/FileDTO"
 
 export const INITIAL_STATE = {
     user: {
         email: '',
         name: '',
         password: '',
-        profilePhoto: '',
+        profilePhoto: ''
     }
-
 }
 
 const userReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) => {

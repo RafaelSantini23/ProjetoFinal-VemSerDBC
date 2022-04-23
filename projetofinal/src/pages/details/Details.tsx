@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../../components/modal/Modal";
+import { ButtonForm } from "../../Global.styles";
 import { converteNumber,
   somaTotal,
   formataTags,
@@ -17,10 +18,13 @@ import { Container,
   InfoCampanha,
   ImagemCampanha,
   ContainerDetails,
+  IconDonate,
 } from "./Details.styles"
+
 
 function Details() {
   const [isVisibel, setIsVisibel] = useState(false);
+  const [ modalDonation, setModalDonation ] = useState(false);
 
 
   const Campanhas = {
@@ -52,7 +56,7 @@ function Details() {
     <Container>
       {  isVisibel && (
             <div>
-                <Modal colabs={Campanhas.apoiadores} onClick={() => setIsVisibel(false)} />
+                <Modal height="550px" colabs={Campanhas.apoiadores} onClick={() => setIsVisibel(false)} />
             </div> )   }
       <h1>{Campanhas.titulo}</h1>
       <ContainerDetails>
@@ -75,6 +79,13 @@ function Details() {
             <h2>{converteBRL(Campanhas.meta)}</h2>
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{Campanhas.apoiadores.length}</a>
+
+            <ButtonForm onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
+
+            {  modalDonation && (
+            <div>
+                <Modal height="150px" donate={true}  onClick={() => setModalDonation(false)} />
+            </div> )}
           </InfoCampanha>
       </ContainerDetails>
     </Container>

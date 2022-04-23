@@ -1,3 +1,5 @@
+import { FileDTO } from './FileDTO';
+
 export interface UsersCreateDTO {
   user: {
       email: string;

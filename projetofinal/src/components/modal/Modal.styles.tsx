@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { IoMdClose } from "react-icons/io"
+import { IoMdClose } from "react-icons/io";
+import { Field } from "formik";
+import CurrencyFormat from 'react-currency-format';
 
 
 export const ModalContainer = styled.div`
@@ -29,9 +31,9 @@ export const ButtonClose = styled.button`
     text-align: right;
 `
 
-export const Content = styled.div`
+export const Content = styled.div<{height?: string}>`
     width: 100%;
-    height: 550px;
+    height: ${props => props.height};
   
     ::-webkit-scrollbar {
     width: 10px;
@@ -105,3 +107,31 @@ export const ColabName = styled.span`
     margin-left: 10px;
 
 `
+
+export const ContainerDonation = styled.div`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+`
+
+export const InputDonation = styled(Field)`
+    width: 50%;
+`
+
+
+// input com currency format e atributos de conversão para moeda brasileira
+
+export const InputCurrency = styled(CurrencyFormat)`
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    `

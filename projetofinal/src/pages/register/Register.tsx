@@ -8,6 +8,7 @@ import { registerUser } from "../../store/actions/usersAction";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
@@ -61,10 +62,11 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                           profilePhoto: values.profilePhoto
                         }                        
                         registerUser(dispatch, user, navigate);
-                        setSubmitting(false);
+                    
                       }}
                       >
-                  {props => (
+                  {props => ( 
+                    
                   <Form>
                       <div>
                           <LabelForm htmlFor="email">Email</LabelForm>
