@@ -30,7 +30,7 @@ function Item({ auth, dispatch }: AuthDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    auth: state.AuthReducer.auth
+    auth: state.authReducer.auth
 })
 
 export default connect(mapStateToProps)(Item)

@@ -24,7 +24,7 @@ function Header({auth}: AuthDTO) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    auth: state.AuthReducer.auth
+    auth: state.authReducer.auth
 })
 
 export default connect(mapStateToProps)(Header)

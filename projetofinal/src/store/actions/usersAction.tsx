@@ -10,7 +10,9 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         console.log('Entrei no try');
 
         const { data } = await api.post('/user/register', values);
-
+        
+        console.log(values);
+        
         const user = {
             type: 'SET_USER',
             user: data
@@ -19,7 +21,8 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         
         
         dispatch(user);
-
+        
+        console.log(user);
         navigate('/');
 
     } catch (error) {

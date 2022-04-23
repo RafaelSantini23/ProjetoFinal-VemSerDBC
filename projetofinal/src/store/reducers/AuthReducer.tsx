@@ -12,7 +12,7 @@ export const INITIAL_STATE = {
 }
 
 
-const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
+const authReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_TOKEN') {
         return {
             ...state,
@@ -32,4 +32,4 @@ const AuthReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
 
 }
 
-export default AuthReducer;
+export default authReducer;

@@ -11,25 +11,17 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 
 
-
-
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
   
-  const handleUpload = (event: React.ChangeEvent ) => {
-    const target = event.target as HTMLInputElement;
-    const files = target.files?.[0];
+  // const handleUpload = (event: React.ChangeEvent, setFieldValue: Function) => {
+  //   const target = event.target as HTMLInputElement;
+  //   const files = target.files?.[0];
 
-    console.log(files);
-    
-    
-    // setFieldValue('profilePhoto', files);
-  }  
-
-  useEffect(() => {
-    // registerUser(dispatch, user, navigate);
-  },[])
+  //   setFieldValue('ProfilePhoto',files)
+  //   console.log(files);
+  // }
   
   console.log(user);
 
@@ -64,24 +56,28 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       email: '',
                       name: '',
                       password: '',
-                      confirmPassword: '', 
-                      
-                    
+                      confirmPassword: '',  
+                      profilePhoto: null,  
                   }}
                   // validationSchema={SignupSchema}
-                  onSubmit={ ( values: UsersCreateDTO['user'], { setSubmitting }: FormikHelpers<UsersCreateDTO['user']> ) => {
-                        const user = {
-                          email: values.email,
-                          name: values.name,
-                          password: values.password,
-                          
-                        }
+                  onSubmit={ ( values: UsersCreateDTO['user'] ) => {
+
+                    const user = {
+                      email: values.email,
+                      name: values.name,
+                      password: values.password,
+                      profilePhoto: values.profilePhoto
+                      
+                    }
+
+                        console.log(values.profilePhoto);
                         
                         registerUser(dispatch, user, navigate);
-                        setSubmitting(false);
+                    
                       }}
                       >
-                  {props => (
+                  {props => ( 
+                    
                   <Form>
                       <div>
                           <LabelForm htmlFor="email">Email</LabelForm>
@@ -115,17 +111,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       <div>
                             
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="text"/>
-                            {/* {props.errors.profilePhoto && props.touched.profilePhoto ? (
-                              <span>{props.errors.profilePhoto}</span>
-                              ) : null} */}
-
-                          {/* <LabelForm htmlFor='profilePhoto'>Foto: </LabelForm>
-                          <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="mande o link da imagem" />
-                          {props.errors.profilePhoto && props.touched.profilePhoto ? (
-                            <span>{props.errors.profilePhoto}</span>
-                            ) : null} */}
-                          
+                            <input name="profilePhoto" id="profilePhoto"   placeholder="Selecione uma foto de perfil" type="file" onChange={(event) => props.setFieldValue('profilePhoto', event.target.files?.[0])} />
 
                       </div>
                       <ButtonForm type='submit'>Cadastrar</ButtonForm>
@@ -138,7 +124,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  user: state.UserReducer.user
+  user: state.userReducer.user
 });  
 
 

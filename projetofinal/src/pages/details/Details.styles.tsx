@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Theme from '../../theme';
+import { FcDonate } from "react-icons/fc";
 
 export const Container = styled.div`
   background-color: #E5E5E5;
@@ -82,3 +83,7 @@ export const TotalTitle = styled.h1<{
 `;
 
 
+export const IconDonate = styled(FcDonate)`
+  margin: 0 10px;
+  font-size: 18px;
+`

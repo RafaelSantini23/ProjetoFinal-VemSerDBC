@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { IoMdClose } from "react-icons/io"
+import { IoMdClose } from "react-icons/io";
+import { Field } from "formik";
+
 
 
 export const ModalContainer = styled.div`
     width: 100%;
-    height: 100vh;
-    position: absolute;
+    min-height: 100vh;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
@@ -18,7 +20,7 @@ export const ModalContainer = styled.div`
 
 export const BackGroundModal = styled.div`
     background: rgb(71, 71, 71);
-    height: 100vh;
+    min-height: 100vh;
 `
 
 export const ButtonClose = styled.button`
@@ -29,9 +31,9 @@ export const ButtonClose = styled.button`
     text-align: right;
 `
 
-export const Content = styled.div`
+export const Content = styled.div<{height?: string}>`
     width: 100%;
-    height: 550px;
+    height: ${props => props.height};
   
     ::-webkit-scrollbar {
     width: 10px;
@@ -103,5 +105,18 @@ export const ColabName = styled.span`
     font-size: 18px;
     font-weight: bold;
     margin-left: 10px;
+
+`
+
+export const ContainerDonation = styled.div`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+`
+
+export const InputDonation = styled(Field)`
+    width: 50%;
+
 
 `

@@ -39,7 +39,6 @@ export const formataTags = (array: string[]) => {
 
 export const formataCorTotal = (meta: number, total: number) => {
   let cor;
-  console.log(meta, total)
   switch(true) {
     case (total < meta * 0.30):
       return cor = 'red'

@@ -34,6 +34,7 @@ export const ButtonForm = styled.button<{marginTop?: string}>`
     display: flex;
     justify-content: center;
     align-items: center;
+    
     cursor: pointer;
     border: 0;
     transition: filter 0.2s;
@@ -41,6 +42,7 @@ export const ButtonForm = styled.button<{marginTop?: string}>`
     &:hover {
         filter: brightness(0.9);
     }
+    
 `
 
 export const InputStyle = styled(Field)`
