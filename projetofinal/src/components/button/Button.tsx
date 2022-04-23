@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from "react"
 import { ButtonForm } from "../../Global.styles"
+import Theme from "../../theme"
 
 
 
@@ -10,7 +11,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 function Button({ onClick, children}: ButtonProps) {
   return (
-    <ButtonForm onClick={onClick}> {children} </ButtonForm>
+    <ButtonForm colors={`${Theme.colors.secondary}`} onClick={onClick}> {children} </ButtonForm>
   )
 }
 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import ImgCampanhaPrincipal from '../../imgs/background.png'
+
 
 export const Container = styled.div`
   background-color: #E5E5E5;
@@ -21,11 +23,16 @@ export const ContainerCampanhas = styled.div`
 
 export const TituloCampanhas = styled.h1`
   color: #6c757d;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+
 `;
 
 export const DivCampanha = styled.div`
-  background-color: white;
+  background-color: #FFF;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
 `;
 
 export const ImgCampanha = styled.img`
@@ -53,3 +60,20 @@ export const LinkContainer = styled(Link)`
     transform: scale(1.1);
   }
 `;
+
+export const ContainerMyCampaign = styled.div`
+  width: 100%;
+  height: 450px;
+  background: url(${ImgCampanhaPrincipal}) no-repeat fixed 30% center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+`

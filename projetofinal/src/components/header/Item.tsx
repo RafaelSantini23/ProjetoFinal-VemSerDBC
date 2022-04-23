@@ -4,9 +4,10 @@ import { LinkStyle } from "../../Global.styles"
 import { AuthDTO } from "../../models/AuthDTO"
 import { RootState } from "../../store"
 import { handleLogout } from "../../store/actions/authAction"
+import Theme from "../../theme"
 import Button from "../button/Button"
 import Search from "../inputs/Search"
-import { ItemStyles, ItensStyle } from "./Header.styles"
+import { ItemStyles } from "./Header.styles"
 
 function Item({ auth, dispatch }: AuthDTO & DispatchProp) {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ function Item({ auth, dispatch }: AuthDTO & DispatchProp) {
   return (
       <>
             <ItemStyles>
-                    <LinkStyle to="/campanhas">Explore</LinkStyle>
+                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas">Explore</LinkStyle>
             </ItemStyles>
             <ItemStyles>
                 <Search />

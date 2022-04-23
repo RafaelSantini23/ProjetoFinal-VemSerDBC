@@ -15,6 +15,10 @@ import { ButtonClose,
     ContainerDonation,
     InputCurrency,
 } from "./Modal.styles"
+import InputMask from 'react-input-mask';
+import MaskedInput from 'react-text-mask'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+
 
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -26,21 +30,34 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     }[],
     donate?: boolean,
     height: string,
+
 }
 
 
 
 
+
+
 function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
-    const maskReais = (value: string) => {
-        return (Number(value.replace(/\D/g, "")) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        };
-        
-        const unMaskReais = (value: string) => {
-        return typeof (value) === 'number' ? value : (Number(value.replace(/\D/g, "")) / 100);
+    //mask money para field formik
+    
+
+    const defaultMaskOptions = {
+          prefix: 'R$',
+          suffix: '',
+          includeThousandsSeparator: true,
+          thousandsSeparatorSymbol: '.',
+          allowDecimal: true,
+          decimalSymbol: ',',
+          decimalLimit: 4, 
+          integerLimit: 7, 
+          allowNegative: false,
+          allowLeadingZeroes: false,
         }
-        
-        
+    
+    const numberMask = createNumberMask(defaultMaskOptions)
+  
+
   return (
     <ModalContainer>
         <ModalPrincipal >
@@ -58,8 +75,10 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
                         </ColabInfo>
                     </ModalColab>
                 ))}
+
             {donate && 
             <ContainerDonation> 
+                
                  <Formik
                   initialValues={{
                       money: '',
@@ -69,13 +88,17 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
 
                       }}
                       >
-                     
+                     {props => (
+
                          <Form>
+
                       <label htmlFor="money"> Informe o valor: </label> 
-                      
-                      <Field onChange={(event: any) => maskReais(event.target.value) } id="money" name="money"  />  
+                        
+                      <Field as={InputCurrency} mask={numberMask}  id="money" name="money"  />  
+
                       <ButtonForm type='submit'>Doar</ButtonForm>
                   </Form>  
+                             )}
                             
                        
                              
