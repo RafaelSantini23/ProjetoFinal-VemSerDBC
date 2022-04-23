@@ -45,11 +45,23 @@ export const ButtonForm = styled.button<{marginTop?: string}>`
     
 `
 
+export const DivValidate = styled.div`
+    position: relative;
+    padding-bottom: 20px;
+`;
+
+export const SpanError = styled.span`
+    position: absolute;
+    left: 1%;
+    bottom: 1%;
+    color: red;
+`;
+
 export const InputStyle = styled(Field)`
     width: 350px;
     height: 50px;
     border-radius: 8px;
-    padding: 0 12px;
+    padding: 0 8px;
     background: #fff;
     border: 1px solid #a8a8b3;
     font: 400 16px 'Roboto', sans-serif;

@@ -17,18 +17,13 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
 
         const { data } = await api.post('/user/register', formData);
         
-        console.log(values);
-        
         const user = {
             type: 'SET_USER',
             user: data
         }
-        console.log(data);
-        
         
         dispatch(user);
         
-        console.log(user);
         navigate('/');
 
     } catch (error) {

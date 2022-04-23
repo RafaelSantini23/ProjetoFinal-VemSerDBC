@@ -14,6 +14,11 @@ export const formataData = (props: string) => {
   return moment(props, 'DD MM YYYY HH:mm:ss').locale('pt-br').fromNow()
 }
 
+export const validDate = (value: string | undefined) => {
+  const data = moment()
+  return moment(value, "DDMMYYYY").isValid() && moment(value, "DDMMYYYY").isAfter(moment(data, "DDMMYYYY")) 
+}
+
 // Format Functions
 
 export const converteNumber = (props: string) => parseFloat(props.replace(',', '.'));
