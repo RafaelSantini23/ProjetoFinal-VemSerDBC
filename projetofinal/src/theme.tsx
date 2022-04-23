@@ -8,6 +8,7 @@ const Theme = {
         danger: '#dc3545',
         light: '#f8f9fa',
         dark: '#343a40',
+        background: '#E5E5E5'
     },
     containerPrincipal: {
         width: '100%',

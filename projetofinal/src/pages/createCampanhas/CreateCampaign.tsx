@@ -3,13 +3,12 @@ import { useEffect } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, SpanError } from "../../Global.styles";
-import { CheckCloseStyle, DescriptionStyle } from "./CreateCampaign.styles";
+import { ButtonForm, DivValidate, InputStyle, LabelForm, LinkStyle, SpanError } from "../../Global.styles";
+import { CheckCloseStyle, DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { isLoggedin, validDate } from "../../utils/Utils";
 import { createCampaign } from "../../store/actions/fundraiserAction";
-import moment from "moment";
 
 
 
@@ -34,7 +33,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
 
       automaticClose: Yup.boolean()
       .oneOf([true , false], 'Campo Obrigatório!')
-      .required('Campo Obrigatório!'),
+      .nullable(),
 
       title: Yup.string()
       .required('Campo Obrigatório!'),
@@ -49,12 +48,14 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
 
 
   return (
-    <ContainerGlobal>
-       <ContainerFormUser>
-       <LinkStyle mT="20px" to="/campanhas">Voltar as campanhas</LinkStyle>
+    <ContainerCampaign>
+      <DivButton>
+        <ButtonForm  onClick={() => navigate('/campanhas')}>Voltar as campanhas</ButtonForm>
+      </DivButton>
+       <ContainerFormCampaign>
        <Formik
                 initialValues={{
-                    automaticClose: false,
+                    automaticClose: null,
                     categories: '',
                     validdate: '',
                     description: '',
@@ -100,12 +101,14 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                           <label>
                              <CheckCloseStyle type="radio" value="true" name="automaticClose" id="automaticClose"/>
                              Sim
+                          </label>
+                          <label>
                              <CheckCloseStyle type="radio" value="false" name="automaticClose" id="automaticClose"/>
                              Não
+                          </label>
                           {props.errors.automaticClose && props.touched.automaticClose ? (
                             <SpanError>{props.errors.automaticClose}</SpanError>
                             ) : null}
-                          </label>
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='validdate'>Data limite</LabelForm>
@@ -139,8 +142,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                   </Form>  
                   )}          
               </Formik>
-       </ContainerFormUser>
-    </ContainerGlobal>
+       </ContainerFormCampaign>
+    </ContainerCampaign>
   )
 }
 

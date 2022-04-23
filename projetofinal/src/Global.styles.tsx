@@ -37,10 +37,11 @@ export const ButtonForm = styled.button<{marginTop?: string}>`
     
     cursor: pointer;
     border: 0;
-    transition: filter 0.2s;
+    transition: 0.8s;
     margin-top: ${props => props.marginTop};
     &:hover {
         filter: brightness(0.9);
+        background-color: ${Theme.colors.secondary};
     }
     
 `
@@ -59,7 +60,7 @@ export const SpanError = styled.span`
 
 export const InputStyle = styled(Field)`
     width: 350px;
-    height: 50px;
+    height: 40px;
     border-radius: 8px;
     padding: 0 8px;
     background: #fff;
