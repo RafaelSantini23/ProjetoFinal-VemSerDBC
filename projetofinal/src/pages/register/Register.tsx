@@ -8,33 +8,32 @@ import { registerUser } from "../../store/actions/usersAction";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
 
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
-  // const SignupSchema = Yup.object().shape({
-  //   nome: Yup.string()
-  //     .min(4, 'Minimo 4 caracteres!')
-  //     .max(50, 'Too Long!')
-  //     .matches(validaNome, 'Nome inválido!')
-  //     .required('Campo Obrigatório!'),
+  const SignupSchema = Yup.object().shape({
+    nome: Yup.string()
+      .min(4, 'Minimo 4 caracteres!')
+      .max(50, 'Too Long!')
+      .matches(validaNome, 'Nome inválido!')
+      .required('Campo Obrigatório!'),
 
-  //   email: Yup.string()
-  //     .email('Email inválido!')
-  //     .matches(validaEmail, 'Email incorreto!').trim()
-  //     .required('Campo Obrigatório!'),
+    email: Yup.string()
+      .email('Email inválido!')
+      .matches(validaEmail, 'Email incorreto!').trim()
+      .required('Campo Obrigatório!'),
 
-  //   senha: Yup.string()
-  //     .matches(validaSenha, 'Senha inválida!')
-  //     .required('Campo Obrigatório!'),
+    senha: Yup.string()
+      .matches(validaSenha, 'Senha inválida!')
+      .required('Campo Obrigatório!'),
 
-  //   confirmasenha: Yup.string()
-  //     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
-  //     .required('Campo Obrigatório!'),
-  //     profilePhoto: Yup.string().required('Campo Obrigatório!')
-  // });
+    confirmasenha: Yup.string()
+      .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
+      .required('Campo Obrigatório!'),
+      profilePhoto: Yup.string().required('Campo Obrigatório!')
+  });
 
 
 
@@ -49,7 +48,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                     password: '',
                     confirmPassword: '',  
                   }}
-                  // validationSchema={SignupSchema}
+                  validationSchema={SignupSchema}
                   onSubmit={(
                       values: UsersCreateDTO['user'],
                       { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
@@ -62,7 +61,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                           profilePhoto: values.profilePhoto
                         }                        
                         registerUser(dispatch, user, navigate);
-                    
+                        setSubmitting(false)
                       }}
                       >
                   {props => ( 
