@@ -9,6 +9,9 @@ import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
+import { ImgLogin, TitleLogin } from "../login/login.styles";
+import ThemeImg from '../../imgs/theme.png';
+import Theme from "../../theme";
 
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
@@ -41,7 +44,11 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   return (
     <ContainerGlobal>
       <ContainerFormUser>
-        <LinkStyle mT="20px" to="/">Voltar ao login</LinkStyle>
+      <ImgLogin>
+            <img src={ThemeImg}  height={'250px'} alt="" />
+            <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
+        </ImgLogin>
+        <LinkStyle color={`${Theme.colors.dark}`} mT="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
                     email: '',
@@ -66,7 +73,6 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       }}
                       >
                   {props => ( 
-                    
                   <Form>
                       <div>
                           <LabelForm htmlFor="email">Email</LabelForm>
@@ -101,7 +107,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
                             <input name="profilePhoto" id="profilePhoto" type="file" onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}/>
                       </div>
-                      <ButtonForm type='submit'>Cadastrar</ButtonForm>
+                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
                   </Form>  
                   )}          
               </Formik>

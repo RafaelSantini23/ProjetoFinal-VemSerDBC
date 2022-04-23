@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 import { Field } from "formik";
-import CurrencyFormat from 'react-currency-format';
+import MaskedInput from "react-text-mask";
 
 
 export const ModalContainer = styled.div`
@@ -122,7 +122,7 @@ export const InputDonation = styled(Field)`
 
 // input com currency format e atributos de conversão para moeda brasileira
 
-export const InputCurrency = styled(CurrencyFormat)`
+export const InputCurrency = styled(MaskedInput)`
     width: 100%;
     height: 50px;
     border: none;

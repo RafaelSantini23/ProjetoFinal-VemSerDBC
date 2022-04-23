@@ -7,6 +7,9 @@ import { handleLogin } from "../../store/actions/authAction"
 import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
 import { useNavigate } from "react-router-dom";
+import ThemeImg from '../../imgs/theme.png'
+import { ImgLogin, TitleLogin } from "./login.styles";
+import Theme from "../../theme";
 
 
 function Login({auth, dispatch}: AuthDTO & DispatchProp) {
@@ -25,6 +28,10 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
 
   return (
     <ContainerGlobal>
+        <ImgLogin>
+            <img src={ThemeImg}  height={'250px'} alt="" />
+            <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
+        </ImgLogin>
         <ContainerFormUser>
 
          <Formik
@@ -52,10 +59,10 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                         <LabelForm htmlFor='password'>Password</LabelForm>
                         <InputStyle name="password" id="password"  placeholder="Digite a sua senha" />
                     </div>
-                    <ButtonForm marginTop="20px"  type='submit'>Entrar</ButtonForm>
+                    <ButtonForm colors={`${Theme.colors.dark}`} marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            
             </Formik>
-            <LinkStyle mT='20px' to="/register">Não possuo cadastro</LinkStyle>
+            <LinkStyle color={`${Theme.colors.dark}`} mT='20px' to="/register">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
     </ContainerGlobal>
   )

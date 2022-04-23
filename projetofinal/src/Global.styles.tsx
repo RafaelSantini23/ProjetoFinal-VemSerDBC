@@ -23,12 +23,12 @@ export const ContainerFormUser = styled.div`
     
 `
 
-export const ButtonForm = styled.button<{marginTop?: string}>`
+export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
     width: 100%;
     height: 40px;
     border-radius: 8px;
     font-weight: 500;
-    background: ${Theme.colors.dark};
+    background: ${props => props.colors};
     color: #fff;
     padding: 0 32px;
     display: flex;
@@ -59,6 +59,7 @@ export const InputStyle = styled(Field)`
 export const LabelForm = styled.label`
     font-size: ${Theme.labelForm.fontSize};
     display: block;
+    color: #9FA2B4;
     margin-top: 15px;
 `
 
@@ -69,7 +70,7 @@ export const LogoDiv = styled.div`
 `
 
 export const LinkStyle = styled(Link)<{mT?: string}>`
-    color: ${Theme.colors.dark};
+    color: ${props => props.color};
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;

@@ -1,38 +1,26 @@
-import moment from "moment"
-import { formataCorTotal, converteNumber, formataData, somaTotal, converteBRL, formataTags } from "../../utils/Utils";
+import { converteNumber, formataData, somaTotal, converteBRL, formataTags } from "../../utils/Utils";
 import { 
+  ButtonContainer,
   Container,
-  TotalSpan,
-  ImgCampanha,
-  DivCampanha,
-  DivCategoria,
-  LinkContainer,
+  ContainerMyCampaign,
   TituloCampanhas,
-  ContainerCampanhas
 } from "./Home.styles";
 import 'moment/locale/pt-br'
-import { connect } from "react-redux";
-import { RootState } from "../../store";
-import { DispatchProp } from "react-redux";
-import { AuthDTO } from "../../models/AuthDTO";
-import { buffer } from "stream/consumers";
+import Card from "../../components/card/Card";
+import ImgCampanhaPrincipal from '../../imgs/background.png'
+import { ButtonForm } from "../../Global.styles";
+import Theme from "../../theme";
 
 
-function Home({auth, dispatch}: any )  {
 
-  console.log(auth);
+function Home()  {
+
   const token = localStorage.getItem('token');
 
   const tokenn = token?.split('.')[1];
   const decoded = JSON.parse(window?.atob(tokenn as string));
-  const data = moment(decoded.exp * 1000).format('DD/MM/YYYY');
-  
-  console.log(decoded.sub);
 
-  
-  
-  
-
+  const id = decoded.sub
   
 
   const Campanhas = [
@@ -71,35 +59,20 @@ function Home({auth, dispatch}: any )  {
 ]
   
   return (
-    <Container>
+    <>
+      <ContainerMyCampaign>
+        <ButtonContainer>
+          <ButtonForm colors={`${Theme.colors.secondary}`}> Minhas Campanhas </ButtonForm>
+        </ButtonContainer>
+      </ContainerMyCampaign>
+    <Container>  
       <TituloCampanhas>Campanhas Recentes</TituloCampanhas>
-      <ContainerCampanhas>
-        {Campanhas.map((item) => (
-          <LinkContainer key={item.id} to={`/details/${item.id}`}>
-            <DivCampanha>
-              <ImgCampanha src={item.foto} alt="foto" />
-              <h2>{item.titulo}</h2>
-              <DivCategoria>
-                <span>{item.categoria}</span>
-                <small>ID da campanha: {item.id}</small>
-              </DivCategoria>
-              <h4>{item.criador}</h4>
-              <p>Total Arrecadado: 
-                <TotalSpan color={formataCorTotal(item.meta, item.total)}>
-                {converteBRL(item.total)}</TotalSpan>
-                </p>
-              <p>Meta: <span>{converteBRL(item.meta)}</span></p>
-              <small>Última data de alteração: {item.data}</small>
-            </DivCampanha>
-          </LinkContainer>
-        ))}
-      </ContainerCampanhas>
+      <Card colabs={Campanhas} />
     </Container>
+    </>
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  user: state.authReducer.auth
-})
 
-export default connect(mapStateToProps)(Home)
+
+export default Home
