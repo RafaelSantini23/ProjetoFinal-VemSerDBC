@@ -14,17 +14,6 @@ import React, { useEffect } from "react";
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
-  
-  // const handleUpload = (event: React.ChangeEvent, setFieldValue: Function) => {
-  //   const target = event.target as HTMLInputElement;
-  //   const files = target.files?.[0];
-
-  //   setFieldValue('ProfilePhoto',files)
-  //   console.log(files);
-  // }
-  
-  console.log(user);
-
   // const SignupSchema = Yup.object().shape({
   //   nome: Yup.string()
   //     .min(4, 'Minimo 4 caracteres!')
@@ -47,35 +36,31 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   //     profilePhoto: Yup.string().required('Campo Obrigatório!')
   // });
 
+
+
   return (
     <ContainerGlobal>
       <ContainerFormUser>
         <LinkStyle mT="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
-                      email: '',
-                      name: '',
-                      password: '',
-                      confirmPassword: '',  
-                      profilePhoto: null,  
+                    email: '',
+                    name: '',
+                    password: '',
+                    confirmPassword: '',  
                   }}
                   // validationSchema={SignupSchema}
-                  onSubmit={ ( values: UsersCreateDTO['user'] ) => {
+                  onSubmit={(
+                      values: UsersCreateDTO['user'],
+                      { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
+                      ) => {
 
-                    
-                    
-
-
-                    const user = {
-                      email: values.email,
-                      name: values.name,
-                      password: values.password,
-                      profilePhoto: values.profilePhoto
-                      
-                    }
-
-                        console.log(values.profilePhoto);
-                        
+                        const user = {
+                          email: values.email,
+                          name: values.name,
+                          password: values.password,
+                          profilePhoto: values.profilePhoto
+                        }                        
                         registerUser(dispatch, user, navigate);
                     
                       }}
@@ -112,11 +97,9 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                             <span>{props.errors.confirmPassword}</span>
                             ) : null}
                       </div>
-                      <div>
-                            
+                      <div>   
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <input name="profilePhoto" id="profilePhoto"   placeholder="Selecione uma foto de perfil" type="file" onChange={(event) => props.setFieldValue('profilePhoto', event.target.files?.[0])} />
-
+                            <input name="profilePhoto" id="profilePhoto" type="file" onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}/>
                       </div>
                       <ButtonForm type='submit'>Cadastrar</ButtonForm>
                   </Form>  

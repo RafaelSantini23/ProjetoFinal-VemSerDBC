@@ -5,7 +5,7 @@ import Home from './pages/home/Home';
 import api from './api';
 import Header from './components/header/Header';
 import { AuthDTO } from './models/AuthDTO';
-import CreateCampanhas from './pages/createCampanhas/CreateCampanhas';
+import CreateCampanhas from './pages/createCampanhas/CreateCampaign';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import { RootState } from './store';

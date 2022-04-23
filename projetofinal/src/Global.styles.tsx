@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
-    height: ${Theme.containerPrincipal.height};
+    min-height: ${Theme.containerPrincipal.height};
     background-color: ${Theme.colors.dark};
     display: flex;
     justify-content: flex-end;
@@ -14,7 +14,7 @@ export const ContainerGlobal = styled.div`
 `
 export const ContainerFormUser = styled.div`
     width: ${Theme.containerForm.width};
-    height: ${Theme.containerPrincipal.height};
+    min-height: ${Theme.containerPrincipal.height};
     background-color: ${Theme.colors.light};
     display: flex;
     justify-content: center;
