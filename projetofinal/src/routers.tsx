@@ -11,6 +11,7 @@ import Register from './pages/register/Register';
 import { RootState } from './store';
 import { isAuth } from './store/actions/authAction';
 import Details from './pages/details/Details';
+import moment from 'moment';
 
 function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 
@@ -21,6 +22,12 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
       api.defaults.headers.common['Authorization'] = token;
       isAuth(dispatch)
     }
+
+    
+
+
+  
+
   }, [])
 
   return (

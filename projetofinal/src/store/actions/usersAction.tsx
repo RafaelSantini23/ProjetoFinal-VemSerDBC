@@ -24,6 +24,9 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
             user: data
         }
         console.log(data);
+
+        console.log(`data:image/png;base64,${data.profilePhoto}`);
+        
         
         
         dispatch(user);

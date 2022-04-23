@@ -27,7 +27,6 @@ const authReducer = (state: AuthDTO = INITIAL_STATE, action: AnyAction) => {
         }
     }
 
-   
     return state;
 
 }

@@ -11,11 +11,32 @@ import {
   ContainerCampanhas
 } from "./Home.styles";
 import 'moment/locale/pt-br'
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { RootState } from "../../store";
+import { DispatchProp } from "react-redux";
+import { AuthDTO } from "../../models/AuthDTO";
+import { buffer } from "stream/consumers";
 
-function Home() {
 
-  const Campanhas = [{
+function Home({auth, dispatch}: any )  {
+
+  console.log(auth);
+  const token = localStorage.getItem('token');
+
+  const tokenn = token?.split('.')[1];
+  const decoded = JSON.parse(window?.atob(tokenn as string));
+  const data = moment(decoded.exp * 1000).format('DD/MM/YYYY');
+  
+  console.log(decoded.sub);
+
+  
+  
+  
+
+  
+
+  const Campanhas = [
+    {
     id: 1,
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
@@ -24,7 +45,9 @@ function Home() {
     criador: 'O Jão Cee',
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48')
-  },{
+  },
+
+  {
     id: 2,
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
@@ -33,7 +56,9 @@ function Home() {
     criador: 'O Jão Cee',
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48')
-  },{
+  },
+
+  {
     id: 3,
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
@@ -42,7 +67,8 @@ function Home() {
     criador: 'O Jão Cee',
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48')
-  }]
+  }
+]
   
   return (
     <Container>
@@ -71,4 +97,9 @@ function Home() {
     </Container>
   )
 }
-export default Home
+
+const mapStateToProps = (state: RootState) => ({
+  user: state.authReducer.auth
+})
+
+export default connect(mapStateToProps)(Home)
