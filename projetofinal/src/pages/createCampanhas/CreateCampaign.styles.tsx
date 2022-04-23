@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Field } from "formik";
-import { Link } from "react-router-dom";
 import Theme from '../../theme';
+import ImgCampanhaPrincipal from '../../imgs/background.png'
 
 export const ContainerCampaign = styled.div`
-    background-color: ${Theme.colors.background};
+    background: url(${ImgCampanhaPrincipal}) no-repeat fixed top 10% center;;
     min-height: ${Theme.containerPrincipal.height};
     width: ${Theme.containerPrincipal.width};
     display: flex;

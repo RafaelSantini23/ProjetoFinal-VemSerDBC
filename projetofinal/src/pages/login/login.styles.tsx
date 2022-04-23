@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ImgLogin = styled.div`
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -88,8 +88,8 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='password'>Senha</LabelForm>
-                          <PasswordStrengthBar password={props.values.password} />
                           <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
+                          <PasswordStrengthBar password={props.values.password} />
                           {props.errors.password && props.touched.password ? (
                             <SpanError>{props.errors.password}</SpanError>
                             ) : null}

@@ -64,7 +64,7 @@ export const LinkContainer = styled(Link)`
 export const ContainerMyCampaign = styled.div`
   width: 100%;
   height: 450px;
-  background: url(${ImgCampanhaPrincipal}) no-repeat fixed 30% center;
+  background: url(${ImgCampanhaPrincipal}) no-repeat fixed top 10% center;
   display: flex;
   justify-content: center;
   align-items: center;
