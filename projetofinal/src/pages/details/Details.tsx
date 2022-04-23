@@ -84,7 +84,7 @@ function Details() {
 
             {  modalDonation && (
             <div>
-                <Modal height="80px" donate={true}  onClick={() => setModalDonation(false)} />
+                <Modal height="150px" donate={true}  onClick={() => setModalDonation(false)} />
             </div> )}
           </InfoCampanha>
       </ContainerDetails>

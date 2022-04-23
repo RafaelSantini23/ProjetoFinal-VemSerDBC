@@ -4,12 +4,18 @@ import api from "../../api";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
-    console.log('Entrei na função');
-    
-    try {
-        console.log('Entrei no try');
 
-        const { data } = await api.post('/user/register', values);
+    const formData = new FormData()
+
+    formData.append('email', values.email)
+    formData.append('name', values.name)
+    formData.append('password', values.password)
+    formData.append('profilePhoto', values.profilePhoto)
+   
+   
+    try {
+
+        const { data } = await api.post('/user/register', formData);
         
         console.log(values);
         

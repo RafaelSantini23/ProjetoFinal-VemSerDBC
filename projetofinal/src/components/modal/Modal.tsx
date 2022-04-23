@@ -1,5 +1,5 @@
-import { Form, Formik } from "formik";
-import React, { ButtonHTMLAttributes } from "react"
+import { Field, Form, Formik } from "formik";
+import React, { ButtonHTMLAttributes, ComponentType } from "react"
 import { ButtonForm } from "../../Global.styles";
 import { ButtonClose,
     Content,
@@ -13,7 +13,9 @@ import { ButtonClose,
     ModalPrincipal,
     InputDonation,
     ContainerDonation,
+    InputCurrency,
 } from "./Modal.styles"
+
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode,
@@ -23,32 +25,22 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
         photo: string;
     }[],
     donate?: boolean,
-    height: string
-
+    height: string,
 }
 
 
 
 
 function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
-
-    //regex para formatar o valor em reais conforme digita no input
-    const formatValue = (value: string) => {
-        const onlyNumber = value.replace(/[^0-9]/g, '')
-        const [integer, decimal] = onlyNumber.split(/(?=\d{3})/)
-        return `${integer.replace(/\B(?=(\d{3})+(?!\d))/g, '.')},${decimal}`
-    }
-
-   const convertNumber = (newText: string) => {
-
-
-    newText = newText.replace(/\D/g, '');
-     newText = newText.replace(/(\d{1,2})$/, ',$1');
-     newText = newText.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-       return newText;
-
-   }
-
+    const maskReais = (value: string) => {
+        return (Number(value.replace(/\D/g, "")) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+        
+        const unMaskReais = (value: string) => {
+        return typeof (value) === 'number' ? value : (Number(value.replace(/\D/g, "")) / 100);
+        }
+        
+        
   return (
     <ModalContainer>
         <ModalPrincipal >
@@ -80,16 +72,16 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
                     
                       }}
                       >
-                      { props => (
-
-                          
-                          <Form>
+                     
+                         <Form>
                       <label htmlFor="money"> Informe o valor: </label> 
-                      <InputDonation id="money" name="money"   onChange={() => convertNumber(props.values.money)} />  
                       
+                      <Field onChange={(event: any) => maskReais(event.target.value) } id="money" name="money"  />  
                       <ButtonForm type='submit'>Doar</ButtonForm>
                   </Form>  
-                              )}
+                            
+                       
+                             
               </Formik>
 
             </ContainerDonation>  
@@ -101,3 +93,4 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
   )
 }
 export default Modal
+
