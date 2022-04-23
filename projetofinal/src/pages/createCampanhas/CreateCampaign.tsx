@@ -1,13 +1,15 @@
-import { Form, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useEffect } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle } from "../../Global.styles";
+import * as Yup from 'yup';
+import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, SpanError } from "../../Global.styles";
 import { CheckCloseStyle, DescriptionStyle } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
-import { isLoggedin } from "../../utils/Utils";
+import { isLoggedin, validDate } from "../../utils/Utils";
 import { createCampaign } from "../../store/actions/fundraiserAction";
+import moment from "moment";
 
 
 
@@ -18,6 +20,34 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
         isLoggedin(navigate)
     }, [])
 
+
+    const SignupSchema = Yup.object().shape({
+      goal: Yup.string()
+      .min(4, "Pelo menos 4 números!")
+      .required('Campo Obrigatório!'),
+
+      validdate: Yup.string()
+      .min(10, 'Data inválida!')
+      .test('Data válida!', 'Data inválida!', (value) => validDate(value))
+
+      .required('Campo Obrigatório!'),
+
+      automaticClose: Yup.boolean()
+      .oneOf([true , false], 'Campo Obrigatório!')
+      .required('Campo Obrigatório!'),
+
+      title: Yup.string()
+      .required('Campo Obrigatório!'),
+
+      description: Yup.string()
+      .required('Campo Obrigatório!'),
+
+      categories: Yup.string()
+      .min(3, 'Categoria minima de 3 letras!')
+      .required('Campo Obrigatório!'),
+    });
+
+
   return (
     <ContainerGlobal>
        <ContainerFormUser>
@@ -25,18 +55,17 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
        <Formik
                 initialValues={{
                     automaticClose: false,
-                    categories: [],
+                    categories: '',
                     validdate: '',
                     description: '',
                     goal: '',
                     title: '',    
                   }}
-                  // validationSchema={SignupSchema}
+                  validationSchema={SignupSchema}
                 onSubmit={(
                     values,
                     { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
                     ) => {        
-                        // values.goal = parseFloat(values.goal)
                       const campaign = {
                         title: values.title,
                         goal: values.goal,
@@ -46,66 +75,66 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                         categories: values.categories,
                         description: values.description,
                       }
-                      console.log(values.description)
                     createCampaign(dispatch, campaign, navigate)
                     setSubmitting(false);
                     }}
                     >
                   {props => (
                   <Form>
-                      <div>
+                      <DivValidate>
                           <LabelForm htmlFor="title">Titulo</LabelForm>
                           <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
                           {props.errors.title && props.touched.title ? (
-                            <span>{props.errors.title}</span>
+                            <SpanError>{props.errors.title}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
                           <InputStyle name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
                           {props.errors.goal && props.touched.goal ? (
-                            <span>{props.errors.goal}</span>
+                            <SpanError>{props.errors.goal}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='automaticClose'>Encerrar a campanha após atingir a meta?</LabelForm>
                           <label>
                              <CheckCloseStyle type="radio" value="true" name="automaticClose" id="automaticClose"/>
                              Sim
-                          </label>
-                          <label>
                              <CheckCloseStyle type="radio" value="false" name="automaticClose" id="automaticClose"/>
                              Não
+                          {props.errors.automaticClose && props.touched.automaticClose ? (
+                            <SpanError>{props.errors.automaticClose}</SpanError>
+                            ) : null}
                           </label>
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='validdate'>Data limite</LabelForm>
                           <InputStyle name="validdate" id="validdate"  placeholder="Digite a data de encerramento da campanha" />
                           {props.errors.validdate && props.touched.validdate ? (
-                            <span>{props.errors.validdate}</span>
+                            <SpanError>{props.errors.validdate}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                             <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                             <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
                             {props.errors.coverPhoto && props.touched.coverPhoto ? (
-                              <span>{props.errors.coverPhoto}</span>
+                              <SpanError>{props.errors.coverPhoto}</SpanError>
                               ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
                           <InputStyle name="categories" id="categories"  placeholder="Digite a(s) categoria(s) da campanha" />
                           {props.errors.categories && props.touched.categories ? (
-                            <span>{props.errors.categories}</span>
+                            <SpanError>{props.errors.categories}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='description'>Descrição</LabelForm>
-                          <DescriptionStyle name="description" id="description"  placeholder="Digite a descrição da campanha" onChange={event => props.setFieldValue('description', event.target.value)}/>
+                          <Field as={DescriptionStyle} name="description" id="description"  placeholder="Digite a descrição da campanha" />
                           {props.errors.description && props.touched.description ? (
-                            <span>{props.errors.description}</span>
+                            <SpanError>{props.errors.description}</SpanError>
                             ) : null}
-                      </div>
+                      </DivValidate>
                       <ButtonForm type='submit'>Cadastrar</ButtonForm>
                   </Form>  
                   )}          

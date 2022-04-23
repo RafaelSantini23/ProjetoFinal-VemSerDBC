@@ -1,7 +1,7 @@
 export interface FundraiserDTO {
   campaign: {
     automaticClose: boolean,
-    categories: string[],
+    categories: string | string[],
     validdate?: string,
     coverPhoto?: string,
     description: string,

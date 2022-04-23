@@ -86,9 +86,6 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
                 
                   onSubmit={ ( values ) => {
 
-                    console.log(values);
-                    
-                    
                       }}
                       >
                      {props => (

@@ -5,13 +5,10 @@ import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
 
 export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'], navigate: NavigateFunction ) => {
-    console.log(values);
     
     try {
         const { data } = await api.post('/auth', values);
         
-        console.log(data);
-
         const user = {
             type: 'SET_TOKEN',
             auth: {
@@ -56,8 +53,6 @@ export const handleLogout = (dispatch: AppDispatch, navigate: NavigateFunction) 
     localStorage.removeItem('token');
 
     dispatch(user); 
-
-    console.log(user);
     
     navigate('/')
 }

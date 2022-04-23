@@ -3,41 +3,39 @@ import * as Yup from 'yup';
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
-import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
+import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, LogoDiv, SpanError } from "../../Global.styles";
 import { registerUser } from "../../store/actions/usersAction";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import Theme from "../../theme";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
 import ThemeImg from '../../imgs/theme.png';
-import Theme from "../../theme";
 
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
-  // const SignupSchema = Yup.object().shape({
-  //   nome: Yup.string()
-  //     .min(4, 'Minimo 4 caracteres!')
-  //     .max(50, 'Too Long!')
-  //     .matches(validaNome, 'Nome inválido!')
-  //     .required('Campo Obrigatório!'),
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(4, 'Minimo 4 caracteres!')
+      .max(50, 'Too Long!')
+      .matches(validaNome, 'Nome inválido!')
+      .required('Campo Obrigatório!'),
 
-  //   email: Yup.string()
-  //     .email('Email inválido!')
-  //     .matches(validaEmail, 'Email incorreto!').trim()
-  //     .required('Campo Obrigatório!'),
+    email: Yup.string()
+      .email('Email inválido!')
+      .matches(validaEmail, 'Email incorreto!')
+      .required('Campo Obrigatório!'),
 
-  //   senha: Yup.string()
-  //     .matches(validaSenha, 'Senha inválida!')
-  //     .required('Campo Obrigatório!'),
+    password: Yup.string()
+      .matches(validaSenha, 'Senha inválida!')
+      .required('Campo Obrigatório!'),
 
-  //   confirmasenha: Yup.string()
-  //     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
-  //     .required('Campo Obrigatório!'),
-  //     profilePhoto: Yup.string().required('Campo Obrigatório!')
-  // });
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
+      .required('Campo Obrigatório!'),
+  });
 
 
 
@@ -56,7 +54,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                     password: '',
                     confirmPassword: '',  
                   }}
-                  // validationSchema={SignupSchema}
+                  validationSchema={SignupSchema}
                   onSubmit={(
                       values: UsersCreateDTO['user'],
                       { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
@@ -69,44 +67,44 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                           profilePhoto: values.profilePhoto
                         }                        
                         registerUser(dispatch, user, navigate);
-                    
+                        setSubmitting(false)
                       }}
                       >
                   {props => ( 
                   <Form>
-                      <div>
+                      <DivValidate>
                           <LabelForm htmlFor="email">Email</LabelForm>
-                          <InputStyle id="email" name="email" placeholder="Digite o seu e-mail" type="email"/>
+                          <InputStyle name="email" id="email" placeholder="Digite o seu e-mail" type="email"/>
                           {props.errors.email && props.touched.email ? (
-                            <span>{props.errors.email}</span>
+                            <SpanError>{props.errors.email}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='name'>Nome</LabelForm>
-                          <InputStyle  name="name" id="name" placeholder="Digite o seu nome" />
+                          <InputStyle  name="name" id="name" placeholder="Digite o seu nome"/>
                           {props.errors.name && props.touched.name ? (
-                            <span>{props.errors.name}</span>
+                            <SpanError>{props.errors.name}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='password'>Senha</LabelForm>
-                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
                           <PasswordStrengthBar password={props.values.password} />
+                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
                           {props.errors.password && props.touched.password ? (
-                            <span>{props.errors.password}</span>
+                            <SpanError>{props.errors.password}</SpanError>
                             ) : null}
-                      </div>
-                      <div>
+                      </DivValidate>
+                      <DivValidate>
                           <LabelForm htmlFor='confirmPassword'>Confirme a Senha</LabelForm>
                           <InputStyle name="confirmPassword" id="confirmPassword"  placeholder="Digite novamente a sua senha" />
                           {props.errors.confirmPassword && props.touched.confirmPassword ? (
-                            <span>{props.errors.confirmPassword}</span>
+                            <SpanError>{props.errors.confirmPassword}</SpanError>
                             ) : null}
-                      </div>
-                      <div>   
+                      </DivValidate>
+                      <DivValidate>   
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
                             <input name="profilePhoto" id="profilePhoto" type="file" onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}/>
-                      </div>
+                      </DivValidate>
                       <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
                   </Form>  
                   )}          

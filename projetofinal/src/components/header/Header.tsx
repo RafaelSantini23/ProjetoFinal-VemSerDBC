@@ -5,13 +5,9 @@ import { connect } from "react-redux"
 import { RootState } from "../../store";
 
 function Header({auth}: AuthDTO) {
-  console.log(auth);
 
   const { isLogged }: AuthDTO['auth']  = auth;
   
-  console.log(isLogged);
-  
-
   return (
     <>
     {isLogged && (

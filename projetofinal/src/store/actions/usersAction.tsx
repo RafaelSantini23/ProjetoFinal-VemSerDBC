@@ -17,21 +17,13 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
 
         const { data } = await api.post('/user/register', formData);
         
-        console.log(values);
-        
         const user = {
             type: 'SET_USER',
             user: data
         }
-        console.log(data);
-
-        console.log(`data:image/png;base64,${data.profilePhoto}`);
-        
-        
         
         dispatch(user);
         
-        console.log(user);
         navigate('/');
 
     } catch (error) {
