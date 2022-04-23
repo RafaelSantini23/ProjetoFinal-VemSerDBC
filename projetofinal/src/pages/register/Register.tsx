@@ -13,16 +13,6 @@ import { useNavigate } from "react-router-dom";
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
-  
-  const handleUpload = (event: React.ChangeEvent) => {
-    const target = event.target as HTMLInputElement;
-    const files = target.files?.[0];
-
-    console.log(files);
-  }
-  
-  console.log(user);
-
   // const SignupSchema = Yup.object().shape({
   //   nome: Yup.string()
   //     .min(4, 'Minimo 4 caracteres!')
@@ -45,30 +35,31 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   //     profilePhoto: Yup.string().required('Campo Obrigatório!')
   // });
 
+
+
   return (
     <ContainerGlobal>
       <ContainerFormUser>
         <LinkStyle mT="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
-                      email: '',
-                      name: '',
-                      password: '',
-                      confirmPassword: '',   
+                    email: '',
+                    name: '',
+                    password: '',
+                    confirmPassword: '',  
                   }}
                   // validationSchema={SignupSchema}
                   onSubmit={(
                       values: UsersCreateDTO['user'],
                       { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
                       ) => {
+
                         const user = {
                           email: values.email,
                           name: values.name,
                           password: values.password,
                           profilePhoto: values.profilePhoto
-                        }
-                        console.log('entrei');
-                        
+                        }                        
                         registerUser(dispatch, user, navigate);
                         setSubmitting(false);
                       }}
@@ -104,21 +95,9 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                             <span>{props.errors.confirmPassword}</span>
                             ) : null}
                       </div>
-                      <div>
-                            
+                      <div>   
                             <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="Selecione uma foto de perfil" type="file" onChange={(event:  React.ChangeEvent) => handleUpload(event)}/>
-                            {props.errors.profilePhoto && props.touched.profilePhoto ? (
-                              <span>{props.errors.profilePhoto}</span>
-                              ) : null}
-
-                          {/* <LabelForm htmlFor='profilePhoto'>Foto: </LabelForm>
-                          <InputStyle name="profilePhoto" id="profilePhoto"  placeholder="mande o link da imagem" />
-                          {props.errors.profilePhoto && props.touched.profilePhoto ? (
-                            <span>{props.errors.profilePhoto}</span>
-                            ) : null} */}
-                          
-
+                            <input name="profilePhoto" id="profilePhoto" type="file" onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}/>
                       </div>
                       <ButtonForm type='submit'>Cadastrar</ButtonForm>
                   </Form>  
