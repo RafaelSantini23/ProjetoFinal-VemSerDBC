@@ -17,7 +17,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
+    login: Yup.string()
       .min(4, 'Minimo 4 caracteres!')
       .max(50, 'Too Long!')
       .matches(validaNome, 'Nome inválido!')
@@ -33,7 +33,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
       .required('Campo Obrigatório!'),
 
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
+      .oneOf([Yup.ref("password"), null], "Senhas diferentes!")
       .required('Campo Obrigatório!'),
   });
 
@@ -50,7 +50,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
           <Formik
                   initialValues={{
                     email: '',
-                    name: '',
+                    login: '',
                     password: '',
                     confirmPassword: '',  
                   }}
@@ -62,7 +62,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
 
                         const user = {
                           email: values.email,
-                          name: values.name,
+                          login: values.login,
                           password: values.password,
                           profilePhoto: values.profilePhoto
                         }                        
@@ -80,16 +80,16 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                             ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='name'>Nome</LabelForm>
-                          <InputStyle  name="name" id="name" placeholder="Digite o seu nome"/>
-                          {props.errors.name && props.touched.name ? (
-                            <SpanError>{props.errors.name}</SpanError>
+                          <LabelForm htmlFor='login'>Nome</LabelForm>
+                          <InputStyle  name="login" id="login" placeholder="Digite o seu nome"/>
+                          {props.errors.login && props.touched.login ? (
+                            <SpanError>{props.errors.login}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='password'>Senha</LabelForm>
-                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
                           <PasswordStrengthBar password={props.values.password} />
+                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
                           {props.errors.password && props.touched.password ? (
                             <SpanError>{props.errors.password}</SpanError>
                             ) : null}

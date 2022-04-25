@@ -4,17 +4,18 @@ import api from "../../api";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 
 
-export const createCampaign = async (dispatch: AppDispatch, values: any, navigate: NavigateFunction ) => {
+export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
   
     const formData = new FormData()
 
     formData.append('title', values.title)
-    formData.append('goal', values.goal)
-    formData.append('validdate', values.validdate)
-    formData.append('automaticClose', values.automaticClose)
-    formData.append('coverPhoto', values.coverPhoto)
-    formData.append('categories', values.categories)
     formData.append('description', values.description)
+    formData.append('goal', values.goal  as string)
+    formData.append('categories', values.categories  as string)
+    formData.append('automaticClose', values.automaticClose  as string)
+    formData.append('validdate', values.validdate  as string)
+    formData.append('coverPhoto', values.coverPhoto  as string)
+
 
   try {
       

@@ -3,9 +3,9 @@ import { FileDTO } from './FileDTO';
 export interface UsersCreateDTO {
   user: {
       email: string;
-      name: string;
+      login: string;
       password: string;
       confirmPassword?: string;
-      profilePhoto?: any;
+      profilePhoto?: FileDTO | string;
   }
 }

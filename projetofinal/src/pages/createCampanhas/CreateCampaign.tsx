@@ -11,6 +11,7 @@ import { isLoggedin, validDate } from "../../utils/Utils";
 import { createCampaign } from "../../store/actions/fundraiserAction";
 import CreatableSelect from 'react-select/creatable';
 import moment from "moment";
+import Theme from "../../theme";
 
 
 function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
@@ -54,6 +55,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
   });
 
 
+
+
   return (
     <ContainerCampaign>
       <DivButton>
@@ -78,12 +81,16 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       const campaign = {
                         title: values.title,
                         goal: values.goal as number,
-                        validdate: moment(values.validdate).format('YYYY-MM-DD'),
+                        validdate: moment(values.validdate, "DD/MM/YYYY").format('YYYY-MM-DD'),
                         automaticClose: values.automaticClose,
                         coverPhoto: values.coverPhoto,
                         categories: values.categories,
                         description: values.description,
                       }
+
+                      console.log(values.categories);
+                      
+
                     createCampaign(dispatch, campaign, navigate)
                     setSubmitting(false);
                     }}
@@ -134,7 +141,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <Field component={CreatableSelect} isMulti="true" onChange={(event: any) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                          <Field component={CreatableSelect} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                           {props.errors.categories && props.touched.categories ? (
                             <SpanError>{props.errors.categories}</SpanError>
                             ) : null}
@@ -146,7 +153,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                             <SpanError>{props.errors.description}</SpanError>
                             ) : null}
                       </DivValidate>
-                      <ButtonForm type='submit'>Cadastrar</ButtonForm>
+                     
+                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
                   </Form>  
                   )}          
               </Formik>
