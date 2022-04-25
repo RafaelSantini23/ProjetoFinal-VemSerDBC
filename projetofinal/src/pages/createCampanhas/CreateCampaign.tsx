@@ -1,5 +1,5 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
@@ -9,15 +9,34 @@ import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { isLoggedin, validDate } from "../../utils/Utils";
 import { createCampaign } from "../../store/actions/fundraiserAction";
+import CreatableSelect from 'react-select/creatable';
+import { ActionMeta, OnChangeValue, Options } from 'react-select';
+import Theme from "../../theme";
+// import Select from "react-select/dist/declarations/src/Select";
+
 
 
 
 function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
-   const navigate = useNavigate()
+  const navigate = useNavigate()
+  
+  
+  useEffect(() => {
+    isLoggedin(navigate)
+  }, [])
+  
 
-    useEffect(() => {
-        isLoggedin(navigate)
-    }, [])
+  const handleChange = (value: any, setFieldValue: Function) => {
+      
+       let list = value.map((item: any) => item?.value)
+        
+        setFieldValue('categories', list)
+    };
+
+    const options = [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+    ]
 
 
     const SignupSchema = Yup.object().shape({
@@ -41,10 +60,15 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
       description: Yup.string()
       .required('Campo Obrigatório!'),
 
-      categories: Yup.string()
-      .min(3, 'Categoria minima de 3 letras!')
+
+
+      categories: Yup.array()
+      // .length(1, 'selecione mais de uma categoria')
+
       .required('Campo Obrigatório!'),
     });
+
+
 
 
   return (
@@ -70,12 +94,16 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       const campaign = {
                         title: values.title,
                         goal: values.goal,
-                        validdate: values.validdate,
+                        validdate: values?.validdate?.split('/').join('-'),
                         automaticClose: values.automaticClose,
                         coverPhoto: values.coverPhoto,
                         categories: values.categories,
                         description: values.description,
                       }
+
+                      console.log(values.categories);
+                      
+
                     createCampaign(dispatch, campaign, navigate)
                     setSubmitting(false);
                     }}
@@ -126,7 +154,16 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <InputStyle name="categories" id="categories"  placeholder="Digite a(s) categoria(s) da campanha" />
+                          <Field component={CreatableSelect}
+                            isMulti
+                            name="categories"
+                            options={options}
+                            onChange={(value: any) => handleChange(value, props.setFieldValue)}
+                            
+
+                          />
+
+
                           {props.errors.categories && props.touched.categories ? (
                             <SpanError>{props.errors.categories}</SpanError>
                             ) : null}
@@ -138,7 +175,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                             <SpanError>{props.errors.description}</SpanError>
                             ) : null}
                       </DivValidate>
-                      <ButtonForm type='submit'>Cadastrar</ButtonForm>
+                     
+                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
                   </Form>  
                   )}          
               </Formik>

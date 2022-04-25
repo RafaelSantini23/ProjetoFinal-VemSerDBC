@@ -38,6 +38,7 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                 initialValues={{
                     login: '',
                     password: ''
+                    
                 }}
                 onSubmit={(
                     values: AuthDTO["auth"],

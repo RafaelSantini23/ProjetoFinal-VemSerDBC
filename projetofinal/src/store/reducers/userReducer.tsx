@@ -1,13 +1,13 @@
 import { AnyAction } from "redux"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
-import { FileDTO } from "../../models/FileDTO"
+
 
 export const INITIAL_STATE = {
     user: {
         email: '',
-        name: '',
+        login: '',
         password: '',
-        profilePhoto: ''
+        profilePhoto: '' 
     }
 }
 

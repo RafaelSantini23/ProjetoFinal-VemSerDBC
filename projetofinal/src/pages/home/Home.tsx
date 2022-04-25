@@ -10,17 +10,22 @@ import Card from "../../components/card/Card";
 import ImgCampanhaPrincipal from '../../imgs/background.png'
 import { ButtonForm } from "../../Global.styles";
 import Theme from "../../theme";
+import { RootState } from "../../store";
+import { connect, DispatchProp } from "react-redux";
+import { AuthDTO } from "../../models/AuthDTO";
 
 
 
 function Home()  {
 
-  const token = localStorage.getItem('token');
+  
 
-  const tokenn = token?.split('.')[1];
-  const decoded = JSON.parse(window?.atob(tokenn as string));
+  // const token = localStorage.getItem('token');
 
-  const id = decoded.sub
+  // const tokenn = token?.split('.')[1];
+  // const decoded = JSON.parse(window?.atob(tokenn as string));
+
+  // const id = decoded.sub
   
 
   const Campanhas = [

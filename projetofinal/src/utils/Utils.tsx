@@ -55,6 +55,7 @@ export const formataCorTotal = (meta: number, total: number) => {
   return cor;
 }
 
+
 export const isLoggedin = (navigate: NavigateFunction) => {
     const token = localStorage.getItem('token');
 
@@ -64,10 +65,12 @@ export const isLoggedin = (navigate: NavigateFunction) => {
 
 }
 
+
 export const convertImage64 = (value: string) => {
-
-  return `data:image/png;base64,${value}`
-
+  return `data:image/png;base64,${value}`;
 }
+//converter
+
+
 
 

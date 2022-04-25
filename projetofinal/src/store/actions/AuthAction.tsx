@@ -3,8 +3,9 @@ import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "..";
 import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
+import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 
-export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'], navigate: NavigateFunction ) => {
+export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'] | UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     
     try {
         const { data } = await api.post('/auth', values);
@@ -22,9 +23,9 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
         
         dispatch(user); 
 
-        localStorage.setItem('token', data);
+        localStorage.setItem('token', user.auth.token);
 
-         api.defaults.headers.common['Authorization'] = data;
+        api.defaults.headers.common['Authorization'] = user.auth.token;
 
         navigate('/campanhas');
 
@@ -57,11 +58,14 @@ export const handleLogout = (dispatch: AppDispatch, navigate: NavigateFunction) 
     navigate('/')
 }
 
-export const isAuth = (dispatch: AppDispatch) => {
+export const isAuth = (dispatch: AppDispatch, auth: AuthDTO['auth']) => {
 
         const user = {
             type: 'IS_LOGGED',
             auth: {
+                login: auth.login,
+                password: auth.password,
+                token: auth.token,
                 isLogged: true,
                 loading: false
             }

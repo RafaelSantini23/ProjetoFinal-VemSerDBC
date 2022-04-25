@@ -11,27 +11,30 @@ import Register from './pages/register/Register';
 import { RootState } from './store';
 import { isAuth } from './store/actions/authAction';
 import Details from './pages/details/Details';
-import moment from 'moment';
 
 function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
+    
     if(token) {
       api.defaults.headers.common['Authorization'] = token;
-      isAuth(dispatch)
+      isAuth(dispatch, auth)
     }
-
     
+  }, [])
+
+  console.log(auth.token);
+  
+
+  
+  
 
 
   
 
-  }, [])
-
   return (
-    <BrowserRouter>
+    <BrowserRouter >
     <Header />
       <Routes>
         <Route path="/" element={<Login />} />
