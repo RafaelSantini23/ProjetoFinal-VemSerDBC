@@ -62,7 +62,7 @@ function Home({ campaignList, dispatch }: FundraiserListDTO & DispatchProp)  {
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
     meta: converteNumber('1250,00'),
-    total: somaTotal(['100,00', '200,00', '600,00']),
+    total: somaTotal(['100,00', '300,00', '600,00']),
     criador: 'O Jão Cee',
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48')

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
 import { RootState } from "../../store";
+import Theme from "../../theme";
 import { converteNumber,
   somaTotal,
   formataTags,
@@ -26,6 +27,7 @@ import { Container,
 function Details() {
   const [isVisibel, setIsVisibel] = useState(false);
   const [ modalDonation, setModalDonation ] = useState(false);
+  const [ editModal, setEditModal] = useState(false);
 
 
   const Campanhas = {
@@ -81,12 +83,20 @@ function Details() {
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{Campanhas.apoiadores.length}</a>
 
-            <ButtonForm onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
+            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
+
+            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm>
+
+            {  editModal && (
+            <div>
+                <Modal height="850px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
+            </div> )}
+
 
             {  modalDonation && (
             <div>
-                <Modal height="150px" donate={true}  onClick={() => setModalDonation(false)} />
-            </div> )}
+                <Modal height="150px" typeModal='donate'  onClick={() => setModalDonation(false)} />
+            </div> ) }
           </InfoCampanha>
       </ContainerDetails>
     </Container>

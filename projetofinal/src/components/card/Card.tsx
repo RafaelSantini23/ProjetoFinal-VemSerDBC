@@ -1,5 +1,6 @@
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan } from "../../pages/home/Home.styles";
 import { converteBRL, converteNumber, formataCorTotal, formataData, formataTags, somaTotal } from "../../utils/Utils"
+import { Meta, MetaAtingida } from "./Card.styles";
 
 type Card = {
     children?: React.ReactNode,
@@ -25,6 +26,9 @@ function Card({ children, colabs }: Card) {
          {colabs.map((item) => (
           <LinkContainer key={item.id} to={`/details/${item.id}`}>
             <DivCampanha>
+              <Meta>
+                  { item.total >= item.meta && ( <MetaAtingida> Meta atingida</MetaAtingida> )}
+              </Meta>
               <ImgCampanha src={item.foto} alt="foto" />
               <h2>{item.titulo}</h2>
               <DivCategoria>

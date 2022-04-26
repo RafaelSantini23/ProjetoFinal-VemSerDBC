@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import React, { ButtonHTMLAttributes, ComponentType } from "react"
+import React, { ButtonHTMLAttributes } from "react"
 import { ButtonForm } from "../../Global.styles";
 import { ButtonClose,
     Content,
@@ -15,9 +15,9 @@ import { ButtonClose,
     ContainerDonation,
     InputCurrency,
 } from "./Modal.styles"
-import InputMask from 'react-input-mask';
-import MaskedInput from 'react-text-mask'
-import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+import Theme from "../../theme";
+import { numberMask } from "../../utils/Utils";
+import { changeModal } from "./typeModal";
 
 
 
@@ -28,36 +28,16 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
         name: string,
         photo: string;
     }[],
-    donate?: boolean,
+    typeModal?: string,
     height: string,
+    values?: []
+    
 
 }
 
 
-
-
-
-
-function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
-    //mask money para field formik
+function Modal({  onClick, colabs, height, typeModal, values }: ButtonProps ) {
     
-
-    const defaultMaskOptions = {
-          prefix: 'R$',
-          suffix: '',
-          includeThousandsSeparator: true,
-          thousandsSeparatorSymbol: '.',
-          allowDecimal: true,
-          decimalSymbol: ',',
-          decimalLimit: 4, 
-          integerLimit: 7, 
-          allowNegative: false,
-          allowLeadingZeroes: false,
-        }
-    
-    const numberMask = createNumberMask(defaultMaskOptions)
-  
-
   return (
     <ModalContainer>
         <ModalPrincipal >
@@ -73,39 +53,11 @@ function Modal({  onClick, colabs, donate, height }: ButtonProps ) {
                                 {child.name}
                             </ColabName>
                         </ColabInfo>
+                        {typeModal && ( changeModal(typeModal) )}              
                     </ModalColab>
                 ))}
 
-            {donate && 
-            <ContainerDonation> 
-                
-                 <Formik
-                  initialValues={{
-                      money: '',
-                  }}
-                
-                  onSubmit={ ( values ) => {
-
-                      }}
-                      >
-                     {props => (
-
-                         <Form>
-
-                      <label htmlFor="money"> Informe o valor: </label> 
-                        
-                      <Field as={InputCurrency} mask={numberMask}  id="money" name="money"  />  
-
-                      <ButtonForm type='submit'>Doar</ButtonForm>
-                  </Form>  
-                             )}
-                            
-                       
-                             
-              </Formik>
-
-            </ContainerDonation>  
-            }
+                    
             </Content>
             
             </ModalPrincipal>

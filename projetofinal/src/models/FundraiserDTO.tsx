@@ -5,7 +5,7 @@ export interface FundraiserDTO {
     endingDate?: string,
     coverPhoto?: string,
     description: string,
-    goal: string | number,
+    goal: any | string,
     title: string
   }
 }
