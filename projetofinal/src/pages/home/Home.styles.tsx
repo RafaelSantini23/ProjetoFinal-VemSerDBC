@@ -9,7 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
-  min-height: 100vh;
+  min-height: 80vh;
   align-items: center;
   justify-content: center;
 `;
@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const ContainerCampanhas = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
-  padding: 120px;
+  padding:  20px 120px;
   gap: 50px;
   position: relative;
 `;

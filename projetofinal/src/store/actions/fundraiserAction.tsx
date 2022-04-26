@@ -57,24 +57,27 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
 }
 
 
-export const getCampaingOfUser = async (dispatch: AppDispatch) => {
+export const getCampaingOfUser = async (dispatch: AppDispatch, id: number) => {
+    Loading.circle()
     try {
-        const { data } = await api.get(`/fundraiser/user`)
+        const { data } = await api.get(`/fundraiser/userFundraisers/${id}`)
 
         const { content } = data
         const campaign = {
-            type: 'SET_CAMPAIGN',
-            campaign: {
-                ...data,
-            }
+            type: 'SET_CAMPAIGN_LIST',
+            campaignList: content,
+            loading: false
         }
 
         dispatch(campaign);
+        Loading.remove()
 
     } catch (error) {
         console.log(error);
     }
 }
+
+
 export const getCampaign = async (dispatch: AppDispatch, number: number) => {
     Loading.circle()
     try {

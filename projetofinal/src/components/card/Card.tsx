@@ -10,7 +10,7 @@ function Card({campaignList}: FundraiserListDTO) {
   return (
     
         <ContainerCampanhas>
-         {campaignList.map((item) => (
+         { campaignList.length ? campaignList.map((item) => (
           <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`}>
             <DivCampanha>
               <Meta>
@@ -33,7 +33,7 @@ function Card({campaignList}: FundraiserListDTO) {
               <small>Última data de alteração: {formataData(item.lastUpdate)}</small>
             </DivCampanha>
           </LinkContainer>
-        ))}
+        )): <p>Nenhuma campanha encontrada</p>}
         </ContainerCampanhas>
 
   )
