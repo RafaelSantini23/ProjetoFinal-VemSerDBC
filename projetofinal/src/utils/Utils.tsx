@@ -1,6 +1,7 @@
 import moment from "moment";
 import 'moment/locale/pt-br';
 import { NavigateFunction } from "react-router-dom";
+import { ImgCampanha } from "../pages/home/Home.styles";
 
 // Regex
 export const validaNome = /^[a-zA-Z]+$/;
@@ -55,6 +56,18 @@ export const formataCorTotal = (meta: number, total: number) => {
   return cor;
 }
 
+export const metaAtingida = (meta: number, total: number, item: string, frase: string) => {
+  meta >= total ? (
+  <>
+    <h1>Meta Atingida</h1>
+   <ImgCampanha src={item} alt="foto" />
+  <h2>{frase}</h2> </>
+  ) :  (<><ImgCampanha src={item} alt="foto" />
+  <h2>{frase}</h2></>)
+  
+}
+
+
 
 export const isLoggedin = (navigate: NavigateFunction) => {
     const token = localStorage.getItem('token');
@@ -70,13 +83,6 @@ export const convertImage64 = (value: string) => {
   return `data:image/png;base64,${value}`;
 }
 
-export const metaAtingida = (meta: number, total: number) => {
-  if(meta >= total) {
-    return (
-      
-    )
-  }
-}
 
 
 

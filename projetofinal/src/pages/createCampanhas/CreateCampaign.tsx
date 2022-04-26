@@ -10,64 +10,49 @@ import { RootState } from "../../store";
 import { isLoggedin, validDate } from "../../utils/Utils";
 import { createCampaign } from "../../store/actions/fundraiserAction";
 import CreatableSelect from 'react-select/creatable';
-import { ActionMeta, OnChangeValue, Options } from 'react-select';
-import Theme from "../../theme";
 import moment from "moment";
-// import Select from "react-select/dist/declarations/src/Select";
-
-
+import Theme from "../../theme";
 
 
 function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
   const navigate = useNavigate()
-  
-  
+
+  const handleChange = (value: any, setFieldValue: any) => {
+    let list = value.map((item: any) => item.value)
+    setFieldValue('categories', list)
+  };
+
+    
   useEffect(() => {
-    isLoggedin(navigate)
+      isLoggedin(navigate)
   }, [])
-  
-
-  const handleChange = (value: any, setFieldValue: Function) => {
-      
-       let list = value.map((item: any) => item?.value)
-        
-        setFieldValue('categories', list)
-    };
-
-    const options = [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-    ]
 
 
-    const SignupSchema = Yup.object().shape({
-      goal: Yup.string()
-      .min(4, "Pelo menos 4 números!")
-      .required('Campo Obrigatório!'),
+  const SignupSchema = Yup.object().shape({
+    goal: Yup.string()
+    .min(4, "Pelo menos 4 números!")
+    .required('Campo Obrigatório!'),
 
-      validdate: Yup.string()
-      .min(10, 'Data inválida!')
-      .test('Data válida!', 'Data inválida!', (value) => validDate(value))
+    validdate: Yup.string()
+    .min(10, 'Data inválida!')
+    .test('Data válida!', 'Data inválida!', (value) => validDate(value))
 
-      .required('Campo Obrigatório!'),
+    .required('Campo Obrigatório!'),
 
-      automaticClose: Yup.boolean()
-      .oneOf([true , false], 'Campo Obrigatório!')
-      .nullable(),
+    automaticClose: Yup.boolean()
+    .oneOf([true , false], 'Campo Obrigatório!')
+    .nullable(),
 
-      title: Yup.string()
-      .required('Campo Obrigatório!'),
+    title: Yup.string()
+    .required('Campo Obrigatório!'),
 
-      description: Yup.string()
-      .required('Campo Obrigatório!'),
+    description: Yup.string()
+    .required('Campo Obrigatório!'),
 
-
-
-      categories: Yup.array()
-      // .length(1, 'selecione mais de uma categoria')
-
-      .required('Campo Obrigatório!'),
-    });
+    categories: Yup.array()
+    .min(1, 'Campo Obrigatório!')
+    .required('Campo Obrigatório!'),
+  });
 
 
 
@@ -89,9 +74,10 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
-                    values,
+                    values: FundraiserDTO['campaign'],
                     { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
                     ) => {        
+                      console.log(values.categories)
                       const campaign = {
                         title: values.title,
                         goal: Number(values.goal) ,
@@ -155,16 +141,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <Field component={CreatableSelect}
-                            isMulti
-                            name="categories"
-                            options={options}
-                            onChange={(value: any) => handleChange(value, props.setFieldValue)}
-                            
-
-                          />
-
-
+                          <Field component={CreatableSelect} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                           {props.errors.categories && props.touched.categories ? (
                             <SpanError>{props.errors.categories}</SpanError>
                             ) : null}
