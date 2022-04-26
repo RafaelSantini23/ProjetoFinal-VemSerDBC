@@ -1,47 +1,36 @@
+import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan } from "../../pages/home/Home.styles";
-import { converteBRL, converteNumber, formataCorTotal, formataData, formataTags, somaTotal } from "../../utils/Utils"
+import { converteBRL, converteNumber, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 
-type Card = {
-    children?: React.ReactNode,
-    colabs: {
-        id: number,
-        foto: string,
-        titulo: string;
-        meta: string | number;
-        total: string | number;
-        criador: string;
-        categoria: string;
-        data: string;
-    }[],
-}
 
-
-function Card({ children, colabs }: Card) {
+function Card({campaignList}: FundraiserListDTO) {
 
 
   return (
     
         <ContainerCampanhas>
-         {colabs.map((item) => (
-          <LinkContainer key={item.id} to={`/details/${item.id}`}>
+         {campaignList.map((item) => (
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`}>
             <DivCampanha>
               <Meta>
-                  { item.total >= item.meta && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
+                  { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
-              <ImgCampanha src={item.foto} alt="foto" />
-              <h2>{item.titulo}</h2>
+              <ImgCampanha src={convertImage64(item.coverPhoto)} alt="foto" />
+              <h2>{item.title}</h2>
               <DivCategoria>
-                <span>{item.categoria}</span>
-                <small>ID da campanha: {item.id}</small>
+                <span>{item.categories.map(category => (
+                  <span key={category.categoryId}>{category.name} </span>
+                ))}</span>
+                <small>ID da campanha: {item.fundraiserId}</small>
               </DivCategoria>
-              <h4>{item.criador}</h4>
+              <h4>{item.fundraiserCreator.name}</h4>
               <p>Total Arrecadado: 
-                <TotalSpan color={formataCorTotal(item.meta as number, item.total as number)}>
-                {converteBRL(item.total)}</TotalSpan>
+                <TotalSpan color={formataCorTotal(item.goal as number, item.currentValue as number)}>
+                {converteBRL(item.currentValue)}</TotalSpan>
                 </p>
-              <p>Meta: <span>{converteBRL(item.meta)}</span></p>
-              <small>Última data de alteração: {item.data}</small>
+              <p>Meta: <span>{converteBRL(item.goal)}</span></p>
+              <small>Última data de alteração: {formataData(item.lastUpdate)}</small>
             </DivCampanha>
           </LinkContainer>
         ))}

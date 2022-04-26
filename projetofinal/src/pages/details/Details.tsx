@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
+import { RootState } from "../../store";
 import Theme from "../../theme";
 import { converteNumber,
-  somaTotal,
-  formataTags,
   formataData,
   converteBRL,
   formataCorTotal,
@@ -35,9 +34,9 @@ function Details() {
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
     meta: converteNumber('1250,00'),
-    total: somaTotal(['100,00', '900,00', '500,30']),
+    total: 100.00,
     criador: 'O Jão Cee',
-    categoria: formataTags(['doação', 'livro', 'além']),
+    categoria:['doação', 'livro', 'além'],
     data: formataData('21 04 2022, 16:21:48'),
     descricao: "Ajude o supernatural...",
     apoiadores: [{
@@ -107,4 +106,5 @@ function Details() {
     </Container>
   )
 }
+
 export default Details

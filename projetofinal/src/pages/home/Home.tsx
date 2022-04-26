@@ -1,4 +1,3 @@
-import { converteNumber, formataData, somaTotal, formataTags } from "../../utils/Utils";
 import { 
   ButtonContainer,
   Container,
@@ -9,13 +8,25 @@ import 'moment/locale/pt-br'
 import Card from "../../components/card/Card";
 import { ButtonForm } from "../../Global.styles";
 import Theme from "../../theme";
+import { RootState } from "../../store";
+import { connect, DispatchProp } from "react-redux";
+import { FundraiserListDTO } from "../../models/FundraiserListDTO";
+import { useEffect } from "react";
+import { getCampaign } from "../../store/actions/fundraiserAction";
+import api from "../../api";
 
 
+function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
 
-
-function Home()  {
-
+  console.log(campaignList)
   
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      api.defaults.headers.common['Authorization'] = token
+    }
+    getCampaign(dispatch, 0)
+  },[])
 
   // const token = localStorage.getItem('token');
 
@@ -23,42 +34,6 @@ function Home()  {
   // const decoded = JSON.parse(window?.atob(tokenn as string));
 
   // const id = decoded.sub
-  
-
-  const Campanhas = [
-    {
-    id: 1,
-    foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
-    titulo: 'Supernatural',
-    meta: converteNumber('1250,00'),
-    total: somaTotal(['100,00', '200,00', '500,30', '1000,30']),
-    criador: 'O Jão Cee',
-    categoria: formataTags(['doação', 'livro', 'além']),
-    data: formataData('21 04 2022, 16:21:48')
-  },
-
-  {
-    id: 2,
-    foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
-    titulo: 'Supernatural',
-    meta: converteNumber('1250,00'),
-    total: somaTotal(['800,30']),
-    criador: 'O Jão Cee',
-    categoria: formataTags(['doação', 'livro', 'além']),
-    data: formataData('21 04 2022, 16:21:48')
-  },
-
-  {
-    id: 3,
-    foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
-    titulo: 'Supernatural',
-    meta: converteNumber('1250,00'),
-    total: somaTotal(['100,00', '300,00', '600,00']),
-    criador: 'O Jão Cee',
-    categoria: formataTags(['doação', 'livro', 'além']),
-    data: formataData('21 04 2022, 16:21:48')
-  }
-]
   
   return (
     <>
@@ -69,12 +44,14 @@ function Home()  {
       </ContainerMyCampaign>
     <Container>  
       <TituloCampanhas>Campanhas Recentes</TituloCampanhas>
-      <Card colabs={Campanhas} />
+      <Card campaignList={campaignList} />
     </Container>
     </>
   )
 }
 
+const mapStateToProps = (state: RootState) => ({
+ campaignList: state.fundraiserReducer.campaignList,
+})
 
-
-export default Home
+export default connect(mapStateToProps)(Home)

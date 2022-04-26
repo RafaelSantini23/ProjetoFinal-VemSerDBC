@@ -1,5 +1,6 @@
 import { AnyAction} from "redux";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
+import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 
 export const INITIAL_STATE = {
     campaign: {
@@ -14,8 +15,10 @@ export const INITIAL_STATE = {
     donate: {
         message: '',
         value: 0
-    }
+    },
 
+    campaignList: [],
+    loading: true
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -34,6 +37,13 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
     }
 
 
+    if(action.type === 'SET_CAMPAIGN_LIST') {
+        return {
+            ...state,
+            campaignList: action.campaignList,
+            loading: action.loading
+        }
+    }
     return state;
 }
 

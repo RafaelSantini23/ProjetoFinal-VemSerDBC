@@ -34,10 +34,12 @@ export const DivCampanha = styled.div`
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+  width: 350px;
 `;
 
 export const ImgCampanha = styled.img`
   width: 100%;
+  height: 200px;
 `;
 
 export const DivCategoria = styled.div`
