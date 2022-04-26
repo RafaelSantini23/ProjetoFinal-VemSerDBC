@@ -7,11 +7,13 @@ import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
 import { connect, DispatchProp } from "react-redux"
+import { Params, useParams } from "react-router-dom";
 
-function Donate({donate, dispatch, onClick}: any & DispatchProp) {
+
+function Donate({donate, dispatch, onClick}: DonateCreateDTO & DispatchProp) {
 
   console.log(donate);
-  
+  const {id}: Readonly<Params<string>> = useParams();
   
 
   return (
@@ -23,16 +25,16 @@ function Donate({donate, dispatch, onClick}: any & DispatchProp) {
                       value: 0,
                   }}
                 
-                  onSubmit={ ( values: DonateCreateDTO ) => {
+                  onSubmit={ ( values: DonateCreateDTO['donate'] ) => {
 
                         const donateCampaign = {
+                          donate: {
                             message: 'teste',
                             value: convertMoney(values.value as string),
+                          }
                         }
-
-                        donateForCampaign(dispatch,donateCampaign)
-                        
-                        onClick()
+                        donateForCampaign(dispatch, donateCampaign, id) 
+                        onClick?.()
 
                       }}
                       >

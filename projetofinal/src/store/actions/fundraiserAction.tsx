@@ -37,9 +37,9 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
 }
 
 
-export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO, id?: number) => {
+export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO, id?: string) => {
     try {
-        const { data } = await api.post('/donation/22', values)
+        const { data } = await api.post(`/donation/${id}`, values)
 
         const donation = {
             type: 'SET_DONATION',
