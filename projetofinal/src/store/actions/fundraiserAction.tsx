@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "..";
 import api from "../../api";
+import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
@@ -35,6 +36,46 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
   }
 }
 
+
+export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO, id?: number) => {
+    try {
+        const { data } = await api.post('/donation/22', values)
+
+        const donation = {
+            type: 'SET_DONATION',
+            donation: {
+                ...data,
+            }
+        }
+        console.log(data)
+
+        dispatch(donation);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const getCampaingOfUser = async (dispatch: AppDispatch) => {
+    try {
+        const { data } = await api.get(`/fundraiser/user`)
+
+        const { content } = data
+        const campaign = {
+            type: 'SET_CAMPAIGN',
+            campaign: {
+                ...data,
+            }
+        }
+
+        dispatch(campaign);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 export const getCampaign = async (dispatch: AppDispatch, number: number) => {
     Loading.circle()
     try {

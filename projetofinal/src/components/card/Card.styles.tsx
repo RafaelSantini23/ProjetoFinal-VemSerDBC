@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 
-export const MetaAtingida = styled.h1`
+export const MetaAtingida = styled.h1<{mT: string}>`
     position: absolute;
-    margin-top: 100px;
+    margin-top: ${props => props.mT};
     color: red;
 
 
 `
+
 
 export const Meta = styled.div`
     position: relative;

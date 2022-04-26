@@ -2,6 +2,7 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Meta, MetaAtingida } from "../../components/card/Card.styles";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
@@ -79,6 +80,9 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
+          <Meta>
+                { Campanhas.total >= Campanhas.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
+            </Meta>
             <ImagemCampanha src={convertImage64(campaign.coverPhoto)} alt="capa" />
             <p>Categorias: {campaign.categories.map((category: any) => (
               <span>{category.name}</span>
@@ -101,6 +105,12 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
 
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
 
+            {  modalDonation && (
+            <div>
+                <Modal height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
+            </div> ) }
+             
+
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm>
 
             {  editModal && (
@@ -109,10 +119,6 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
             </div> )}
 
 
-            {  modalDonation && (
-            <div>
-                <Modal height="150px" typeModal='donate'  onClick={() => setModalDonation(false)} />
-            </div> ) }
           </InfoCampanha>
       </ContainerDetails>
     </Container>

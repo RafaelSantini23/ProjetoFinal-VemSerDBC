@@ -33,7 +33,7 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
 
     } catch (error) {
         console.log(error);
-        
+        Loading.remove()
     }
 
     

@@ -3,11 +3,6 @@ import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContain
 import { converteBRL, converteNumber, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 
-// type Card = {
-//     children?: React.ReactNode,
-//     colabs: FundraiserListDTO['campaignList']
-// }
-
 
 function Card({campaignList}: FundraiserListDTO) {
 
@@ -19,7 +14,7 @@ function Card({campaignList}: FundraiserListDTO) {
           <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`}>
             <DivCampanha>
               <Meta>
-                  { item.currentValue >= item.goal && ( <MetaAtingida> Meta atingida</MetaAtingida> )}
+                  { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
               <ImgCampanha src={convertImage64(item.coverPhoto)} alt="foto" />
               <h2>{item.title}</h2>

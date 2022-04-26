@@ -1,6 +1,4 @@
-import { Field, Form, Formik } from "formik";
-import React, { ButtonHTMLAttributes } from "react"
-import { ButtonForm } from "../../Global.styles";
+import React, { ButtonHTMLAttributes, MouseEventHandler } from "react"
 import { ButtonClose,
     Content,
     ImgModal,
@@ -11,12 +9,7 @@ import { ButtonClose,
     HeaderModal,
     ModalContainer,
     ModalPrincipal,
-    InputDonation,
-    ContainerDonation,
-    InputCurrency,
 } from "./Modal.styles"
-import Theme from "../../theme";
-import { numberMask } from "../../utils/Utils";
 import { changeModal } from "./typeModal";
 
 
@@ -30,16 +23,24 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     }[],
     typeModal?: string,
     height: string,
-    values?: []
-    
+    values?: [],
+    onClick?: any,
+    id?: string,
 
 }
 
-
-function Modal({  onClick, colabs, height, typeModal, values }: ButtonProps ) {
+function Modal({ id = 'modal',  onClick, colabs, height, typeModal }: ButtonProps ) {
     
+
+    const handleOutsideClick = (e: any) => {
+        if (e.target.id === id) {
+            onClick?.()
+        }
+    }
+
+    console.log(typeModal);
   return (
-    <ModalContainer>
+    <ModalContainer id={id} onClick={handleOutsideClick} >
         <ModalPrincipal >
         <HeaderModal>
             <ButtonClose onClick={onClick}> <IconClose /> </ButtonClose> 
@@ -53,11 +54,11 @@ function Modal({  onClick, colabs, height, typeModal, values }: ButtonProps ) {
                                 {child.name}
                             </ColabName>
                         </ColabInfo>
-                        {typeModal && ( changeModal(typeModal) )}              
                     </ModalColab>
                 ))}
-
-                    
+                <>
+                    {typeModal &&  changeModal?.(typeModal, onClick) }              
+                </> 
             </Content>
             
             </ModalPrincipal>

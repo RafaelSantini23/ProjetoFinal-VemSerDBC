@@ -1,6 +1,6 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { connect, DispatchProp } from "react-redux";
-import { ButtonForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { ButtonForm, CampaignForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { CheckCloseStyle, ContainerFormCampaign, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
@@ -19,6 +19,7 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
         setFieldValue('categories', list)
     };
 
+    const ca = ['pikachu','pirocopter']
 
     const SignupSchema = Yup.object().shape({
         goal: Yup.string()
@@ -48,15 +49,15 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
 
   return (
     <div>
-         <ContainerFormCampaign>
+         <CampaignForm>
        <Formik
                 initialValues={{
-                    automaticClose: values.automaticClose,
-                    categories: values.categories,
-                    endingDate: values.endingDate,
-                    description: values.description,
-                    goal: values.goal,
-                    title: values.title,    
+                    automaticClose: null,
+                    categories: '',
+                    endingDate: '',
+                    description: '',
+                    goal: '',
+                    title: '',    
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
@@ -127,11 +128,11 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                             ) : null}
                       </DivValidate>
                      
-                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
+                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Atualizar</ButtonForm>
                   </Form>  
                   )}          
               </Formik>
-       </ContainerFormCampaign>
+       </CampaignForm>
     </div>
   )
 }
