@@ -69,8 +69,14 @@ export const isLoggedin = (navigate: NavigateFunction) => {
 export const convertImage64 = (value: string) => {
   return `data:image/png;base64,${value}`;
 }
-//converter
 
+export const metaAtingida = (meta: number, total: number) => {
+  if(meta >= total) {
+    return (
+      
+    )
+  }
+}
 
 
 

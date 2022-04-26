@@ -12,6 +12,7 @@ import { createCampaign } from "../../store/actions/fundraiserAction";
 import CreatableSelect from 'react-select/creatable';
 import { ActionMeta, OnChangeValue, Options } from 'react-select';
 import Theme from "../../theme";
+import moment from "moment";
 // import Select from "react-select/dist/declarations/src/Select";
 
 
@@ -81,9 +82,9 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                 initialValues={{
                     automaticClose: null,
                     categories: '',
-                    validdate: '',
+                    endingDate: '',
                     description: '',
-                    goal: '',
+                    goal: 0,
                     title: '',    
                   }}
                   validationSchema={SignupSchema}
@@ -93,8 +94,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                     ) => {        
                       const campaign = {
                         title: values.title,
-                        goal: values.goal,
-                        validdate: values?.validdate?.split('/').join('-'),
+                        goal: Number(values.goal) ,
+                        endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
                         automaticClose: values.automaticClose,
                         coverPhoto: values.coverPhoto,
                         categories: values.categories,
@@ -121,7 +122,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                           <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
                           <InputStyle name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
                           {props.errors.goal && props.touched.goal ? (
-                            <SpanError>{props.errors.goal}</SpanError>
+                            <SpanError>{props.errors.goal as string}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
@@ -139,10 +140,10 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                             ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='validdate'>Data limite</LabelForm>
-                          <InputStyle name="validdate" id="validdate"  placeholder="Digite a data de encerramento da campanha" />
-                          {props.errors.validdate && props.touched.validdate ? (
-                            <SpanError>{props.errors.validdate}</SpanError>
+                          <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
+                          <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                          {props.errors.endingDate && props.touched.endingDate ? (
+                            <SpanError>{props.errors.endingDate}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
