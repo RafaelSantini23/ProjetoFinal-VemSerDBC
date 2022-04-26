@@ -1,4 +1,4 @@
-import { converteNumber, formataData, somaTotal, converteBRL, formataTags } from "../../utils/Utils";
+import { converteNumber, formataData, somaTotal, formataTags } from "../../utils/Utils";
 import { 
   ButtonContainer,
   Container,
@@ -7,12 +7,9 @@ import {
 } from "./Home.styles";
 import 'moment/locale/pt-br'
 import Card from "../../components/card/Card";
-import ImgCampanhaPrincipal from '../../imgs/background.png'
 import { ButtonForm } from "../../Global.styles";
 import Theme from "../../theme";
-import { RootState } from "../../store";
-import { connect, DispatchProp } from "react-redux";
-import { AuthDTO } from "../../models/AuthDTO";
+
 
 
 

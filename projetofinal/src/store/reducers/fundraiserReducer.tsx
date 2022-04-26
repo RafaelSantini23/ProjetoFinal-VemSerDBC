@@ -5,21 +5,35 @@ export const INITIAL_STATE = {
     campaign: {
         automaticClose: true,
         categories: [],
-        validdate: '',
+        endingDate: '',
         coverPhoto: '',
         description: '',
         goal: 0,
         title: ''
+    },
+    donate: {
+        message: '',
+        value: 0
     }
+
 }
 
-const fundraiserReducer = (state: FundraiserDTO = INITIAL_STATE, action: AnyAction) => {
+const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_CAMPAIGN') {
         return {
             ...state,
             campaign: action.campaign
         }
     }
+
+    if(action.type === 'SET_DONATE') {
+        return {
+            ...state,
+            donate: action.donate
+        }
+    }
+
+
     return state;
 }
 

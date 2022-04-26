@@ -1,21 +1,38 @@
 import { Field, Form, Formik } from "formik"
 import { ButtonForm } from "../../Global.styles"
+import { DonateCreateDTO } from "../../models/DonateCreateDTO"
 import Theme from "../../theme"
-import { numberMask } from "../../utils/Utils"
+import { convertMoney, numberMask } from "../../utils/Utils"
 import { ContainerDonation, InputCurrency } from "./Modal.styles"
+import { donateForCampaign } from "../../store/actions/fundraiserAction"
+import { RootState } from "../../store"
+import { connect, DispatchProp } from "react-redux"
 
-function Donate() {
+function Donate({donate, dispatch, onClick}: any & DispatchProp) {
+
+  console.log(donate);
+  
+  
+
   return (
     <div>
             <ContainerDonation> 
                 
                  <Formik
                   initialValues={{
-                      money: '',
+                      value: 0,
                   }}
                 
-                  onSubmit={ ( values ) => {
-                      
+                  onSubmit={ ( values: DonateCreateDTO ) => {
+
+                        const donateCampaign = {
+                            message: 'teste',
+                            value: convertMoney(values.value as string),
+                        }
+
+                        donateForCampaign(dispatch,donateCampaign)
+                        
+                        onClick()
 
                       }}
                       >
@@ -23,11 +40,11 @@ function Donate() {
 
                          <Form>
 
-                                <label htmlFor="money"> Informe o valor: </label> 
+                                <label htmlFor="value"> Informe o valor: </label> 
                                     
-                                <Field as={InputCurrency} mask={numberMask}  id="money" name="money"  />  
+                                    <Field as={InputCurrency} mask={numberMask}  id="value" name="value"  />  
 
-                                <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Doar</ButtonForm>
+                                <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Doar</ButtonForm>
 
                         </Form>  
                              )}    
@@ -38,4 +55,10 @@ function Donate() {
     </div>
   )
 }
-export default Donate
+
+const mapStateToProps = (state: RootState) => ({
+    donate: state.fundraiserReducer.donate
+})
+
+
+export default connect(mapStateToProps)(Donate)

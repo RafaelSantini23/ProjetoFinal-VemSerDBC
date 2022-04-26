@@ -27,7 +27,7 @@ function Card({ children, colabs }: Card) {
           <LinkContainer key={item.id} to={`/details/${item.id}`}>
             <DivCampanha>
               <Meta>
-                  { item.total >= item.meta && ( <MetaAtingida> Meta atingida</MetaAtingida> )}
+                  { item.total >= item.meta && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
               <ImgCampanha src={item.foto} alt="foto" />
               <h2>{item.titulo}</h2>

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Field } from 'formik';
 import Theme from './theme';
 import { Link } from 'react-router-dom';
+import InputMask from 'react-input-mask';
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
@@ -93,5 +94,19 @@ export const LinkStyle = styled(Link)<{mT?: string}>`
     }
 `
 
+export const CampaignForm = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
+export const inputDate = styled(InputMask)`
+    width: 350px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #a8a8b3;
+    font: 400 16px 'Roboto', sans-serif;
+`
 

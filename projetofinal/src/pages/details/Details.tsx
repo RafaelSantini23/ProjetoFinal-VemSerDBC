@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Meta, MetaAtingida } from "../../components/card/Card.styles";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
 import Theme from "../../theme";
@@ -34,7 +35,7 @@ function Details() {
     foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
     titulo: 'Supernatural',
     meta: converteNumber('1250,00'),
-    total: somaTotal(['100,00', '200,00', '500,30']),
+    total: somaTotal(['100,00', '900,00', '500,30']),
     criador: 'O Jão Cee',
     categoria: formataTags(['doação', 'livro', 'além']),
     data: formataData('21 04 2022, 16:21:48'),
@@ -64,6 +65,9 @@ function Details() {
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
+            <Meta>
+                { Campanhas.total >= Campanhas.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
+            </Meta>
             <ImagemCampanha src={Campanhas.foto} alt="capa" />
             <p>Categorias: {Campanhas.categoria}</p> 
           </DivImagem>
@@ -84,6 +88,12 @@ function Details() {
 
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
 
+            {  modalDonation && (
+            <div>
+                <Modal height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
+            </div> ) }
+             
+
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm>
 
             {  editModal && (
@@ -92,10 +102,6 @@ function Details() {
             </div> )}
 
 
-            {  modalDonation && (
-            <div>
-                <Modal height="150px" typeModal='donate'  onClick={() => setModalDonation(false)} />
-            </div> ) }
           </InfoCampanha>
       </ContainerDetails>
     </Container>

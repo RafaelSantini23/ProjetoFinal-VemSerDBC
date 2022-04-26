@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { ButtonForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { ButtonForm, DivValidate, inputDate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { CheckCloseStyle, DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
@@ -13,6 +13,7 @@ import CreatableSelect from 'react-select/creatable';
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
+
 
 
 function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
@@ -132,7 +133,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
-                          <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                          <Field as={inputDate} mask="99/99/9999"  name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
                           {props.errors.endingDate && props.touched.endingDate ? (
                             <SpanError>{props.errors.endingDate}</SpanError>
                             ) : null}

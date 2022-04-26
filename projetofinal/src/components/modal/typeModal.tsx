@@ -1,13 +1,16 @@
 import Donate from "./Donate";
 import EditCampaign from "./editCampaign";
 
-export const changeModal = (modal: string) => {
+
+
+export const changeModal = (modal: string, onClick: () => void ) => {
     switch(modal) {
         case 'donate':
-            return (<Donate />) 
+            return <Donate onClick={onClick} />
         case 'editCampaign':
-            return (<EditCampaign />)
+            return <EditCampaign />
         default:
-            return (<div>Modal not found</div>)
+            return <div> Modal notFound </div>
     }
+   
 }
