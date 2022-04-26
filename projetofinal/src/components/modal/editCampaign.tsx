@@ -53,7 +53,7 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
        <Formik
                 initialValues={{
                     automaticClose: null,
-                    categories: ca,
+                    categories: '',
                     endingDate: '',
                     description: '',
                     goal: '',

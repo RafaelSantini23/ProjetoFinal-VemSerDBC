@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { Loading } from "notiflix";
+import { useEffect, useState } from "react";
+import { connect, DispatchProp } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
+import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
+import { getCampaignDetails } from "../../store/actions/fundraiserAction";
 import Theme from "../../theme";
 import { converteNumber,
   formataData,
   converteBRL,
+  convertImage64,
   formataCorTotal,
 } from "../../utils/Utils"
 import { Container,
@@ -23,11 +29,21 @@ import { Container,
 } from "./Details.styles"
 
 
-function Details() {
+function Details({campaign, dispatch, loading}: any & DispatchProp) {
   const [isVisibel, setIsVisibel] = useState(false);
-  const [ modalDonation, setModalDonation ] = useState(false);
-  const [ editModal, setEditModal] = useState(false);
+  const [modalDonation, setModalDonation] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const {id} = useParams()
 
+  useEffect(() => {
+    getCampaignDetails(dispatch, id)
+  },[])
+
+  if(loading) {
+    return (<>{Loading.circle()}</>)
+  }
+
+  console.log(campaign)
 
   const Campanhas = {
     id: 1,
@@ -60,30 +76,32 @@ function Details() {
             <div>
                 <Modal height="550px" colabs={Campanhas.apoiadores} onClick={() => setIsVisibel(false)} />
             </div> )   }
-      <h1>{Campanhas.titulo}</h1>
+      <h1>{campaign.title}</h1>
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
-            <Meta>
+          <Meta>
                 { Campanhas.total >= Campanhas.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
             </Meta>
-            <ImagemCampanha src={Campanhas.foto} alt="capa" />
-            <p>Categorias: {Campanhas.categoria}</p> 
+            <ImagemCampanha src={convertImage64(campaign.coverPhoto)} alt="capa" />
+            <p>Categorias: {campaign.categories.map((category: any) => (
+              <span>{category.name}</span>
+            ))}</p> 
           </DivImagem>
           <DescCampanha>
             <HeaderDesc>Descrição</HeaderDesc>
             <MsgDesc>
-              {Campanhas.descricao}
+              {campaign.description}
             </MsgDesc>
           </DescCampanha>
         </DivCampanha>
           <InfoCampanha>
             <h3>Arrecadado</h3>
-            <TotalTitle color={formataCorTotal(Campanhas.meta, Campanhas.total)}>{converteBRL(Campanhas.total)}</TotalTitle>
+            <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL(campaign.currentValue)}</TotalTitle>
             <p>Meta</p>
-            <h2>{converteBRL(Campanhas.meta)}</h2>
+            <h2>{converteBRL(campaign.goal)}</h2>
             <p>Apoiadores</p>
-            <a onClick={() => setIsVisibel(true)}>{Campanhas.apoiadores.length}</a>
+            <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
 
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
 
@@ -107,4 +125,9 @@ function Details() {
   )
 }
 
-export default Details
+const mapStateToProps = (state: RootState) => ({
+  campaign: state.fundraiserReducer.campaign,
+  loading: state.fundraiserReducer.loadingDetails,
+ })
+
+export default connect(mapStateToProps)(Details)

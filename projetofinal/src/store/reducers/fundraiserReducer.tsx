@@ -10,7 +10,9 @@ export const INITIAL_STATE = {
         coverPhoto: '',
         description: '',
         goal: 0,
-        title: ''
+        title: '',
+        contributors: [],
+        fundraiserId: 0,
     },
     donate: {
         message: '',
@@ -18,14 +20,16 @@ export const INITIAL_STATE = {
     },
 
     campaignList: [],
-    loading: true
+    loading: true,
+    loadingDetails: true,
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_CAMPAIGN') {
         return {
             ...state,
-            campaign: action.campaign
+            campaign: action.campaign,
+            loadingDetails: action.loadingDetails
         }
     }
 
