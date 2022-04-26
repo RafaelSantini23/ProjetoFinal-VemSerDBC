@@ -12,7 +12,8 @@ export const INITIAL_STATE = {
         goal: 0,
         title: ''
     },
-    campaignList: []
+    campaignList: [],
+    loading: true
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -25,7 +26,8 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
     if(action.type === 'SET_CAMPAIGN_LIST') {
         return {
             ...state,
-            campaignList: action.campaignList
+            campaignList: action.campaignList,
+            loading: action.loading
         }
     }
     return state;

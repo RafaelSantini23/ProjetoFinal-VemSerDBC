@@ -13,7 +13,7 @@ export const validaSenha = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}/
 
 // Format Date
 export const formataData = (props: string) => {
-  return moment(props, 'DD MM YYYY HH:mm:ss').locale('pt-br').fromNow()
+  return moment(props, 'YYYY-MM-DD HH:mm:ss').locale('pt-br').fromNow()
 }
 
 export const validDate = (value: string | undefined) => {
@@ -25,12 +25,6 @@ export const validDate = (value: string | undefined) => {
 
 export const converteNumber = (props: string) => parseFloat(props.replace(',', '.'));
 
-export const somaTotal = (array: string[]) => {
-  const novoArray = array.map(valor => 
-    converteNumber(valor)
-);
-    return novoArray.reduce((total, valor) => total + valor, 0);
-}
 
 export const converteBRL = (valor: number | string) => {
   if (typeof(valor) === 'string') {
@@ -38,10 +32,6 @@ export const converteBRL = (valor: number | string) => {
     return novoValor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
   }
   return valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-}
-
-export const formataTags = (array: string[]) => {
-  return array.join('/')
 }
 
 export const formataCorTotal = (meta: number, total: number) => {

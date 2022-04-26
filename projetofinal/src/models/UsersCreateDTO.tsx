@@ -5,6 +5,7 @@ export interface UsersCreateDTO {
       email: string;
       login: string;
       password: string;
+      name?: string;
       confirmPassword?: string;
       profilePhoto?: FileDTO | string;
   }

@@ -3,7 +3,7 @@ import { AppDispatch } from "..";
 import api from "../../api";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
-
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
   
@@ -35,17 +35,19 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
 }
 
 export const getCampaign = async (dispatch: AppDispatch, number: number) => {
+    Loading.circle()
     try {
         const { data } = await api.get(`/fundraiser/findAll/${number}`)
-        console.log(data.content)
+        const {content} = data
 
         const campaignList = {
             type: 'SET_CAMPAIGN_LIST',
-            campaignList: data.content
+            campaignList: content,
+            loading: false
         }
 
         dispatch(campaignList)
-
+        Loading.remove()
     } catch (error) {
         console.log(error)
     }

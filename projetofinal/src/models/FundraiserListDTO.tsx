@@ -3,15 +3,19 @@ import { UsersCreateDTO } from "./UsersCreateDTO"
 export interface FundraiserListDTO {
   campaignList: {
     automaticClose?: boolean,
-    categories: string[],
+    categories: [{
+      categoryId: number
+      name: string
+    }],
     endingDate?: string,
-    coverPhoto?: string,
+    coverPhoto: string,
     description: string,
     goal: number,
     title: string,
     currentValue: number,
-    fundraiserCreator: UsersCreateDTO,
-    funraiserId?: number,
-    lastUpdate?: string
-  }[]
+    fundraiserCreator: UsersCreateDTO['user'],
+    fundraiserId?: number,
+    lastUpdate: string
+  }[],
+  loading?: boolean
 }
