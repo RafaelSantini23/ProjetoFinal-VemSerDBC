@@ -80,7 +80,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       console.log(values.categories)
                       const campaign = {
                         title: values.title,
-                        goal: values.goal as number,
+                        goal: values.goal,
                         validdate: moment(values.validdate, "DD/MM/YYYY").format('YYYY-MM-DD'),
                         automaticClose: values.automaticClose,
                         coverPhoto: values.coverPhoto,
