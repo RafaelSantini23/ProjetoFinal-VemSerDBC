@@ -4,9 +4,10 @@ import { AppDispatch } from "..";
 import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'] | UsersCreateDTO['user'], navigate: NavigateFunction ) => {
-    
+    Loading.circle()
     try {
         const { data } = await api.post('/auth', values);
         
@@ -21,6 +22,7 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
             }
         }
         
+        Loading.remove()
         dispatch(user); 
 
         localStorage.setItem('token', user.auth.token);
@@ -39,7 +41,6 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
 
 
 export const handleLogout = (dispatch: AppDispatch, navigate: NavigateFunction) => {
-    
     const user = {
         type: 'SET_TOKEN',
         auth: {

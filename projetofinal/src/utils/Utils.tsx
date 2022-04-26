@@ -1,6 +1,7 @@
 import moment from "moment";
 import 'moment/locale/pt-br';
 import { NavigateFunction } from "react-router-dom";
+import { createNumberMask } from "text-mask-addons";
 import { ImgCampanha } from "../pages/home/Home.styles";
 
 // Regex
@@ -56,17 +57,20 @@ export const formataCorTotal = (meta: number, total: number) => {
   return cor;
 }
 
-export const metaAtingida = (meta: number, total: number, item: string, frase: string) => {
-  meta >= total ? (
-  <>
-    <h1>Meta Atingida</h1>
-   <ImgCampanha src={item} alt="foto" />
-  <h2>{frase}</h2> </>
-  ) :  (<><ImgCampanha src={item} alt="foto" />
-  <h2>{frase}</h2></>)
-  
+export const  defaultMaskOptions = {
+  prefix: 'R$',
+  suffix: '',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: '.',
+  allowDecimal: true,
+  decimalSymbol: ',',
+  decimalLimit: 4, 
+  integerLimit: 7, 
+  allowNegative: false,
+  allowLeadingZeroes: false,
 }
 
+export const numberMask = createNumberMask(defaultMaskOptions)
 
 
 export const isLoggedin = (navigate: NavigateFunction) => {
@@ -81,6 +85,20 @@ export const isLoggedin = (navigate: NavigateFunction) => {
 
 export const convertImage64 = (value: string) => {
   return `data:image/png;base64,${value}`;
+}
+
+export const convertMoney = (value: string) => {
+  value = value.split('R$').join('');
+
+  if(value.includes('.')) {
+   value = value.split('.').join('');
+  }
+
+  if(value.includes(',')) {
+    value = value.split(',').join('.');
+  }
+  
+  return parseFloat(value);
 }
 
 

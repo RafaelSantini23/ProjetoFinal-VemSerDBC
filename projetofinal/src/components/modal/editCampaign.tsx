@@ -1,102 +1,70 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import * as Yup from 'yup';
 import { ButtonForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
-import { CheckCloseStyle, DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
+import { CheckCloseStyle, ContainerFormCampaign, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
-import { convertMoney, isLoggedin, numberMask,  validDate } from "../../utils/Utils";
-import { createCampaign } from "../../store/actions/fundraiserAction";
-import CreatableSelect from 'react-select/creatable';
-import moment from "moment";
 import Theme from "../../theme";
-import { InputCurrency } from "../../components/modal/Modal.styles";
+import { numberMask, validDate } from "../../utils/Utils";
+import { InputCurrency } from "./Modal.styles";
+import * as Yup from 'yup';
+import CreatableSelect from 'react-select/creatable';
 
 
-function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
-  const navigate = useNavigate()
 
-  const handleChange = (value: any, setFieldValue: any) => {
-    let list = value.map((item: any) => item.value)
-    setFieldValue('categories', list)
-  };
-
-
-  
+function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchProp & { values?: any }) {
     
-  useEffect(() => {
-      isLoggedin(navigate)
-  }, [])
+    const handleChange = (value: any, setFieldValue: any) => {
+        let list = value.map((item: any) => item.value)
+        setFieldValue('categories', list)
+    };
 
 
-
-  const SignupSchema = Yup.object().shape({
-    goal: Yup.string()
-    .min(4, "Pelo menos 4 números!")
-    .required('Campo Obrigatório!'),
-
-    endingDate: Yup.string()
-    .min(10, 'Data inválida!')
-    .test('Data válida!', 'Data inválida!', (value) => validDate(value))
-
-    .required('Campo Obrigatório!'),
-
-    automaticClose: Yup.boolean()
-    .oneOf([true , false], 'Campo Obrigatório!')
-    .nullable(),
-
-    title: Yup.string()
-    .required('Campo Obrigatório!'),
-
-    description: Yup.string()
-    .required('Campo Obrigatório!'),
-
-    categories: Yup.array()
-    .min(1, 'Campo Obrigatório!')
-    .required('Campo Obrigatório!'),
-  });
-
-
-
+    const SignupSchema = Yup.object().shape({
+        goal: Yup.string()
+        .min(4, "Pelo menos 4 números!")
+        .required('Campo Obrigatório!'),
+    
+        endingDate: Yup.string()
+        .min(10, 'Data inválida!')
+        .test('Data válida!', 'Data inválida!', (value) => validDate(value))
+    
+        .required('Campo Obrigatório!'),
+    
+        automaticClose: Yup.boolean()
+        .oneOf([true , false], 'Campo Obrigatório!')
+        .nullable(),
+    
+        title: Yup.string()
+        .required('Campo Obrigatório!'),
+    
+        description: Yup.string()
+        .required('Campo Obrigatório!'),
+    
+        categories: Yup.array()
+        .min(1, 'Campo Obrigatório!')
+        .required('Campo Obrigatório!'),
+      });
 
   return (
-    <ContainerCampaign>
-      <DivButton>
-        <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => navigate('/campanhas')}>Voltar as campanhas</ButtonForm>
-      </DivButton>
-       <ContainerFormCampaign>
+    <div>
+         <ContainerFormCampaign>
        <Formik
                 initialValues={{
-                    automaticClose: null,
-                    categories: '',
-                    endingDate: '',
-                    description: '',
-                    goal: '',
-                    title: '',    
+                    automaticClose: values.automaticClose,
+                    categories: values.categories,
+                    endingDate: values.endingDate,
+                    description: values.description,
+                    goal: values.goal,
+                    title: values.title,    
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
                     values: FundraiserDTO['campaign'],
                     { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
                     ) => {        
-                    
-                      const campaign = {
-                        title: values.title,
-                        goal: convertMoney(values.goal),
-                        endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
-                        automaticClose: values.automaticClose,
-                        coverPhoto: values.coverPhoto,
-                        categories: values.categories,
-                        description: values.description,
-                      }
-
-                      console.log(values);
                       
-
-                    createCampaign(dispatch, campaign, navigate)
-
+                  
                     setSubmitting(false);
                     }}
                     >
@@ -164,7 +132,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                   )}          
               </Formik>
        </ContainerFormCampaign>
-    </ContainerCampaign>
+    </div>
   )
 }
 
@@ -173,4 +141,5 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 
-export default connect(mapStateToProps)(CreateCampaign)
+
+export default connect(mapStateToProps)(editCampaign)

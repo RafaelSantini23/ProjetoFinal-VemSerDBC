@@ -3,8 +3,10 @@ import { AppDispatch } from "..";
 import api from "../../api";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
+    Loading.circle();
 
     const formData = new FormData()
 
@@ -12,17 +14,22 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     formData.append('name', values.login)
     formData.append('password', values.password)
     formData.append('profilePhoto', values.profilePhoto as File)
-   
+    
+
    
     try {
 
-        const { data } = await api.post('/user/register', formData);
+        const response = await api.post('/user/register', formData);
         
         const user = {
             type: 'SET_USER',
-            user: data
+            user: response.data
         }
+        console.log(response);
+         
         
+        Loading.remove();
+
         dispatch(user);
         
 
@@ -34,10 +41,18 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         }
 
         handleLogin(dispatch, login,  navigate);
-
-    } catch (error) {
-        console.log(error);
         
+    } catch (error: any) {
+        if(error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        }
+        
+        Loading.remove()
+    
     }
 }
+
+
 
