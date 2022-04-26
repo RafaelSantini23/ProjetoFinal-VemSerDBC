@@ -1,11 +1,15 @@
+import { CategoryDTO } from "./CategoryDTO"
+
 export interface FundraiserDTO {
   campaign: {
     automaticClose: boolean | string | null,
-    categories: string | string[],
+    categories: CategoryDTO['categories'] | string,
     endingDate?: string,
     coverPhoto?: string,
     description: string,
     goal: any | string,
-    title: string
+    title: string,
+    contributors?: [],
+    fundraiserId?: number
   }
 }

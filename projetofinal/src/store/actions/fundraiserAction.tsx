@@ -4,6 +4,7 @@ import api from "../../api";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { loadingMessageCSS } from "react-select/dist/declarations/src/components/Menu";
 
 export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
   
@@ -47,6 +48,25 @@ export const getCampaign = async (dispatch: AppDispatch, number: number) => {
         }
 
         dispatch(campaignList)
+        Loading.remove()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getCampaignDetails = async (dispatch: AppDispatch, id: string | undefined) => {
+    // Loading.circle()
+    try {
+        const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
+        console.log(data)
+
+        const campaign = {
+            type: 'SET_CAMPAIGN',
+            campaign: data,
+            loadingDetails: false,
+        }
+  
+        dispatch(campaign);
         Loading.remove()
     } catch (error) {
         console.log(error)
