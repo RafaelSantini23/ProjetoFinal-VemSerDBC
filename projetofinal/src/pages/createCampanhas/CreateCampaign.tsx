@@ -33,7 +33,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
     .min(4, "Pelo menos 4 números!")
     .required('Campo Obrigatório!'),
 
-    validdate: Yup.string()
+    endingDate: Yup.string()
     .min(10, 'Data inválida!')
     .test('Data válida!', 'Data inválida!', (value) => validDate(value))
 
@@ -67,7 +67,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                 initialValues={{
                     automaticClose: null,
                     categories: '',
-                    validdate: '',
+                    endingDate: '',
                     description: '',
                     goal: '',
                     title: '',    
@@ -81,7 +81,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       const campaign = {
                         title: values.title,
                         goal: values.goal,
-                        validdate: moment(values.validdate, "DD/MM/YYYY").format('YYYY-MM-DD'),
+                        endingDate: moment(values.endingDate, "DD/MM/YYYY").format('YYYY-MM-DD'),
                         automaticClose: values.automaticClose,
                         coverPhoto: values.coverPhoto,
                         categories: values.categories,
@@ -126,10 +126,10 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                             ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='validdate'>Data limite</LabelForm>
-                          <InputStyle name="validdate" id="validdate"  placeholder="Digite a data de encerramento da campanha" />
-                          {props.errors.validdate && props.touched.validdate ? (
-                            <SpanError>{props.errors.validdate}</SpanError>
+                          <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
+                          <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                          {props.errors.endingDate && props.touched.endingDate ? (
+                            <SpanError>{props.errors.endingDate}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>

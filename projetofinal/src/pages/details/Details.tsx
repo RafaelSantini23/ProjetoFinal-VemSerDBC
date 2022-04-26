@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
+import { RootState } from "../../store";
 import { converteNumber,
   somaTotal,
   formataTags,
@@ -91,4 +92,5 @@ function Details() {
     </Container>
   )
 }
+
 export default Details

@@ -13,12 +13,18 @@ import Theme from "../../theme";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { AuthDTO } from "../../models/AuthDTO";
+import { FundraiserListDTO } from "../../models/FundraiserListDTO";
+import { useEffect } from "react";
+import { getCampaign } from "../../store/actions/fundraiserAction";
 
 
+function Home({ campaignList, dispatch }: FundraiserListDTO & DispatchProp)  {
 
-function Home()  {
-
+  console.log(campaignList)
   
+  useEffect(() => {
+    getCampaign(dispatch, 0)
+  },[])
 
   // const token = localStorage.getItem('token');
 
@@ -78,6 +84,8 @@ function Home()  {
   )
 }
 
+const mapStateToProps = (state: RootState) => ({
+ campaignList: state.fundraiserReducer.campaignList
+})
 
-
-export default Home
+export default connect(mapStateToProps)(Home)

@@ -2,6 +2,7 @@ import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "..";
 import api from "../../api";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
+import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 
 
 export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
@@ -9,7 +10,7 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
     const formData = new FormData()
     
     formData.append('goal', values.goal as string)
-    formData.append('endingDate', values.validdate  as string)
+    formData.append('endingDate', values.endingDate  as string)
     formData.append('coverPhoto', values.coverPhoto  as string)
     formData.append('description', values.description)
     formData.append('categories', values.categories  as string)
@@ -19,9 +20,7 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
   try {
       
       const { data } = await api.post('/fundraiser/save', formData);
-      
-      console.log(data)
-
+  
       const campaign = {
           type: 'SET_CAMPAIGN',
           campaign: data
@@ -31,7 +30,23 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
 
       navigate('/campanhas')
   } catch (error) {
-      console.log(error);
-      
+      console.log(error); 
   }
+}
+
+export const getCampaign = async (dispatch: AppDispatch, number: number) => {
+    try {
+        const { data } = await api.get(`/fundraiser/findAll/${number}`)
+        console.log(data.content)
+
+        const campaignList = {
+            type: 'SET_CAMPAIGN_LIST',
+            campaignList: data.content
+        }
+
+        dispatch(campaignList)
+
+    } catch (error) {
+        console.log(error)
+    }
 }
