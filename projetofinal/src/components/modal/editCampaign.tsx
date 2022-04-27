@@ -9,17 +9,35 @@ import { numberMask, validDate } from "../../utils/Utils";
 import { InputCurrency } from "./Modal.styles";
 import * as Yup from 'yup';
 import CreatableSelect from 'react-select/creatable';
+// import { useEffect } from "react";
+import { CategoryDTO } from "../../models/CategoryDTO";
+import { useEffect, useState } from "react";
+
+type Category = {
+  name: string;
+}
+
+function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchProp & { values?: any }) {
+    const [categories, setCategories] = useState([])
 
 
-
-function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchProp & { values?: any }) {
-    
     const handleChange = (value: any, setFieldValue: any) => {
         let list = value.map((item: any) => item.value)
         setFieldValue('categories', list)
     };
 
-    const ca = ['pikachu','pirocopter']
+    const options = ( categories: any ) => {
+        setCategories(categories.map((item: any) =>  item.name ))
+    }
+
+    useEffect(() => {
+      options(campaign.categories)
+    }, [])
+
+    console.log(categories);
+    
+    //formatar valores da categoria para irem como defaultValue no input
+
 
     const SignupSchema = Yup.object().shape({
         goal: Yup.string()
@@ -42,22 +60,23 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
         description: Yup.string()
         .required('Campo Obrigatório!'),
     
-        categories: Yup.array()
-        .min(1, 'Campo Obrigatório!')
-        .required('Campo Obrigatório!'),
+        // categories: Yup.array()
+        // .min(1, 'Campo Obrigatório!')
+        // .required('Campo Obrigatório!'),
       });
 
   return (
     <div>
          <CampaignForm>
+
        <Formik
                 initialValues={{
-                    automaticClose: null,
+                    automaticClose: campaign.automaticClose,
                     categories: '',
-                    endingDate: '',
-                    description: '',
-                    goal: '',
-                    title: '',    
+                    endingDate: campaign.endingDate,
+                    description: campaign.description,
+                    goal: campaign.goal,
+                    title: campaign.title,    
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
@@ -65,7 +84,8 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                     { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
                     ) => {        
                       
-                  
+                      console.log(values);
+                      
                     setSubmitting(false);
                     }}
                     >
@@ -115,7 +135,9 @@ function editCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <Field component={CreatableSelect} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                          <Field component={CreatableSelect} defaultValue={{ label: 'Red' , value: 'red' }}    isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)">
+                            
+                          </Field>
                           {props.errors.categories && props.touched.categories ? (
                             <SpanError>{props.errors.categories}</SpanError>
                             ) : null}
@@ -143,4 +165,4 @@ const mapStateToProps = (state: RootState) => ({
 
 
 
-export default connect(mapStateToProps)(editCampaign)
+export default connect(mapStateToProps)(EditCampaign)

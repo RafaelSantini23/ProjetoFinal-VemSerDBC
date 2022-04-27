@@ -35,6 +35,16 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
   const [editModal, setEditModal] = useState(false);
   const {id} = useParams()
 
+  const token = localStorage.getItem('token');
+
+   const tokenn = token?.split('.')[1];
+   const decoded = JSON.parse(window?.atob(tokenn as string));
+
+   const idContributor = Number(decoded.sub)
+  
+      
+      
+  
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
@@ -43,45 +53,21 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
     return (<>{Loading.circle()}</>)
   }
 
-  console.log(campaign)
 
-  const Campanhas = {
-    id: 1,
-    foto: 'https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg',
-    titulo: 'Supernatural',
-    meta: converteNumber('1250,00'),
-    total: 100.00,
-    criador: 'O Jão Cee',
-    categoria:['doação', 'livro', 'além'],
-    data: formataData('21 04 2022, 16:21:48'),
-    descricao: "Ajude o supernatural...",
-    apoiadores: [{
-      id: "1",
-            name: "João",
-            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
-    }, {
-      id: "2",
-            name: "Jão",
-            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
-    }, {
-      id: "3",
-            name: "Jão",
-            photo: "https://sm.ign.com/t/ign_br/screenshot/default/supernatural-season-15-cast-poster-1420x798_cnnm.h720.jpg"
-    }]
-  }
+
 
   return (
     <Container>
       {  isVisibel && (
             <div>
-                <Modal height="550px" colabs={Campanhas.apoiadores} onClick={() => setIsVisibel(false)} />
+                <Modal height="550px" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
             </div> )   }
       <h1>{campaign.title}</h1>
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
           <Meta>
-                { Campanhas.total >= Campanhas.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
+                { campaign.total >= campaign.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
             </Meta>
             <ImagemCampanha src={convertImage64(campaign.coverPhoto)} alt="capa" />
             <p>Categorias: {campaign.categories.map((category: any) => (
@@ -103,7 +89,7 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
 
-            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
+            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Doar <IconDonate />  </ButtonForm>
 
             {  modalDonation && (
             <div>
