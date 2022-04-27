@@ -146,3 +146,12 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
         
     }
 }
+
+export const selectGet = (value: string, dispatch: AppDispatch, page: number) => {
+    switch(value) {
+        case "total":
+            return getCampaign(dispatch, page);
+        case "user":
+            return getCampaingOfUser(dispatch, page)
+    }
+}

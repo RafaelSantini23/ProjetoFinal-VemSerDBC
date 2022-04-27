@@ -12,22 +12,22 @@ import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { useEffect, useState } from "react";
-import { getCampaign, getCampaingOfUser } from "../../store/actions/fundraiserAction";
+import { selectGet } from "../../store/actions/fundraiserAction";
 import api from "../../api";
 
 
 function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
-  const [myCampaignsList, setMyCampaignsList] = useState(false)
 
   const [page, setPage] = useState(0)
-  
+  const [buttonName, setButtonName] = useState('Minhas Campanhas')
+  const [typeName, setTypeName] = useState('total')
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
-    myCampaignsList ? getCampaingOfUser(dispatch, page) : getCampaign(dispatch, page)
-    // getCampaign(dispatch, page)
+    selectGet('total', dispatch, page)
   },[])
 
   // const token = localStorage.getItem('token');
@@ -39,48 +39,36 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
 
   const nextPage = () => {
     setPage(page + 1)
-    if(myCampaignsList) {
-      getCampaingOfUser(dispatch, page + 1)
-    } 
-      
-    if(!myCampaignsList) {
-      getCampaign(dispatch, page + 1)
-      setMyCampaignsList(false)
-    }
-    
+    selectGet(typeName, dispatch, page + 1)
+    console.log(typeName)
   }
 
   const prevPage = () => {
     setPage(page - 1)
-    if(myCampaignsList) {
-      getCampaingOfUser(dispatch, page - 1)
-    } 
-
-    if(!myCampaignsList) {
-      getCampaign(dispatch, page - 1)
-    }
-
+    selectGet(typeName, dispatch, page - 1)
+    console.log(typeName)
   }
   
-  const campaignsList = (getCampaignOf: Function, condition: boolean) => {
-    getCampaignOf(dispatch, page)
-    setMyCampaignsList(condition)
+  const campaignsList = async (value: string) => {
+    setTypeName(value)
+    console.log(typeName)
+    selectGet(value, dispatch, page)
+    console.log(typeName)
   }
-
+console.log(typeName)
   
-
   return (
     <>
       <ContainerMyCampaign>
         <ButtonContainer>
-         { myCampaignsList ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => campaignsList(getCampaign, false)}> Todas as Campanhas </ButtonForm> :
-         <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => campaignsList(getCampaingOfUser, true)}> Minhas Campanhas </ButtonForm> 
-          } 
-        </ButtonContainer>
+        {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('total'))}>{buttonName}</ButtonForm>
+        : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('user'))}>{buttonName}</ButtonForm> 
+        }
+         </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
       
-      <TituloCampanhas>{myCampaignsList ? 'Minhas Campanhas' : 'Todas as campanhas'}</TituloCampanhas>
+      <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <Card campaignList={campaignList} />
       
       <div>
