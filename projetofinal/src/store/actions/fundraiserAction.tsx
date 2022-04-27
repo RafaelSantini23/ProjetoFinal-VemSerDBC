@@ -44,7 +44,7 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
         const donation = {
             type: 'SET_DONATION',
             donation: {
-                ...data,
+                donate: data,
             }
         }
         console.log(data)

@@ -1,6 +1,7 @@
 import Donate from "./Donate";
-import EditCampaign from "./editCampaign";
 import { useParams } from "react-router-dom";
+import { FundraiserDTO } from "../../models/FundraiserDTO";
+import EditCampaign from "./EditCampaign";
 
 
 export const changeModal = (modal: string, onClick: () => void ) => {
@@ -8,7 +9,7 @@ export const changeModal = (modal: string, onClick: () => void ) => {
         case 'donate':
             return <Donate onClick={onClick}  />
         case 'editCampaign':
-            return <EditCampaign />
+            return <EditCampaign  />
         default:
             return <div> Modal notFound </div>
     }

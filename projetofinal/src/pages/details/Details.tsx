@@ -35,6 +35,16 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
   const [editModal, setEditModal] = useState(false);
   const {id} = useParams()
 
+  const token = localStorage.getItem('token');
+
+   const tokenn = token?.split('.')[1];
+   const decoded = JSON.parse(window?.atob(tokenn as string));
+
+   const idContributor = Number(decoded.sub)
+  
+      
+      
+  
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
@@ -42,6 +52,8 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
   if(loading) {
     return (<>{Loading.circle()}</>)
   }
+
+
 
 
   return (
@@ -77,7 +89,7 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
 
-            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Contribuir <IconDonate />  </ButtonForm>
+            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Doar <IconDonate />  </ButtonForm>
 
             {  modalDonation && (
             <div>
