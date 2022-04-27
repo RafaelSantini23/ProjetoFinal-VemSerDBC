@@ -14,11 +14,11 @@ export const INITIAL_STATE = {
         contributors: [],
         fundraiserId: 0,
     },
+    categoryList: [],
     donate: {
         message: '',
         value: 0
     },
-
     campaignList: [],
     loading: true,
     loadingDetails: true,
@@ -29,7 +29,8 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         return {
             ...state,
             campaign: action.campaign,
-            loadingDetails: action.loadingDetails
+            loadingDetails: action.loadingDetails,
+            categoryList: action.categoryList,
         }
     }
 
@@ -48,6 +49,7 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             loading: action.loading
         }
     }
+
     return state;
 }
 

@@ -24,7 +24,9 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
     setFieldValue('categories', list)
   };
 
-
+  const bananas = [
+    {label: 'banana', value:'banana'}
+  ]
   
     
   useEffect(() => {
@@ -146,9 +148,9 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <Field component={CreatableSelect} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                          <Field component={CreatableSelect} options={bananas} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                           {props.errors.categories && props.touched.categories ? (
-                            <SpanError>{props.errors.categories}</SpanError>
+                            <SpanError>{props.errors.categories as string}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>

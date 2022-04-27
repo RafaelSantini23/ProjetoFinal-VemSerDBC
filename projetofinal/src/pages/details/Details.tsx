@@ -42,9 +42,7 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
 
    const idContributor = Number(decoded.sub)
   
-      
-      
-  
+
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
@@ -52,9 +50,6 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
   if(loading) {
     return (<>{Loading.circle()}</>)
   }
-
-
-
 
   return (
     <Container>
