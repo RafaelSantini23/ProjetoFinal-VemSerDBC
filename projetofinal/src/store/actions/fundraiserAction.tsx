@@ -36,7 +36,6 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
   }
 }
 
-
 export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO, id?: string) => {
     try {
         const { data } = await api.post(`/donation/${id}`, values)
@@ -57,32 +56,10 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
     }
 }
 
-
-export const getCampaingOfUser = async (dispatch: AppDispatch, id: number) => {
+export const getCampaign = async (dispatch: AppDispatch, value: string, number: number) => {
     Loading.circle()
     try {
-        const { data } = await api.get(`/fundraiser/userFundraisers/${id}`)
-
-        const { content } = data
-        const campaign = {
-            type: 'SET_CAMPAIGN_LIST',
-            campaignList: content,
-            loading: false
-        }
-
-        dispatch(campaign);
-        Loading.remove()
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-export const getCampaign = async (dispatch: AppDispatch, number: number) => {
-    Loading.circle()
-    try {
-        const { data } = await api.get(`/fundraiser/findAll/${number}`)
+        const { data } = await api.get(`/fundraiser/${value}/${number}`)
         const {content} = data
 
         const campaignList = {
@@ -99,7 +76,6 @@ export const getCampaign = async (dispatch: AppDispatch, number: number) => {
 }
 
 export const getCampaignDetails = async (dispatch: AppDispatch, id: string | undefined) => {
-    // Loading.circle()
     try {
         const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
         console.log(data)
@@ -122,7 +98,6 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
     }
 }
 
-
 export const updateCampaign = async (values: FundraiserDTO['campaign'], id: number) => {
     const formData = new FormData()
     formData.append('goal', values.goal as string)
@@ -144,14 +119,5 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
     } catch (error) {
         console.log(error);
         
-    }
-}
-
-export const selectGet = (value: string, dispatch: AppDispatch, page: number) => {
-    switch(value) {
-        case "total":
-            return getCampaign(dispatch, page);
-        case "user":
-            return getCampaingOfUser(dispatch, page)
     }
 }

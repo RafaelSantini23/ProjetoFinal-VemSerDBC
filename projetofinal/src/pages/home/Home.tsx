@@ -12,7 +12,7 @@ import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { useEffect, useState } from "react";
-import { selectGet } from "../../store/actions/fundraiserAction";
+import { getCampaign } from "../../store/actions/fundraiserAction";
 import api from "../../api";
 
 
@@ -20,14 +20,14 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
 
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
-  const [typeName, setTypeName] = useState('total')
+  const [typeName, setTypeName] = useState('findAll')
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
-    selectGet('total', dispatch, page)
+    getCampaign(dispatch, 'findAll', page)
   },[])
 
   // const token = localStorage.getItem('token');
@@ -39,20 +39,20 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
 
   const nextPage = () => {
     setPage(page + 1)
-    selectGet(typeName, dispatch, page + 1)
+    getCampaign(dispatch, typeName, page + 1)
     console.log(typeName)
   }
 
   const prevPage = () => {
     setPage(page - 1)
-    selectGet(typeName, dispatch, page - 1)
+    getCampaign(dispatch, typeName, page - 1)
     console.log(typeName)
   }
   
   const campaignsList = async (value: string) => {
     setTypeName(value)
     console.log(typeName)
-    selectGet(value, dispatch, page)
+    getCampaign(dispatch, value, page)
     console.log(typeName)
   }
 console.log(typeName)
@@ -61,14 +61,17 @@ console.log(typeName)
     <>
       <ContainerMyCampaign>
         <ButtonContainer>
-        {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('total'))}>{buttonName}</ButtonForm>
-        : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('user'))}>{buttonName}</ButtonForm> 
+        {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonForm>
+        : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonForm> 
         }
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
       
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
+      <select>
+        <option value='completed'></option>
+      </select>
       <Card campaignList={campaignList} />
       
       <div>
