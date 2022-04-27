@@ -146,3 +146,39 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
         
     }
 }
+
+export const deleteCampaign = async (id: number, navigate: NavigateFunction) => {
+    try {
+       const { data } = await api.delete(`/fundraiser/${id}`)
+       console.log(data);
+       
+       navigate('/campanhas')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getCategories = async (dispatch: AppDispatch) => {
+    try {
+        const { data } = await api.get('/category/findAll')
+
+        const arr: any = []
+        data.map((item: any) => (
+            arr.push({ value: item.name, label: item.name })
+        ))
+
+        const categoryList = {
+            type: 'SET_CATEGORYS',
+            categorys: arr,
+            loading: false
+        }
+
+
+        console.log(data);
+        
+
+        dispatch(categoryList)
+    } catch (error) {
+        console.log(error);
+    }
+}

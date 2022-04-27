@@ -67,7 +67,7 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
     setMyCampaignsList(condition)
   }
 
-  
+
 
   return (
     <>
