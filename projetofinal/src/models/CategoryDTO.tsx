@@ -1,6 +1,6 @@
 export interface CategoryDTO {
-  categories: {
+  categories: [{
     categoryId: number,
     name: string
-  }[]
+  }]
 }
