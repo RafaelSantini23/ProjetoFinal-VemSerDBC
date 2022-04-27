@@ -76,7 +76,8 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                     endingDate: campaign.endingDate,
                     description: campaign.description,
                     goal: campaign.goal,
-                    title: campaign.title,    
+                    title: campaign.title,
+                    coverPhoto: campaign.coverPhoto  
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
