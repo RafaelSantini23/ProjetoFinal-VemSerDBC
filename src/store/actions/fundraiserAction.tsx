@@ -79,7 +79,8 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
     try {
         const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
         console.log(data)
-        const list: any = []
+        const list: any = [];
+
         data.categories.map((item: any) => (
             list.push({ value: item.name, label: item.name })
         ))
@@ -92,6 +93,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
         
         
         dispatch(campaign);
+        
         Loading.remove()
     } catch (error) {
         console.log(error)
@@ -150,9 +152,9 @@ export const getCategories = async (dispatch: AppDispatch) => {
 
 
         console.log(data);
-        
 
         dispatch(categoryList)
+
     } catch (error) {
         console.log(error);
     }

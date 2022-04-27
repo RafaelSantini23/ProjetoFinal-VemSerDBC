@@ -55,7 +55,6 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
     getCampaign(dispatch, value, page)
     console.log(typeName)
   }
-console.log(typeName)
   
   return (
     <>
