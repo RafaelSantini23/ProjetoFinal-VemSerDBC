@@ -42,6 +42,15 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
 
    const idContributor = Number(decoded.sub)
   
+  //  const findOwner = campaign.fundraiserCreator.find((item: any) => item.userId == id)
+
+  //  console.log(findOwner);
+
+   const findContributor = campaign.contributors.find((item: any) => item.userId == idContributor)
+
+  // console.log(findContributor);
+  
+   
 
   useEffect(() => {
     getCampaignDetails(dispatch, id)
@@ -84,14 +93,14 @@ function Details({campaign, dispatch, loading}: any & DispatchProp) {
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
 
-            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> Doar <IconDonate />  </ButtonForm>
+            <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { campaign.contributors.length & findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>
 
             {  modalDonation && (
             <div>
                 <Modal height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
             </div> ) }
              
-
+             
             <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm>
 
             {  editModal && (

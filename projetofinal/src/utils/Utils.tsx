@@ -25,7 +25,6 @@ export const validDate = (value: string | undefined) => {
 
 export const converteNumber = (props: string) => parseFloat(props.replace(',', '.'));
 
-
 export const converteBRL = (valor: number | string) => {
   if (typeof(valor) === 'string') {
     const novoValor = converteNumber(valor)
