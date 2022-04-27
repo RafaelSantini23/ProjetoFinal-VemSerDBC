@@ -23,15 +23,13 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
             value: 0,
           }}
 
-          onSubmit={(values: DonateCreateDTO['donate']) => {
+          onSubmit={(values: DonateCreateDTO & any) => {
 
             const donateCampaign = {
-              donate: {
                 message: 'teste',
                 value: convertMoney(values.value as string),
-              }
             }
-            donateForCampaign(dispatch, donateCampaign, id)
+            donateForCampaign(dispatch, donateCampaign as any, id)
             onClick?.()
 
           }}

@@ -19,14 +19,15 @@ import api from "../../api";
 function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
   const [myCampaignsList, setMyCampaignsList] = useState(false)
 
-  console.log(campaignList)
+  const [page, setPage] = useState(0)
   
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
-    getCampaign(dispatch, 0)
+    myCampaignsList ? getCampaingOfUser(dispatch, page) : getCampaign(dispatch, page)
+    // getCampaign(dispatch, page)
   },[])
 
   // const token = localStorage.getItem('token');
@@ -35,9 +36,34 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
   // const decoded = JSON.parse(window?.atob(tokenn as string));
 
   // const id = decoded.sub
+
+  const nextPage = () => {
+    setPage(page + 1)
+    if(myCampaignsList) {
+      getCampaingOfUser(dispatch, page + 1)
+    } 
+      
+    if(!myCampaignsList) {
+      getCampaign(dispatch, page + 1)
+      setMyCampaignsList(false)
+    }
+    
+  }
+
+  const prevPage = () => {
+    setPage(page - 1)
+    if(myCampaignsList) {
+      getCampaingOfUser(dispatch, page - 1)
+    } 
+
+    if(!myCampaignsList) {
+      getCampaign(dispatch, page - 1)
+    }
+
+  }
   
   const campaignsList = (getCampaignOf: Function, condition: boolean) => {
-    getCampaignOf(dispatch, 0)
+    getCampaignOf(dispatch, page)
     setMyCampaignsList(condition)
   }
 
@@ -56,6 +82,11 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
       
       <TituloCampanhas>{myCampaignsList ? 'Minhas Campanhas' : 'Todas as campanhas'}</TituloCampanhas>
       <Card campaignList={campaignList} />
+      
+      <div>
+        <button disabled={page < 1} onClick={() => prevPage()}> previous </button>
+        <button onClick={() => nextPage()}> next </button>
+      </div>
     </Container>
     </>
   )
