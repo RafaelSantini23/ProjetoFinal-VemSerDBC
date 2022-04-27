@@ -14,9 +14,10 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { useEffect, useState } from "react";
 import { getCampaign } from "../../store/actions/fundraiserAction";
 import api from "../../api";
+import { Loading } from "notiflix";
 
 
-function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
+function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & any & DispatchProp)  {
 
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
@@ -54,21 +55,22 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
   
   const filterCampaigns = (value: string) => {
     let campaignFilter: FundraiserListDTO['campaignList'] = []
-    getCampaign(dispatch, typeName, page)
     if (value === 'completas') {
-      campaignFilter = campaignList.filter(item => item.currentValue >= item.goal)
+      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue >= item.goal)
+    }else if (value === 'abertas') {
+      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue < item.goal)
+    } else {
+      campaignFilter = campaignListTemp
     }
-    if (value === 'abertas') {
-      campaignFilter = campaignList.filter(item => item.currentValue < item.goal)
-    }
+    Loading.circle()
     const campaign = {
       type: 'SET_CAMPAIGN_LIST',
       campaignList: campaignFilter,
+      campaignListTemp: campaignListTemp,
       loading: false
   }
   dispatch(campaign)
-  console.log(campaign)
-
+  Loading.remove()
   }
 
   return (
@@ -84,7 +86,7 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
       
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <select onChange={event => filterCampaigns(event.target.value)}>
-        <option value=''></option>
+        <option value=''>Todos</option>
         <option value='abertas'>Abertas</option>
         <option value='completas'>Concluídas</option>
       </select>
@@ -101,6 +103,7 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
 
 const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
+ campaignListTemp: state.fundraiserReducer.campaignListTemp,
 })
 
 export default connect(mapStateToProps)(Home)
