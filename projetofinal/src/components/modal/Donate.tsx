@@ -10,56 +10,54 @@ import { connect, DispatchProp } from "react-redux"
 import { Params, useParams } from "react-router-dom";
 
 
-function Donate({donate, dispatch, onClick}: DonateCreateDTO & DispatchProp) {
+function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
 
-  console.log(donate);
-  const {id}: Readonly<Params<string>> = useParams();
-  
+  const { id }: Readonly<Params<string>> = useParams();
+
 
   return (
     <div>
-            <ContainerDonation> 
-                
-                 <Formik
-                  initialValues={{
-                      value: 0,
-                  }}
-                
-                  onSubmit={ ( values: DonateCreateDTO['donate'] ) => {
+      <ContainerDonation>
+        <Formik
+          initialValues={{
+            value: 0,
+          }}
 
-                        const donateCampaign = {
-                          donate: {
-                            message: 'teste',
-                            value: convertMoney(values.value as string),
-                          }
-                        }
-                        donateForCampaign(dispatch, donateCampaign, id) 
-                        onClick?.()
+          onSubmit={(values: DonateCreateDTO['donate']) => {
 
-                      }}
-                      >
-                     {props => (
+            const donateCampaign = {
+              donate: {
+                message: 'teste',
+                value: convertMoney(values.value as string),
+              }
+            }
+            donateForCampaign(dispatch, donateCampaign, id)
+            onClick?.()
 
-                         <Form>
+          }}
+        >
+          {props => (
 
-                                <label htmlFor="value"> Informe o valor: </label> 
-                                    
-                                    <Field as={InputCurrency} mask={numberMask}  id="value" name="value"  />  
+            <Form>
 
-                                <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Doar</ButtonForm>
+              <label htmlFor="value"> Informe o valor: </label>
 
-                        </Form>  
-                             )}    
-              </Formik>
+              <Field as={InputCurrency} mask={numberMask} id="value" name="value" />
 
-            </ContainerDonation>  
-           
+              <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Doar</ButtonForm>
+
+            </Form>
+          )}
+        </Formik>
+
+      </ContainerDonation>
+
     </div>
   )
 }
 
 const mapStateToProps = (state: RootState) => ({
-    donate: state.fundraiserReducer.donate
+  donate: state.fundraiserReducer.donate
 })
 
 

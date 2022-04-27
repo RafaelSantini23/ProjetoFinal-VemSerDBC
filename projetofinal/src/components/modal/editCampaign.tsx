@@ -2,42 +2,29 @@ import { Field, Form, Formik, FormikHelpers } from "formik";
 import { connect, DispatchProp } from "react-redux";
 import { ButtonForm, CampaignForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
-import { CheckCloseStyle, ContainerFormCampaign, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
+import { CheckCloseStyle, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
 import Theme from "../../theme";
-import { numberMask, validDate } from "../../utils/Utils";
+import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, validDate } from "../../utils/Utils";
 import { InputCurrency } from "./Modal.styles";
 import * as Yup from 'yup';
 import CreatableSelect from 'react-select/creatable';
-// import { useEffect } from "react";
-import { CategoryDTO } from "../../models/CategoryDTO";
-import { useEffect, useState } from "react";
-
-type Category = {
-  name: string;
-}
-
-function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchProp & { values?: any }) {
-    const [categories, setCategories] = useState([])
+import PreviewImage from "../PreviewImage/PreviewImage";
+import { updateCampaign } from "../../store/actions/fundraiserAction";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 
+
+function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & DispatchProp & any) {
+  const navigate = useNavigate()
+  
     const handleChange = (value: any, setFieldValue: any) => {
+      
         let list = value.map((item: any) => item.value)
+
         setFieldValue('categories', list)
     };
-
-    const options = ( categories: any ) => {
-        setCategories(categories.map((item: any) =>  item.name ))
-    }
-
-    useEffect(() => {
-      options(campaign.categories)
-    }, [])
-
-    console.log(categories);
-    
-    //formatar valores da categoria para irem como defaultValue no input
-
 
     const SignupSchema = Yup.object().shape({
         goal: Yup.string()
@@ -60,9 +47,9 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
         description: Yup.string()
         .required('Campo Obrigatório!'),
     
-        // categories: Yup.array()
-        // .min(1, 'Campo Obrigatório!')
-        // .required('Campo Obrigatório!'),
+        categories: Yup.array()
+        .min(1, 'Campo Obrigatório!')
+        .required('Campo Obrigatório!'),
       });
 
   return (
@@ -71,27 +58,41 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
 
        <Formik
                 initialValues={{
-                    automaticClose: campaign.automaticClose,
-                    categories: '',
+                    automaticClose: null,
+                    categories: campaign.categories.map((item: any) => (item.name)),
                     endingDate: campaign.endingDate,
                     description: campaign.description,
-                    goal: campaign.goal,
-                    title: campaign.title,
-                    coverPhoto: campaign.coverPhoto  
+                    goal: converteBRL(campaign.goal),
+                    title: campaign.title,    
+                    coverPhoto: base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any,
                   }}
                   validationSchema={SignupSchema}
                 onSubmit={(
-                    values: FundraiserDTO['campaign'],
-                    { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
+                    values: FundraiserDTO['campaign']
+                   
                     ) => {        
+                     
+
+                      const campaignEdit = {
+                        goal: convertMoney(values.goal),
+                        endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+                        coverPhoto: values.coverPhoto,
+                        description: values.description,
+                        categories: values.categories,
+                        title: values.title,
+                        automaticClose: values.automaticClose,
+                      }
                       
-                      console.log(values);
-                      
-                    setSubmitting(false);
-                    }}
+
+
+                    updateCampaign(campaignEdit, campaign.fundraiserId)
+
+                    onClick?.()
+
+                  }}
                     >
                   {props => (
-                  <Form>
+                    <Form>
                       <DivValidate>
                           <LabelForm htmlFor="title">Titulo</LabelForm>
                           <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
@@ -130,17 +131,19 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                       <DivValidate>
                             <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                             <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
+                           {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
+                           {/* <img src={convertImage64(campaign.coverPhoto)} width='100px' height='100px' alt="" /> */}
                             {props.errors.coverPhoto && props.touched.coverPhoto ? (
                               <SpanError>{props.errors.coverPhoto}</SpanError>
                               ) : null}
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                          <Field component={CreatableSelect} defaultValue={{ label: 'Red' , value: 'red' }}    isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)">
+                          <Field component={CreatableSelect} defaultValue={categoryList} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)">
                             
                           </Field>
                           {props.errors.categories && props.touched.categories ? (
-                            <SpanError>{props.errors.categories}</SpanError>
+                            <SpanError>{props.errors.categories as string}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
@@ -151,7 +154,7 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
                             ) : null}
                       </DivValidate>
                      
-                      <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Atualizar</ButtonForm>
+                      <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Atualizar</ButtonForm>
                   </Form>  
                   )}          
               </Formik>
@@ -161,7 +164,8 @@ function EditCampaign({ campaign, dispatch, values }: FundraiserDTO & DispatchPr
 }
 
 const mapStateToProps = (state: RootState) => ({
-    campaign: state.fundraiserReducer.campaign
+    campaign: state.fundraiserReducer.campaign,
+    categoryList: state.fundraiserReducer.categoryList,
 })
 
 
