@@ -22,6 +22,7 @@ export const INITIAL_STATE = {
     campaignList: [],
     loading: true,
     loadingDetails: true,
+    categorys: [],
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -50,6 +51,12 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         }
     }
 
+    if(action.type === 'SET_CATEGORYS') {
+        return {
+            ...state,
+            categorys: action.categorys
+        }
+    }
     return state;
 }
 

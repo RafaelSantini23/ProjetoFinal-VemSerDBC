@@ -8,30 +8,29 @@ import { CheckCloseStyle, DivButton, DescriptionStyle, ContainerFormCampaign, Co
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { convertMoney, isLoggedin, numberMask,  validDate } from "../../utils/Utils";
-import { createCampaign } from "../../store/actions/fundraiserAction";
+import { createCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import CreatableSelect from 'react-select/creatable';
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
+import { CategoryDTO } from "../../models/CategoryDTO";
 
 
 
-function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
+function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any & DispatchProp) {
   const navigate = useNavigate()
 
   const handleChange = (value: any, setFieldValue: any) => {
     let list = value.map((item: any) => item.value)
     setFieldValue('categories', list)
   };
-
-  const bananas = [
-    {label: 'banana', value:'banana'}
-  ]
   
-    
+  
   useEffect(() => {
-      isLoggedin(navigate)
+    isLoggedin(navigate)
+    getCategories(dispatch)
   }, [])
+  console.log(categorys);
 
   
   const SignupSchema = Yup.object().shape({
@@ -130,7 +129,7 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                <Field component={CreatableSelect} options={bananas} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                <Field component={CreatableSelect} options={categorys} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                 {props.errors.categories && props.touched.categories ? (
                   <SpanError>{props.errors.categories as string}</SpanError>
                   ) : null}
@@ -153,7 +152,8 @@ function CreateCampaign({ campaign, dispatch }: FundraiserDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    campaign: state.fundraiserReducer.campaign
+    campaign: state.fundraiserReducer.campaign,
+    categorys: state.fundraiserReducer.categorys,
 })
 
 

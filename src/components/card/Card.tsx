@@ -1,28 +1,31 @@
-import { useEffect } from "react";
+import { Loading } from "notiflix";
+import { useNavigate } from "react-router-dom";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan } from "../../pages/home/Home.styles";
+import { RootState } from "../../store";
 import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 
 
 function Card({campaignList}: FundraiserListDTO) {
   const token = localStorage.getItem('token');
+  const navigate = useNavigate()
 
   const tokenn = token?.split('.')[1];
   const decoded = JSON.parse(window?.atob(tokenn as string));
 
   const id = decoded.sub
 
-    
-    
-    
+ 
 
+
+  
 
   return (
     
         <ContainerCampanhas>
          { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`}>
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => Loading.circle()}>
             <DivCampanha>
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
@@ -49,4 +52,7 @@ function Card({campaignList}: FundraiserListDTO) {
 
   )
 }
-export default Card 
+
+
+
+export default Card
