@@ -40,23 +40,37 @@ function Home({ campaignList, dispatch}: FundraiserListDTO & DispatchProp)  {
   const nextPage = () => {
     setPage(page + 1)
     getCampaign(dispatch, typeName, page + 1)
-    console.log(typeName)
   }
 
   const prevPage = () => {
     setPage(page - 1)
     getCampaign(dispatch, typeName, page - 1)
-    console.log(typeName)
   }
   
   const campaignsList = async (value: string) => {
     setTypeName(value)
-    console.log(typeName)
     getCampaign(dispatch, value, page)
-    console.log(typeName)
   }
-console.log(typeName)
   
+  const filterCampaigns = (value: string) => {
+    let campaignFilter: FundraiserListDTO['campaignList'] = []
+    getCampaign(dispatch, typeName, page)
+    if (value === 'completas') {
+      campaignFilter = campaignList.filter(item => item.currentValue >= item.goal)
+    }
+    if (value === 'abertas') {
+      campaignFilter = campaignList.filter(item => item.currentValue < item.goal)
+    }
+    const campaign = {
+      type: 'SET_CAMPAIGN_LIST',
+      campaignList: campaignFilter,
+      loading: false
+  }
+  dispatch(campaign)
+  console.log(campaign)
+
+  }
+
   return (
     <>
       <ContainerMyCampaign>
@@ -69,8 +83,10 @@ console.log(typeName)
     <Container>  
       
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
-      <select>
-        <option value='completed'></option>
+      <select onChange={event => filterCampaigns(event.target.value)}>
+        <option value=''></option>
+        <option value='abertas'>Abertas</option>
+        <option value='completas'>Concluídas</option>
       </select>
       <Card campaignList={campaignList} />
       

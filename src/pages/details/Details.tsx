@@ -50,7 +50,7 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
-  console.log(loadingDetails);
+
   
   if(loadingDetails) {
     return (

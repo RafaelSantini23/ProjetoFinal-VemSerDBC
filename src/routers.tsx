@@ -24,15 +24,6 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
     
   }, [])
 
-  console.log(auth.token);
-  
-
-  
-  
-
-
-  
-
   return (
     <BrowserRouter >
     <Header />

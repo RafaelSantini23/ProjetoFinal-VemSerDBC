@@ -38,7 +38,6 @@ function Modal({ id = 'modal',  onClick, colabs, height, typeModal }: ButtonProp
         }
     }
 
-    console.log(typeModal);
   return (
     <ModalContainer id={id} onClick={handleOutsideClick} >
         <ModalPrincipal >

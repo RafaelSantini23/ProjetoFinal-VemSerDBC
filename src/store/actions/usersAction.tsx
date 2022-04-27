@@ -25,9 +25,7 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
             type: 'SET_USER',
             user: response.data
         }
-        console.log(response);
          
-        
         Loading.remove();
 
         dispatch(user);

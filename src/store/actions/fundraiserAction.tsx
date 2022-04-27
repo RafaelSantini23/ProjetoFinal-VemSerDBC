@@ -46,7 +46,6 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
                 donate: data,
             }
         }
-        console.log(data)
 
         dispatch(donation);
 
@@ -67,7 +66,8 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
             campaignList: content,
             loading: false
         }
-
+        console.log(data);
+    
         dispatch(campaignList)
         Loading.remove()
     } catch (error) {
@@ -78,7 +78,6 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
 export const getCampaignDetails = async (dispatch: AppDispatch, id: string | undefined) => {
     try {
         const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
-        console.log(data)
         const list: any = []
         data.categories.map((item: any) => (
             list.push({ value: item.name, label: item.name })
@@ -112,10 +111,6 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
     try {
         const { data } = await api.post(`/fundraiser/${id}`, formData)
 
-        console.log(data);
-        
-  
-       
     } catch (error) {
         console.log(error);
         
@@ -125,7 +120,6 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
 export const deleteCampaign = async (id: number, navigate: NavigateFunction) => {
     try {
        const { data } = await api.delete(`/fundraiser/${id}`)
-       console.log(data);
        
        navigate('/campanhas')
     } catch (error) {
@@ -147,11 +141,7 @@ export const getCategories = async (dispatch: AppDispatch) => {
             categorys: arr,
             loading: false
         }
-
-
-        console.log(data);
         
-
         dispatch(categoryList)
     } catch (error) {
         console.log(error);
