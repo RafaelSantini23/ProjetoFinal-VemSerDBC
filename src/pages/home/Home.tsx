@@ -1,5 +1,6 @@
 import { 
   ButtonContainer,
+  ButtonHome,
   Container,
   ContainerMyCampaign,
   TituloCampanhas,
@@ -11,16 +12,27 @@ import Theme from "../../theme";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { Loading } from "notiflix";
-import { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import api from "../../api";
 import { CategoryDTO } from "../../models/CategoryDTO";
 
 
-function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
+type campaign = {
+  goal: number;
+  currentValue: number;
+}
 
+type Home = {
+  campaignListTemp: FundraiserListDTO[];
+  categorys: CategoryDTO[];
+}
+
+
+function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
+   const [value, setValue] = useState([])
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
   const [typeName, setTypeName] = useState('findAll')
@@ -44,6 +56,8 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
   // const decoded = JSON.parse(window?.atob(tokenn as string));
 
   // const id = decoded.sub
+
+  
 
 
   const pagination = (direction: string) => {
@@ -69,9 +83,9 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
   const filterCampaigns = (value: string | string[]) => {
     let campaignFilter: FundraiserListDTO['campaignList'] = []
     if (value === 'completas') {
-      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue >= item.goal)
+      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
     }else if (value === 'abertas') {
-      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue < item.goal)
+      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
     } else if (value as string[] && value.length > 0) {
       campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
     } else {
@@ -92,10 +106,13 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
     <>
       <ContainerMyCampaign>
         <ButtonContainer>
-        {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonForm>
-        : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonForm> 
-        }
-         <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonForm>
+
+
+        {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
+        : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
+      }
+         <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
+
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  

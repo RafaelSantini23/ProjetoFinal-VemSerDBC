@@ -67,6 +67,8 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             categorys: action.categorys
         }
     }
+
+    
     return state;
 }
 

@@ -1,10 +1,12 @@
 import { Loading } from "notiflix";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import { TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
 import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 

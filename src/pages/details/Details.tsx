@@ -27,6 +27,7 @@ import { Container,
 } from "./Details.styles"
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
+import api from "../../api";
 
 
 function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & DispatchProp) {
@@ -38,39 +39,42 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
 
   const token = localStorage.getItem('token');
 
-   const tokenn = token?.split('.')[1];
-   const decoded = JSON.parse(window?.atob(tokenn as string));
+  const tokenn = token?.split('.')[1];
+  const decoded = JSON.parse(window?.atob(tokenn as string));
+  const idContributor = Number(decoded.sub)
 
-   const idContributor = Number(decoded.sub)
   
    const findOwner = campaign?.fundraiserCreator?.userId === idContributor
 
    console.log(loadingDetails);
    
 
+
+
    const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
 
   
   useEffect(() => {
-    getCampaignDetails(dispatch, id)
+    const token = localStorage.getItem('token')
+    if(token) {
+      api.defaults.headers.common['Authorization'] = token
+    }
+    getCampaignDetails(dispatch, id as string)
   },[])
+
+  
+
   
   if(loadingDetails) {
     return <>{Loading.circle()}</>
   }
-  
-  console.log(campaign);
-  
-
-  console.log(loadingDetails);
- 
 
   return (
     <Container>
-
-      {  isVisibel && (
+      
+       {  isVisibel && (
             <div>
-                <Modal height="550px" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
+                <Modal height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
             </div> )   }
       <h1>{campaign.title}</h1>
       <ContainerDetails>
@@ -123,8 +127,9 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
 
 
           </InfoCampanha>
-      </ContainerDetails>
-    </Container>
+      </ContainerDetails> 
+    </Container> 
+     
   )
 }
 

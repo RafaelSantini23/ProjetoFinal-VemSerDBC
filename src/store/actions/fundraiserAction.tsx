@@ -38,19 +38,19 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
   }
 }
 
-export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO, id?: string) => {
+export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO['donate'], id?: string) => {
     try {
         const { data } = await api.post(`/donation/${id}`, values)
 
         const donation = {
             type: 'SET_DONATION',
-            donation: {
-                donate: data,
-            }
+           
+                donate: {
+                    message: '',
+                    value: data.value
+                },   
         }
-
         dispatch(donation);
-
 
     } catch (error) {
         console.log(error);
@@ -77,17 +77,19 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
     }
 }
 
-export const getCampaignDetails = async (dispatch: AppDispatch, id: string | undefined) => {
+export const getCampaignDetails = async (dispatch: AppDispatch, id: string | number) => {
     try {
         const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
         const list: any = []
         data.categories.map((item: any) => (
             list.push({ value: item.name, label: item.name })
         ))
+
         const campaign = {
             type: 'SET_CAMPAIGN',
             campaign: data,
-            loadingDetails: false,
+            loading: false,
+            loadingDetails:false,
             categoryList: list
         }
         
@@ -97,6 +99,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
         console.log(error)
     }
 }
+
 
 export const updateCampaign = async (values: FundraiserDTO['campaign'], id: number) => {
     const formData = new FormData()

@@ -114,3 +114,16 @@ export const TotalContribution = styled.small`
     display: block;
 
 `
+
+export const ContainerOwner = styled.div`
+
+
+`
+
+export const NotContributors = styled.h1`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+`

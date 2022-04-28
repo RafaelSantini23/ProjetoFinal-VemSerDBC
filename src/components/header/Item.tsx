@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { connect, DispatchProp } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { LinkStyle } from "../../Global.styles"
@@ -11,6 +12,12 @@ import { ItemStyles } from "./Header.styles"
 
 function Item({ auth, dispatch }: AuthDTO & DispatchProp ) {
     const navigate = useNavigate()
+    const [ navigateTo, setNavigateTo ] = useState(false)
+
+    const navigateToPath = (path: string, condition: boolean) => {
+        setNavigateTo(condition)
+        navigate(path)
+    }
 
   return (
       <>
@@ -21,7 +28,7 @@ function Item({ auth, dispatch }: AuthDTO & DispatchProp ) {
                 <Search />
             </ItemStyles>
             <ItemStyles>
-                    <Button onClick={() => navigate('/create-campanhas')}> Crie sua campanha </Button>
+                   { navigateTo ? <Button onClick={() => navigateToPath('/campanhas', false)}> Voltar As Campanhas </Button> : <Button onClick={() => navigateToPath('/create-campanhas', true)}> Criar Campanhas </Button> } 
             </ItemStyles>
             <ItemStyles>
                 <Button onClick={() => handleLogout(dispatch, navigate)}> Logout </Button>

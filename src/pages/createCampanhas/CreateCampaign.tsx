@@ -1,10 +1,10 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import { ButtonForm, DivValidate, inputDate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
-import { CheckCloseStyle, DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign } from "./CreateCampaign.styles";
+import {  DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { convertMoney, isLoggedin, numberMask,  validDate } from "../../utils/Utils";
@@ -13,12 +13,11 @@ import CreatableSelect from 'react-select/creatable';
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
-import { CategoryDTO } from "../../models/CategoryDTO";
-
+import PreviewImage from "../../components/PreviewImage/PreviewImage";
 
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any & DispatchProp) {
-  const navigate = useNavigate()
   const suportedFormats = ['image/png', 'image/jpeg','image/jpg'];
+  const navigate = useNavigate()
 
   const handleChange = (value: any, setFieldValue: any) => {
     let list = value.map((item: any) => item.value)
@@ -62,9 +61,6 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
 
   return (
     <ContainerCampaign>
-      <DivButton>
-        <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => navigate('/campanhas')}>Voltar as campanhas</ButtonForm>
-      </DivButton>
        <ContainerFormCampaign>
        <Formik
           initialValues={{
@@ -79,7 +75,8 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
             onSubmit={(
               values: FundraiserDTO['campaign'],
               { setSubmitting }: FormikHelpers<FundraiserDTO['campaign']>
-              ) => {        
+              ) => { 
+
                 const campaign = {
                   title: values.title,
                   goal: convertMoney(values.goal as string),
@@ -88,7 +85,9 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
                   coverPhoto: values.coverPhoto,
                   categories: values.categories,
                   description: values.description,
-                }
+
+              }
+
               createCampaign(dispatch, campaign, navigate)
               setSubmitting(false);
               }}
@@ -124,14 +123,18 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
-                <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
+                <ButtonForm colors={`${Theme.colors.dark}`}   type='submit'>
+                <input  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
+                 </ButtonForm>
+               
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}
+                  {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                <Field component={CreatableSelect} options={categorys} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                <Field component={CreatableSelectStyle} options={categorys} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                 {props.errors.categories && props.touched.categories ? (
                   <SpanError>{props.errors.categories as string}</SpanError>
                   ) : null}

@@ -107,6 +107,13 @@ export const base64ToFile = (base64: string, filename: string) => {
 }
 
 
+//Função que transforma primeira letra de cada palavra em maiúscula
 
+export const firstUpper = (value: string) => {
+  return value.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  }
+  );
+}
 
 
