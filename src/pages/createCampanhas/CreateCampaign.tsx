@@ -68,7 +68,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
        <ContainerFormCampaign>
        <Formik
           initialValues={{
-              automaticClose: null,
+              automaticClose: false,
               categories: '',
               endingDate: '',
               description: '',
@@ -82,7 +82,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
               ) => {        
                 const campaign = {
                   title: values.title,
-                  goal: convertMoney(values.goal),
+                  goal: convertMoney(values.goal as string),
                   endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
                   automaticClose: values.automaticClose,
                   coverPhoto: values.coverPhoto,
@@ -97,7 +97,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
             <Form>
               <DivValidate>
                 <LabelForm htmlFor="title">Titulo</LabelForm>
-                <InputStyle hidden id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
+                <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
                 {props.errors.title && props.touched.title ? (
                   <SpanError>{props.errors.title}</SpanError>
                   ) : null}

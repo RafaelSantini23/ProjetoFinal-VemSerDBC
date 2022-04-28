@@ -1,16 +1,14 @@
 import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Params, useNavigate, useParams } from "react-router-dom";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
-import Modal from "../../components/modal/Modal";
 import { ButtonForm } from "../../Global.styles";
-import { FundraiserDTO } from "../../models/FundraiserDTO";
+import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
+import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
 import { deleteCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import Theme from "../../theme";
-import { converteNumber,
-  formataData,
+import { 
   converteBRL,
   convertImage64,
   formataCorTotal,
@@ -27,14 +25,16 @@ import { Container,
   ContainerDetails,
   IconDonate,
 } from "./Details.styles"
+import Theme from "../../theme";
+import Modal from "../../components/modal/Modal";
 
 
-function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchProp) {
+function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & DispatchProp) {
+  const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const navigate = useNavigate()
-  const {id} = useParams()
+  const {id}: Readonly<Params<string>> = useParams()
 
   const token = localStorage.getItem('token');
 
@@ -45,22 +45,18 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
   
    const findOwner = campaign?.fundraiserCreator?.userId === idContributor
 
-   console.log(findOwner);
+   console.log(loadingDetails);
    
 
-   const findContributor = campaign.length && campaign.contributors.find((item: any) => item.userId == idContributor)
+   const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
 
+  
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
   
   if(loadingDetails) {
-    return (
-      <>
-      {Loading.circle()}
-    </>
-    )
-    
+    return <>{Loading.circle()}</>
   }
   
   console.log(campaign);
@@ -81,10 +77,10 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
         <DivCampanha>
           <DivImagem>
           <Meta>
-                { campaign.total >= campaign.meta && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
+                { campaign.currentValue >= campaign.goal && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
             </Meta>
             <ImagemCampanha src={convertImage64(campaign.coverPhoto)} alt="capa" />
-            <p>Categorias: {campaign.categories.map((category: any) => (
+            <p>Categorias: {campaign.categories.map(category => (
               <span>{category.name}</span>
             ))}</p> 
           </DivImagem>
@@ -97,7 +93,7 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
         </DivCampanha>
           <InfoCampanha>
             <h3>Arrecadado</h3>
-            <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL(campaign.currentValue)}</TotalTitle>
+            <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL?.(campaign.currentValue)}</TotalTitle>
             <p>Meta</p>
             <h2>{converteBRL(campaign.goal)}</h2>
             <p>Apoiadores</p>
@@ -112,11 +108,11 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
 
              { findOwner ? 
                (<>
-              <ButtonForm disabled={campaign.contributors.length} colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm> 
+              <ButtonForm disabled={campaign.contributors.length > 0} colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm> 
               <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonForm>  
               
               
-              </>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { campaign.contributors.length & findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
+              </>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
               
 
 
@@ -134,7 +130,6 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
 
 const mapStateToProps = (state: RootState) => ({
   campaign: state.fundraiserReducer.campaign,
-  loading: state.fundraiserReducer.loadingDetails,
   loadingDetails: state.fundraiserReducer.loadingDetails,
  })
 

@@ -36,6 +36,14 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         }
     }
 
+    if(action.type === 'SET_LOADING') {
+        return {
+            ...state,
+            loadingDetails: action.loadingDetails,
+            loading: action.loading
+        }
+    }
+
     if(action.type === 'SET_DONATE') {
         return {
             ...state,

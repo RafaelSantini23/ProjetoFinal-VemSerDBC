@@ -1,4 +1,5 @@
 import { Loading } from "notiflix";
+import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
@@ -8,7 +9,7 @@ import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../..
 import { Meta, MetaAtingida } from "./Card.styles";
 
 
-function Card({campaignList}: FundraiserListDTO) {
+function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   const token = localStorage.getItem('token');
   const navigate = useNavigate()
 
@@ -17,12 +18,20 @@ function Card({campaignList}: FundraiserListDTO) {
 
   const id = decoded.sub
   
+  const setLoading = () => {
+    const loading = {
+      type: 'SET_LOADING',
+      loadingDetails: true
+  }
+  dispatch(loading)
+  }
+
 
   return (
     
         <ContainerCampanhas>
          { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => Loading.circle()}>
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
             <DivCampanha>
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
@@ -51,6 +60,8 @@ function Card({campaignList}: FundraiserListDTO) {
   )
 }
 
+const mapStateToProps = (state: RootState) => ({
+  campaignList: state.fundraiserReducer.campaignList,
+ })
 
-
-export default Card
+export default connect(mapStateToProps)(Card)

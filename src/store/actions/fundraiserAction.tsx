@@ -6,6 +6,8 @@ import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { loadingMessageCSS } from "react-select/dist/declarations/src/components/Menu";
+import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
+import { CategoryDTO } from "../../models/CategoryDTO";
 
 export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
   
@@ -56,7 +58,6 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
 }
 
 export const getCampaign = async (dispatch: AppDispatch, value: string, number: number) => {
-    Loading.circle()
     try {
         const { data } = await api.get(`/fundraiser/${value}/${number}`)
         const {content} = data
@@ -90,9 +91,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
             categoryList: list
         }
         
-        
         dispatch(campaign);
-        
         Loading.remove()
     } catch (error) {
         console.log(error)
@@ -102,10 +101,10 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
 export const updateCampaign = async (values: FundraiserDTO['campaign'], id: number) => {
     const formData = new FormData()
     formData.append('goal', values.goal as string)
-    formData.append('endingDate', values.endingDate  as string)
+    formData.append('endingDate', values.endingDate)
     formData.append('coverPhoto', values.coverPhoto  as string)
     formData.append('description', values.description)
-    formData.append('categories', values.categories  as string)
+    formData.append('categories', values.categories)
     formData.append('title', values.title)
     formData.append('automaticClose', values.automaticClose  as string)
 
@@ -129,12 +128,16 @@ export const deleteCampaign = async (id: number, navigate: NavigateFunction) => 
     }
 }
 
+type Category = {
+    name: string
+}
+
 export const getCategories = async (dispatch: AppDispatch) => {
     try {
         const { data } = await api.get('/category/findAll')
 
         const arr: any = []
-        data.map((item: any) => (
+        data.map((item: Category) => (
             arr.push({ value: item.name, label: item.name })
         ))
 
@@ -150,4 +153,3 @@ export const getCategories = async (dispatch: AppDispatch) => {
         console.log(error);
     }
 }
-
