@@ -64,6 +64,7 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
         const campaignList = {
             type: 'SET_CAMPAIGN_LIST',
             campaignList: content,
+            campaignListTemp: content,
             loading: false
         }
         console.log(data);

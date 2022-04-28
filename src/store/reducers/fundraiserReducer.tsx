@@ -20,6 +20,7 @@ export const INITIAL_STATE = {
         value: 0
     },
     campaignList: [],
+    campaignListTemp: [],
     loading: true,
     loadingDetails: true,
     categorys: [],
@@ -47,6 +48,7 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         return {
             ...state,
             campaignList: action.campaignList,
+            campaignListTemp: action.campaignListTemp,
             loading: action.loading
         }
     }
