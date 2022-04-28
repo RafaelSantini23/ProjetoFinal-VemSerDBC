@@ -17,7 +17,6 @@ import { getCampaign, getCategories } from "../../store/actions/fundraiserAction
 import Select from 'react-select'
 import api from "../../api";
 import { CategoryDTO } from "../../models/CategoryDTO";
-import { FundraiserDTO } from "../../models/FundraiserDTO";
 
 
 function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
@@ -25,7 +24,7 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
   const [typeName, setTypeName] = useState('findAll')
-
+  const [value, setValue] = useState(null)
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -59,6 +58,7 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
         getCampaign(dispatch, typeName, page - 1)
         break;
     }
+    setValue(null)
   }
     
   const campaignsList = async (value: string) => {
@@ -99,7 +99,7 @@ function Home({campaignListTemp, categorys, dispatch, loading}: FundraiserListDT
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
-      <Select options={categorys} onChange={(event: any) => filterCampaigns(event.map((item: any) => item.value))} isMulti isClearable />
+      <Select options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <select onChange={event => filterCampaigns(event.target.value)}>
         <option value=''>Todos</option>
