@@ -48,7 +48,7 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
    console.log(findOwner);
    
 
-   const findContributor = campaign.contributors.find((item: any) => item.userId == idContributor)
+   const findContributor = campaign.length && campaign.contributors.find((item: any) => item.userId == idContributor)
 
   useEffect(() => {
     getCampaignDetails(dispatch, id)

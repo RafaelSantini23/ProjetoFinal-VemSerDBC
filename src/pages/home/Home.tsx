@@ -12,12 +12,12 @@ import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { useEffect, useState } from "react";
-import { getCampaign } from "../../store/actions/fundraiserAction";
+import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import api from "../../api";
 import { Loading } from "notiflix";
+import Select from 'react-select'
 
-
-function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & any & DispatchProp)  {
+function Home({ campaignList, campaignListTemp, dispatch, categorys}: FundraiserListDTO & any & DispatchProp)  {
 
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
@@ -31,6 +31,7 @@ function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & a
       api.defaults.headers.common['Authorization'] = token
     }
     getCampaign(dispatch, 'findAll', page)
+    getCategories(dispatch)
   },[])
 
   // const token = localStorage.getItem('token');
@@ -39,6 +40,12 @@ function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & a
   // const decoded = JSON.parse(window?.atob(tokenn as string));
 
   // const id = decoded.sub
+
+  const handleChange = (e: any) => {
+    console.log();
+    
+  
+  }
 
   const nextPage = () => {
     setPage(page + 1)
@@ -86,6 +93,7 @@ function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & a
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
+      <Select options={categorys} isMulti />
       
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <select onChange={event => filterCampaigns(event.target.value)}>
@@ -107,6 +115,7 @@ function Home({ campaignList, campaignListTemp, dispatch}: FundraiserListDTO & a
 const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
  campaignListTemp: state.fundraiserReducer.campaignListTemp,
+ categorys: state.fundraiserReducer.categorys,
 })
 
 export default connect(mapStateToProps)(Home)
