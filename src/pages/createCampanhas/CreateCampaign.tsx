@@ -16,9 +16,9 @@ import { InputCurrency } from "../../components/modal/Modal.styles";
 import { CategoryDTO } from "../../models/CategoryDTO";
 
 
-
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any & DispatchProp) {
   const navigate = useNavigate()
+  const suportedFormats = ['image/png', 'image/jpeg','image/jpg'];
 
   const handleChange = (value: any, setFieldValue: any) => {
     let list = value.map((item: any) => item.value)
@@ -50,10 +50,15 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
     categories: Yup.array()
     .min(1, 'Campo Obrigatório!')
     .required('Campo Obrigatório!'),
-  });
 
-
-
+    coverPhoto: Yup.mixed()
+    .nullable()
+    .required('Campo Obrigatório!')
+    .test('fileSize', 'Tamanho máximo de 5MB', (value) => !value || (value && value.size <= 4000000))
+    .test('fileFormat', 'Formato inválido!', (value) => !value || (value && suportedFormats.includes(value.type))),
+    
+  
+  })
 
   return (
     <ContainerCampaign>
@@ -92,7 +97,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
             <Form>
               <DivValidate>
                 <LabelForm htmlFor="title">Titulo</LabelForm>
-                <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
+                <InputStyle hidden id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
                 {props.errors.title && props.touched.title ? (
                   <SpanError>{props.errors.title}</SpanError>
                   ) : null}
@@ -139,7 +144,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
                   ) : null}
               </DivValidate>
               
-              <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
+              <ButtonForm colors={`${Theme.colors.dark}`}   type='submit'>Cadastrar</ButtonForm>
             </Form>  
             )}          
           </Formik>

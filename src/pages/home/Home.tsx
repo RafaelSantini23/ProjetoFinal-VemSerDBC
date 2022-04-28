@@ -14,7 +14,6 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select'
 import api from "../../api";
 
@@ -86,6 +85,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
         {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonForm>
         : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonForm> 
         }
+         <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonForm>
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  

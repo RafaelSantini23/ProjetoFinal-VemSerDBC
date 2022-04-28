@@ -9,7 +9,7 @@ import Button from "../button/Button"
 import Search from "../inputs/Search"
 import { ItemStyles } from "./Header.styles"
 
-function Item({ auth, dispatch }: AuthDTO & DispatchProp) {
+function Item({ auth, dispatch }: AuthDTO & DispatchProp ) {
     const navigate = useNavigate()
 
   return (

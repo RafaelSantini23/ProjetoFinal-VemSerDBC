@@ -45,22 +45,28 @@ function Details({campaign, dispatch, loading, loadingDetails}: any & DispatchPr
   
    const findOwner = campaign?.fundraiserCreator?.userId === idContributor
 
-   const findContributor = campaign?.contributors.find((item: any) => item.userId == idContributor)
+   console.log(findOwner);
+   
+
+   const findContributor = campaign.length && campaign.contributors.find((item: any) => item.userId == idContributor)
 
   useEffect(() => {
     getCampaignDetails(dispatch, id)
   },[])
-
   
   if(loadingDetails) {
     return (
-    <>
+      <>
       {Loading.circle()}
     </>
     )
-
+    
   }
+  
+  console.log(campaign);
+  
 
+  console.log(loadingDetails);
  
 
   return (

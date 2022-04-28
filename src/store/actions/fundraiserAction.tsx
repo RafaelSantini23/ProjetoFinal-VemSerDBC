@@ -92,6 +92,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | und
         
         
         dispatch(campaign);
+        
         Loading.remove()
     } catch (error) {
         console.log(error)
@@ -144,7 +145,9 @@ export const getCategories = async (dispatch: AppDispatch) => {
         }
         
         dispatch(categoryList)
+
     } catch (error) {
         console.log(error);
     }
 }
+

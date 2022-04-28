@@ -110,3 +110,7 @@ export const inputDate = styled(InputMask)`
     font: 400 16px 'Roboto', sans-serif;
 `
 
+export const TotalContribution = styled.small`
+    display: block;
+
+`
