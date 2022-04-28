@@ -117,7 +117,6 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                 <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
                 {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
-                {/* <img src={convertImage64(campaign.coverPhoto)} width='100px' height='100px' alt="" /> */}
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}

@@ -10,6 +10,6 @@ export interface FundraiserDTO {
     goal: any | string,
     title: string,
     contributors?: [],
-    fundraiserId?: number
+    fundraiserId?: number,
   }
 }

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Field } from "formik";
 import Theme from '../../theme';
-import ImgCampanhaPrincipal from '../../imgs/background.png'
+import ImgCampanhaPrincipal from '../../imgs/background.png';
+import CreatableSelect from 'react-select/creatable';
 
 export const ContainerCampaign = styled.div`
     background: url(${ImgCampanhaPrincipal}) no-repeat fixed top 10% center;;
@@ -43,3 +44,8 @@ export const DescriptionStyle = styled.textarea`
     border-radius: 8px;
     font: 400 16px 'Roboto', sans-serif;
 `;
+
+export const CreatableSelectStyle = styled(CreatableSelect)`
+    max-width: 350px;
+
+`

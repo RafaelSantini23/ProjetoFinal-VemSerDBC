@@ -1,9 +1,12 @@
 import { Loading } from "notiflix";
+import { DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import { TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
 import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 
@@ -17,12 +20,13 @@ function Card({campaignList}: FundraiserListDTO) {
 
   const id = decoded.sub
   
+  
 
   return (
     
         <ContainerCampanhas>
          { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => Loading.circle()}>
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} >
             <DivCampanha>
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}

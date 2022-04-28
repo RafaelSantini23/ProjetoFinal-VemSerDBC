@@ -11,15 +11,27 @@ import Theme from "../../theme";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { Loading } from "notiflix";
-import { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import api from "../../api";
+import { CategoryDTO } from "../../models/CategoryDTO";
+
+
+type campaign = {
+  goal: number;
+  currentValue: number;
+}
+
+type Home = {
+  campaignListTemp: FundraiserListDTO[];
+  categorys: CategoryDTO[];
+}
 
 
 function Home({ campaignList, campaignListTemp, categorys, dispatch}: FundraiserListDTO & any & DispatchProp)  {
-
+   const [value, setValue] = useState([])
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
   const [typeName, setTypeName] = useState('findAll')
@@ -40,6 +52,8 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
 
   // const id = decoded.sub
 
+  
+
 
   const nextPage = () => {
     setPage(page + 1)
@@ -59,11 +73,11 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
   const filterCampaigns = (value: string | string[]) => {
     let campaignFilter: FundraiserListDTO['campaignList'] = []
     if (value === 'completas') {
-      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue >= item.goal)
+      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
     }else if (value === 'abertas') {
-      campaignFilter = campaignListTemp.filter((item: any) => item.currentValue < item.goal)
+      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
     } else if (value as string[] && value.length > 0) {
-      campaignFilter = campaignListTemp.filter((item: any) => item.categories.find((category: any) => value.includes(category.name)))
+      campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find((category) => value.includes(category.name)))
     } else {
       campaignFilter = campaignListTemp
     }
@@ -89,14 +103,14 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
-      <Select options={categorys} onChange={(event: any) => filterCampaigns(event.map((item: any) => item.value))} isMulti />
+      <Select options={categorys} onChange={(event) => filterCampaigns(event.map((item: any) => item?.value))} isMulti />
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <select onChange={event => filterCampaigns(event.target.value)}>
         <option value=''>Todos</option>
         <option value='abertas'>Abertas</option>
         <option value='completas'>Concluídas</option>
       </select>
-      <Card campaignList={campaignList} />
+      <Card  campaignList={campaignList} />
       
       <div>
         <button disabled={page < 1} onClick={() => prevPage()}> previous </button>

@@ -18,3 +18,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+input[type=file] {
+  padding: .2em .4em;
+  border-radius: .2em;
+  background: none;
+  transition: 1s;
+}
+
+::-webkit-file-upload-button {
+  background: none;
+  border: none;
+}
