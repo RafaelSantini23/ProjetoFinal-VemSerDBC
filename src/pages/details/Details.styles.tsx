@@ -11,6 +11,7 @@ export const Container = styled.div`
   min-height: 100vh;
   align-items: center;
   justify-content: center;
+  
 `;
 
 export const ContainerDetails = styled.div`
@@ -24,6 +25,7 @@ export const DivCampanha = styled.div`
   flex-direction: column;
   width: 700px;
   gap: 30px;
+  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
   `;
 
 export const ImagemCampanha = styled.img`
@@ -44,6 +46,7 @@ export const DescCampanha = styled.div`
   width: 100%;
   min-height: 300px;
   border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
 `;
 
 export const HeaderDesc = styled.p`
@@ -73,6 +76,7 @@ export const InfoCampanha = styled.div`
   height: 400px;
   padding: 20px;
   border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
 `;
 
 export const TotalTitle = styled.h1<{

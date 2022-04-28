@@ -61,13 +61,10 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
 
   return (
     <ContainerCampaign>
-      <DivButton>
-        <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => navigate('/campanhas')}>Voltar as campanhas</ButtonForm>
-      </DivButton>
        <ContainerFormCampaign>
        <Formik
           initialValues={{
-              automaticClose: null,
+              automaticClose: false,
               categories: '',
               endingDate: '',
               description: '',
@@ -82,7 +79,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
 
                 const campaign = {
                   title: values.title,
-                  goal: convertMoney(values.goal),
+                  goal: convertMoney(values.goal as string),
                   endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
                   automaticClose: values.automaticClose,
                   coverPhoto: values.coverPhoto,

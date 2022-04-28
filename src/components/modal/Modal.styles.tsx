@@ -62,6 +62,7 @@ export const ModalPrincipal = styled.div`
     width: 40%;
     height: 55%;
     border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
 
 `
 

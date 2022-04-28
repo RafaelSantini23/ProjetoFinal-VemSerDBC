@@ -69,7 +69,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
             values: FundraiserDTO['campaign']  
             ) => {                    
               const campaignEdit = {
-                goal: convertMoney(values.goal),
+                goal: convertMoney(values.goal as string),
                 endingDate: moment(values.endingDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
                 coverPhoto: values.coverPhoto,
                 description: values.description,

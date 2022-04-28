@@ -1,5 +1,6 @@
 import { 
   ButtonContainer,
+  ButtonHome,
   Container,
   ContainerMyCampaign,
   TituloCampanhas,
@@ -30,7 +31,7 @@ type Home = {
 }
 
 
-function Home({ campaignList, campaignListTemp, categorys, dispatch}: FundraiserListDTO & any & DispatchProp)  {
+function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
    const [value, setValue] = useState([])
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
@@ -45,6 +46,10 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
     getCategories(dispatch)
   },[])
 
+  if (loading) {
+    return <>{Loading.circle()}</>
+  }
+
   // const token = localStorage.getItem('token');
 
   // const tokenn = token?.split('.')[1];
@@ -55,16 +60,20 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
   
 
 
-  const nextPage = () => {
-    setPage(page + 1)
-    getCampaign(dispatch, typeName, page + 1)
+  const pagination = (direction: string) => {
+    Loading.circle()
+    switch(direction) {
+      case 'next':
+        setPage(page + 1)
+        getCampaign(dispatch, typeName, page + 1)
+        break;
+      case 'prev':
+        setPage(page - 1)
+        getCampaign(dispatch, typeName, page - 1)
+        break;
+    }
   }
-
-  const prevPage = () => {
-    setPage(page - 1)
-    getCampaign(dispatch, typeName, page - 1)
-  }
-  
+    
   const campaignsList = async (value: string) => {
     setTypeName(value)
     getCampaign(dispatch, value, page)
@@ -77,7 +86,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
     }else if (value === 'abertas') {
       campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
     } else if (value as string[] && value.length > 0) {
-      campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find((category) => value.includes(category.name)))
+      campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
     } else {
       campaignFilter = campaignListTemp
     }
@@ -87,34 +96,37 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
       campaignList: campaignFilter,
       campaignListTemp: campaignListTemp,
       loading: false
-  }
-  dispatch(campaign)
-  Loading.remove()
+    }
+    dispatch(campaign)
+    Loading.remove()
   }
 
   return (
     <>
       <ContainerMyCampaign>
         <ButtonContainer>
-        {buttonName === 'Todas as Campanhas' ? <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonForm>
-        : <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonForm> 
-        }
-         <ButtonForm colors={`${Theme.colors.secondary}`} onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonForm>
+
+
+        {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
+        : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
+      }
+         <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
+
          </ButtonContainer>
       </ContainerMyCampaign>
     <Container>  
-      <Select options={categorys} onChange={(event) => filterCampaigns(event.map((item: any) => item?.value))} isMulti />
+      <Select options={categorys} onChange={(event: any) => filterCampaigns(event.map((item: any) => item.value))} isMulti isClearable />
       <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
       <select onChange={event => filterCampaigns(event.target.value)}>
         <option value=''>Todos</option>
         <option value='abertas'>Abertas</option>
         <option value='completas'>Concluídas</option>
       </select>
-      <Card  campaignList={campaignList} />
+      <Card/>
       
       <div>
-        <button disabled={page < 1} onClick={() => prevPage()}> previous </button>
-        <button onClick={() => nextPage()}> next </button>
+        <button disabled={page < 1} onClick={() => pagination('prev')}> previous </button>
+        <button onClick={() => pagination('next')}> next </button>
       </div>
     </Container>
     </>
@@ -122,9 +134,9 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch}: Fundraiser
 }
 
 const mapStateToProps = (state: RootState) => ({
- campaignList: state.fundraiserReducer.campaignList,
  campaignListTemp: state.fundraiserReducer.campaignListTemp,
  categorys: state.fundraiserReducer.categorys,
+ loading: state.fundraiserReducer.loading,
 })
 
 export default connect(mapStateToProps)(Home)

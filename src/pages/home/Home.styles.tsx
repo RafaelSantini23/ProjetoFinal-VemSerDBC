@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ImgCampanhaPrincipal from '../../imgs/background.png'
+import Theme from "../../theme";
 
 
 export const Container = styled.div`
@@ -71,12 +72,39 @@ export const ContainerMyCampaign = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
   `
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  width: 450px;
-  box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+  width: 420px;
+
+  
+`
+
+export const ButtonHome = styled.button<{colors?: string}>`
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 500;
+    background: ${Theme.colors.secondary};
+    color: #fff;
+    padding: 0 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    cursor: pointer;
+    border: 0;
+    transition: 0.8s;
+    &:hover {
+        filter: brightness(0.9);
+        background-color: ${Theme.colors.secondary};
+    }
+    margin: 0 10px;
+    box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+
+
 `
