@@ -1,7 +1,8 @@
 import { Loading } from "notiflix";
 import { useNavigate } from "react-router-dom";
+import { TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
-import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan } from "../../pages/home/Home.styles";
+import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
 import { RootState } from "../../store";
 import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
@@ -15,10 +16,6 @@ function Card({campaignList}: FundraiserListDTO) {
   const decoded = JSON.parse(window?.atob(tokenn as string));
 
   const id = decoded.sub
-
- 
-
-
   
 
   return (
@@ -45,6 +42,7 @@ function Card({campaignList}: FundraiserListDTO) {
                 </p>
               <p>Meta: <span>{converteBRL(item.goal)}</span></p>
               <small>Última data de alteração: {formataData(item.lastUpdate)}</small>
+              {item?.totalContribution && <TotalContribution> Valor contribuido: {converteBRL(item?.totalContribution)} </TotalContribution>}
             </DivCampanha>
           </LinkContainer>
         )): <p>Nenhuma campanha encontrada</p>}

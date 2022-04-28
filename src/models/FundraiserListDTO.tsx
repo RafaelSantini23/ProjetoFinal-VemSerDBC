@@ -15,7 +15,8 @@ export interface FundraiserListDTO {
     currentValue: number,
     fundraiserCreator: UsersCreateDTO['user'],
     fundraiserId?: number,
-    lastUpdate: string
+    lastUpdate: string,
+    totalContribution?: number,
   }[],
   loading?: boolean
 }

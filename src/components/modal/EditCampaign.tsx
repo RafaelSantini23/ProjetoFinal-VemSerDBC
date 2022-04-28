@@ -51,7 +51,6 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
         .min(1, 'Campo Obrigatório!')
         .required('Campo Obrigatório!'),
       });
-      console.log(campaign)
   return (
     <div>
       <CampaignForm>

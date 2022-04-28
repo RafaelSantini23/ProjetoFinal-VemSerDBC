@@ -30,9 +30,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
     isLoggedin(navigate)
     getCategories(dispatch)
   }, [])
-  console.log(categorys);
 
-  
   const SignupSchema = Yup.object().shape({
     goal: Yup.string()
     .min(4, "Pelo menos 4 números!")
@@ -86,7 +84,6 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
                   categories: values.categories,
                   description: values.description,
                 }
-                console.log(values);
               createCampaign(dispatch, campaign, navigate)
               setSubmitting(false);
               }}
