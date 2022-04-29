@@ -1,21 +1,25 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { ButtonForm, DivValidate, inputDate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
-import {  DivButton, DescriptionStyle, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
+import { ButtonForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { DescriptionStyle, DatePickerStyled, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { convertMoney, isLoggedin, numberMask,  validDate } from "../../utils/Utils";
 import { createCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import CreatableSelect from 'react-select/creatable';
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
 import PreviewImage from "../../components/PreviewImage/PreviewImage";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pt from "date-fns/locale/pt"
+import MaskedInput from "react-text-mask";
 
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any & DispatchProp) {
+  const [dateValue, setDateValue] = useState<null | Date>(null);
   const suportedFormats = ['image/png', 'image/jpeg','image/jpg'];
   const navigate = useNavigate()
 
@@ -24,6 +28,10 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
     setFieldValue('categories', list)
   };
   
+  const formatDatePicker = (value: Date, setFieldValue: any) => {
+    setDateValue(value)
+    setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
+  }
   
   useEffect(() => {
     isLoggedin(navigate)
@@ -57,6 +65,8 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
     
   
   })
+
+
 
   return (
     <ContainerCampaign>
@@ -115,14 +125,23 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
-                <Field as={inputDate} mask="99/99/9999"  name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                <DatePickerStyled 
+                  selected={dateValue} 
+                  dateFormat="dd/MM/yyyy" 
+                  locale={pt} 
+                  name="endingDate" 
+                  id="endingDate" 
+                  minDate={new Date()}
+                  placeholderText="Informe a data de encerramento da campanha"
+                  onChange={(date: Date) => formatDatePicker(date, props.setFieldValue)}
+                />
                 {props.errors.endingDate && props.touched.endingDate ? (
                   <SpanError>{props.errors.endingDate}</SpanError>
                   ) : null}
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
-                <ButtonForm colors={`${Theme.colors.dark}`}   type='submit'>
+                <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>
                 <input  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
                  </ButtonForm>
                

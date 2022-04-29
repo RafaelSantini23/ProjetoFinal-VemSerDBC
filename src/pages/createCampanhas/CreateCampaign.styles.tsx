@@ -3,6 +3,7 @@ import { Field } from "formik";
 import Theme from '../../theme';
 import ImgCampanhaPrincipal from '../../imgs/background.png';
 import CreatableSelect from 'react-select/creatable';
+import ReactDatePicker from "react-datepicker";
 
 export const ContainerCampaign = styled.div`
     background: url(${ImgCampanhaPrincipal}) no-repeat fixed top 10% center;;
@@ -49,3 +50,12 @@ export const CreatableSelectStyle = styled(CreatableSelect)`
     max-width: 350px;
 
 `
+
+export const DatePickerStyled = styled(ReactDatePicker)`
+    width: 350px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #a8a8b3;
+`;

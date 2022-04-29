@@ -57,12 +57,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
 
   // const id = decoded.sub
 
-  console.log(campaignList.length);
   
-
-  
-
-
   const pagination = (direction: string) => {
     Loading.circle()
     switch(direction) {
