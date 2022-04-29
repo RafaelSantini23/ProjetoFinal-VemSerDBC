@@ -132,8 +132,8 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
       <Card/>
       
       <div>
-        <button disabled={page < 1} onClick={() => pagination('prev')}> previous </button>
-        <button disabled={campaignList.length < 1} onClick={() => pagination('next')}> next </button>
+        <button disabled={page < 1} onClick={() => pagination('prev')}> Anterior </button>
+        <button disabled={campaignList.length <= 0} onClick={() => pagination('next')}> Próxima </button>
       </div>
     </Container>
     </>
@@ -145,6 +145,7 @@ const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
  categorys: state.fundraiserReducer.categorys,
  loading: state.fundraiserReducer.loading,
+ 
 })
 
 export default connect(mapStateToProps)(Home)

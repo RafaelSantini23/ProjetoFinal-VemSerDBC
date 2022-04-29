@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
-import { ButtonForm } from "../../Global.styles";
+import { ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
@@ -67,7 +67,8 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
        {  isVisibel && (
             <div>
                 <Modal height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
-            </div> )   }
+            </div> )   
+            }
       <h1>{campaign.title}</h1>
       <ContainerDetails>
         <DivCampanha>
@@ -88,12 +89,15 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
           </DescCampanha>
         </DivCampanha>
           <InfoCampanha>
+            <CampaignInfo>
+
             <h3>Arrecadado</h3>
             <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL?.(campaign.currentValue)}</TotalTitle>
             <p>Meta</p>
             <h2>{converteBRL(campaign.goal)}</h2>
             <p>Apoiadores</p>
             <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
+            </CampaignInfo>
 
             
 
@@ -103,18 +107,18 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
             </div> ) }
 
              { findOwner ? 
-               (<>
+               (<ContainerOwner>
               <ButtonForm disabled={campaign.contributors.length > 0} colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm> 
               <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonForm>  
               
               
-              </>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
+              </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
               
 
 
             {  editModal && (
             <div>
-                <Modal height="auto" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
+                <Modal height="1550px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
             </div> )}
 
 

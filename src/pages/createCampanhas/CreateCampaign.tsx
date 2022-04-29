@@ -122,10 +122,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
-                <ButtonForm colors={`${Theme.colors.dark}`}   type='submit'>
-                <input  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
-                 </ButtonForm>
-               
+                <input  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>        
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}
