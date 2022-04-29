@@ -4,7 +4,7 @@ import Theme from "../../theme";
 
 export const HeaderStyle = styled.header`
     display: flex;
-    height: 120px;
+    height: 80px;
     background-color: ${Theme.colors.dark};
 `
 export const NavBar = styled.nav`

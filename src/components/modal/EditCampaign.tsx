@@ -9,7 +9,7 @@ import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, 
 import { InputCurrency } from "./Modal.styles";
 import * as Yup from 'yup';
 import CreatableSelect from 'react-select/creatable';
-import PreviewImage from "../PreviewImage/PreviewImage";
+import PreviewImage from "../previewimage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
