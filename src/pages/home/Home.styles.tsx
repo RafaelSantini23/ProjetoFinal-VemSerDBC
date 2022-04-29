@@ -2,7 +2,33 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ImgCampanhaPrincipal from '../../imgs/background.png'
 import Theme from "../../theme";
+import Select from 'react-select'
 
+export const DivSelects = styled.div`
+  display: flex;
+  height: 38px;
+  width: 100%;
+  background: transparent;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+`;
+
+export const DivHeaderTitle = styled.div`
+  height: 100%;
+  width: 100%;
+  background: #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DefaultSelect = styled(Select)<{
+  width?: string
+}>`
+  width: ${props => props.width};
+`;
 
 export const Container = styled.div`
   background-color: #E5E5E5;
@@ -25,9 +51,7 @@ export const ContainerCampanhas = styled.div`
 
 export const TituloCampanhas = styled.h1`
   color: #6c757d;
-  margin-bottom: 5px;
-  margin-top: 15px;
-
+  /* margin-left: 80px; */
 `;
 
 export const DivCampanha = styled.div`
@@ -72,7 +96,7 @@ export const ContainerMyCampaign = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  position: relative;
   `
 
 export const ButtonContainer = styled.div`

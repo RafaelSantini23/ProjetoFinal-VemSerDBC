@@ -41,7 +41,7 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         handleLogin(dispatch, login,  navigate);
         
     } catch (error: any) {
-       
+       console.log(error)
         if(error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
