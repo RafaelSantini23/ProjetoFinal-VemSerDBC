@@ -14,7 +14,10 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     formData.append('email', values.email)
     formData.append('name', values.login)
     formData.append('password', values.password)
-    formData.append('profilePhoto', values.profilePhoto as File)
+    if(values.profilePhoto) {
+        formData.append('profilePhoto', values.profilePhoto as File)
+    }
+
     
 
    
@@ -45,8 +48,8 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
        
         if(error.response) {
 
-            if(error.response.data.message) {
-                Notify.failure(error.response.data.message);
+            if(error.response.data.message === "Email already exists.") {
+                Notify.failure('Email existente!');
             } else {
                 Notify.failure('Erro ao cadastrar usuário!');
             }
