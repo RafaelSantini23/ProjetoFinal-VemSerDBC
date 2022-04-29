@@ -43,14 +43,9 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
   const decoded = JSON.parse(window?.atob(tokenn as string));
   const idContributor = Number(decoded.sub)
 
-  
-   const findOwner = campaign?.fundraiserCreator?.userId === idContributor
+  const findOwner = campaign?.fundraiserCreator?.userId === idContributor
 
-   console.log(loadingDetails);
-  
-
-
-   const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
+  const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
 
   
   useEffect(() => {
@@ -60,10 +55,6 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
     }
     getCampaignDetails(dispatch, id as string)
   },[])
-
-  console.log('donate', loadingDonate);
-  
-
   
   if(loadingDetails) {
     return <>{Loading.circle()}</>

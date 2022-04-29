@@ -88,7 +88,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
 
               }
 
-              createCampaign(dispatch, campaign, navigate)
+              createCampaign(campaign, navigate)
               setSubmitting(false);
               }}
               >
