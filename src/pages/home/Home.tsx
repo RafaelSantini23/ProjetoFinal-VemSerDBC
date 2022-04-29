@@ -8,16 +8,17 @@ import {
   TituloCampanhas,
   ContainerMyCampaign,
 } from "./Home.styles";
-import 'moment/locale/pt-br'
-import Card from "../../components/card/Card";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { Loading } from "notiflix";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import api from "../../api";
 import { CategoryDTO } from "../../models/CategoryDTO";
+import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
+import api from "../../api";
+import Card from "../../components/card/Card";
+import 'moment/locale/pt-br'
 
 
 type campaign = {
@@ -31,10 +32,10 @@ type Home = {
 }
 
 
-function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
+function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO & CategoryOptionDTO & DispatchProp)  {
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
-  const [typeName, setTypeName] = useState('findAll')
+  const [typeName, setTypeName] = useState('findAllFundraisersActive')
   const [value, setValue] = useState(null)
   const [status, setStatus] = useState(null)
   useEffect(() => {
@@ -42,8 +43,9 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
     if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
-    getCampaign(dispatch, 'findAll', page)
+    getCampaign(dispatch, 'findAllFundraisersActive', page)
     getCategories(dispatch)
+    console.log(categorys)
   },[])
 
   if (loading) {
@@ -74,43 +76,32 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
     setStatus(null)
   }
     
-  const campaignsList = async (value: string) => {
+  const campaignsList = async (value: string, array?: string | string[]) => {
     setTypeName(value)
-    getCampaign(dispatch, value, page)
+    getCampaign(dispatch, value, page, array as string[])
     setValue(null)
     setStatus(null)
   }
   
   const filterCampaigns = (value: string | string[]) => {
-    let campaignFilter: FundraiserListDTO['campaignList'] = []
       switch(true) {
         case value === 'atingidas':
-          campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
+          campaignsList('findAcchieved') 
           setValue(null)
           break;
         case value === 'nao-atingidas':
-          campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
+          campaignsList('findNotAcchieved')
           setValue(null)
           break;
         case value as string[] && value.length > 0:
-          campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
+          campaignsList('byCategories', value)
           break;
         default:
-          campaignFilter = campaignListTemp
+          campaignsList('findAllFundraisersActive')
           setValue(null)
           setStatus(null)
           break;
     }
-    console.log(value)
-    Loading.circle()
-    const campaign = {
-      type: 'SET_CAMPAIGN_LIST',
-      campaignList: campaignFilter,
-      campaignListTemp: campaignListTemp,
-      loading: false
-    }
-    dispatch(campaign)
-    Loading.remove()
   }
 
   const optionsFilter = [
@@ -123,7 +114,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
     <>
     <ContainerMyCampaign>
       <ButtonContainer>
-      {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
+      {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAllFundraisersActive'))}>{buttonName}</ButtonHome>
       : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
         } 
       <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
