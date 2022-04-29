@@ -68,10 +68,10 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
          }
 
       const {content, totalPages} = data.data
+
       const campaignList = {
           type: 'SET_CAMPAIGN_LIST',
           campaignList: content,
-          campaignListTemp: content,
           totalPages: totalPages,
           loading: false
       }
@@ -86,7 +86,8 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
 
 export const getCampaignDetails = async (dispatch: AppDispatch, id: string | number) => {
     try {
-        const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`)
+        const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`);
+
         const list: any = []
         data.categories.map((item: any) => (
             list.push({ value: item.name, label: item.name })
@@ -130,6 +131,7 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
 
 export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     try {
+        
         confirmAlert({
             title: 'Confirme para deletar',
             message: 'Você tem certeza ao fazer isso.',
@@ -144,7 +146,7 @@ export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
               }
             ]
           });
-       
+
     } catch (error) {
         Notify.failure('Erro ao excluir a campanha!')
         console.log(error);
