@@ -3,6 +3,7 @@ import { Field } from 'formik';
 import Theme from './theme';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};

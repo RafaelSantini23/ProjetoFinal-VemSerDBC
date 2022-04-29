@@ -93,13 +93,15 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
           setValue(null)
           break;
         case value as string[] && value.length > 0:
-          campaignFilter = campaignList.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
+          campaignFilter = campaignListTemp.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
           break;
         default:
           campaignFilter = campaignListTemp
           setValue(null)
           setStatus(null)
+          break;
     }
+    console.log(value)
     Loading.circle()
     const campaign = {
       type: 'SET_CAMPAIGN_LIST',

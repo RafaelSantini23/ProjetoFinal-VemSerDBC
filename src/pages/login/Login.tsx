@@ -4,13 +4,12 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/authAction"
-import { ButtonForm, ContainerFormUser, ContainerGlobal, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
+import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
 import { useNavigate } from "react-router-dom";
 import ThemeImg from '../../imgs/theme.png'
 import { ImgLogin, TitleLogin } from "./login.styles";
 import Theme from "../../theme";
-
 
 function Login({auth, dispatch}: AuthDTO & DispatchProp) {
     const navigate = useNavigate();
@@ -52,14 +51,14 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                     <LogoDiv>
                         <img src={Logo} height={'200px'} alt="Logo" />
                     </LogoDiv>
-                    <div>
+                    <DivValidate>
                         <LabelForm htmlFor='login'>Usuário</LabelForm>
                         <InputStyle  name="login" id="login" placeholder="Digite o nome do usuário" />
-                    </div>
-                    <div>
+                    </DivValidate>
+                    <DivValidate>
                         <LabelForm htmlFor='password'>Password</LabelForm>
                         <InputStyle name="password" id="password"  placeholder="Digite a sua senha" />
-                    </div>
+                    </DivValidate>
                     <ButtonForm colors={`${Theme.colors.dark}`} marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            
             </Formik>

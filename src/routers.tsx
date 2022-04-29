@@ -11,6 +11,7 @@ import Register from './pages/register/Register';
 import { RootState } from './store';
 import { isAuth } from './store/actions/authAction';
 import Details from './pages/details/Details';
+import NotFound from './pages/notfound/NotFound';
 
 function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 
@@ -28,6 +29,7 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
     <BrowserRouter >
     <Header />
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/campanhas" element={<Home />} />
