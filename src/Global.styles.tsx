@@ -3,6 +3,7 @@ import { Field } from 'formik';
 import Theme from './theme';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
+import ReactDatePicker from 'react-datepicker';
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
@@ -162,3 +163,13 @@ export const CampaignInfo = styled.div`
 
 
 `
+
+
+export const DatePickerStyled = styled(ReactDatePicker)`
+    width: 350px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #a8a8b3;
+`;

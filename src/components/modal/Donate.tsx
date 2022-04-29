@@ -30,7 +30,7 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
                 value: convertMoney(values.value as string),
             }
 
-            donateForCampaign(donateCampaign, dispatch, id)
+            donateForCampaign(donateCampaign, dispatch, id as string)
             
             onClick?.()
 

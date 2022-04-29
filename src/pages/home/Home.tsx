@@ -18,6 +18,7 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import api from "../../api";
 import { CategoryDTO } from "../../models/CategoryDTO";
+import Pagination from "../../components/Pagination/Pagination";
 
 
 type campaign = {
@@ -31,7 +32,7 @@ type Home = {
 }
 
 
-function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: FundraiserListDTO & any & DispatchProp)  {
+function Home({ campaignList, campaignListTemp, categorys, dispatch, loading, totalPages}: FundraiserListDTO & any & DispatchProp)  {
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
   const [typeName, setTypeName] = useState('findAll')
@@ -56,6 +57,9 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
   // const decoded = JSON.parse(window?.atob(tokenn as string));
 
   // const id = decoded.sub
+  
+  console.log(totalPages);
+  
 
   
   const pagination = (direction: string) => {
@@ -83,6 +87,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
   
   const filterCampaigns = (value: string | string[]) => {
     let campaignFilter: FundraiserListDTO['campaignList'] = []
+    
       switch(true) {
         case value === 'atingidas':
           campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
@@ -100,6 +105,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
           setValue(null)
           setStatus(null)
     }
+
     Loading.circle()
     const campaign = {
       type: 'SET_CAMPAIGN_LIST',
@@ -151,7 +157,7 @@ const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
  categorys: state.fundraiserReducer.categorys,
  loading: state.fundraiserReducer.loading,
- 
+ totalPages: state.fundraiserReducer.totalPages
 })
 
 export default connect(mapStateToProps)(Home)

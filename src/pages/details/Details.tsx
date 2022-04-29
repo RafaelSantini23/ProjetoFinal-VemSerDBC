@@ -110,10 +110,9 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
                (
                <ContainerOwner>
 
-              <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
-              <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>  
-              
-              
+                  <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
+                  <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>  
+            
               </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
               
 

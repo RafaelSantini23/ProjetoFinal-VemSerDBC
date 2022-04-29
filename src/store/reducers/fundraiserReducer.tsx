@@ -25,6 +25,7 @@ export const INITIAL_STATE = {
     loadingDetails: true,
     loadingDonate: true,
     categorys: [],
+    totalPages: 0,
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -61,7 +62,8 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             ...state,
             campaignList: action.campaignList,
             campaignListTemp: action.campaignListTemp,
-            loading: action.loading
+            loading: action.loading,
+            totalPages: action.totalPages
         }
     }
 

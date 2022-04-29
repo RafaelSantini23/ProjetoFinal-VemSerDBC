@@ -41,24 +41,28 @@ export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispa
         await api.post(`/donation/${id}`, values)
         Notify.success('Doação feita com sucesso!');
         
+        Loading.remove()
     } catch (error) {
         console.log(error);
         Notify.failure('Erro ao fazer a doação!');
     }
     getCampaignDetails(dispatch, id as string)
-    Loading.remove()
 }
 
 export const getCampaign = async (dispatch: AppDispatch, value: string, number: number) => {
     Loading.circle()
     try {
+
       const { data } = await api.get(`/fundraiser/${value}/${number}`)
+      console.log(data);
+      
       const {content} = data
 
       const campaignList = {
           type: 'SET_CAMPAIGN_LIST',
           campaignList: content,
           campaignListTemp: content,
+          totalPages: data.totalPages,
           loading: false
       }
       console.log(data);

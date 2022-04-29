@@ -24,3 +24,11 @@ export const FormStyled = styled(Form)`
     justify-content: space-around;
     width: 100%;
 `
+
+export const FileStyles = styled.input`
+    :visibility {
+        display: none;
+    }
+
+    
+`

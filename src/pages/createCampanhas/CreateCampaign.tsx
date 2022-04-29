@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { ButtonForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
-import { DescriptionStyle, DatePickerStyled, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
+import { ButtonForm, DatePickerStyled, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { DescriptionStyle, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
 import { convertMoney, isLoggedin, numberMask,  validDate } from "../../utils/Utils";
@@ -29,10 +29,11 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
   };
   
   const formatDatePicker = (value: Date, setFieldValue: any) => {
-    setDateValue(value)
-    setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
+    setDateValue(value);
+    return setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
   }
-  
+
+
   useEffect(() => {
     isLoggedin(navigate)
     getCategories(dispatch)

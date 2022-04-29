@@ -1,6 +1,6 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { connect, DispatchProp } from "react-redux";
-import { ButtonForm, CampaignForm, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { ButtonForm, CampaignForm, DatePickerStyled, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { CheckCloseStyle, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
@@ -13,19 +13,30 @@ import PreviewImage from "../PreviewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { FileContainer, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
+import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
+import pt from "date-fns/locale/pt";
+import { useState } from "react";
 
 
 
 function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & DispatchProp & any) {
   const navigate = useNavigate()
-  
+  const [dateValue, setDateValue] = useState<null | Date>(null);
     const handleChange = (value: any, setFieldValue: any) => {
       
         let list = value.map((item: any) => item.value)
 
         setFieldValue('categories', list)
     };
+
+
+    const formatDatePicker = (value: Date, setFieldValue: any) => {
+      setDateValue(value);
+      setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
+    }
+
+    console.log(campaign);
+    
 
     const SignupSchema = Yup.object().shape({
         goal: Yup.string()
@@ -110,7 +121,16 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                       </DivValidate>
                       <DivValidate>
                         <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
-                        <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                        <DatePickerStyled 
+                          selected={dateValue} 
+                          dateFormat="dd/MM/yyyy" 
+                          locale={pt} 
+                          name="endingDate" 
+                          id="endingDate" 
+                          minDate={new Date()}
+                          placeholderText="Informe a data de encerramento da campanha"
+                          onChange={(date: Date) => formatDatePicker(date, props.setFieldValue)}
+                        />
                         {props.errors.endingDate && props.touched.endingDate ? (
                           <SpanError>{props.errors.endingDate}</SpanError>
                           ) : null}
@@ -128,7 +148,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                           <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                           <FileContainer>
 
-                          <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
+                          <FileStyles name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
                           {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
                           </FileContainer>
                           {props.errors.coverPhoto && props.touched.coverPhoto ? (
