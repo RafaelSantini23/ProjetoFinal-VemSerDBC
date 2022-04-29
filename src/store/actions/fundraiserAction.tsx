@@ -26,18 +26,22 @@ export const createCampaign = async (values: FundraiserDTO['campaign'], navigate
       await api.post('/fundraiser/save', formData);
   
       navigate('/campanhas')
+      Notify.success('Campanha criada com sucesso!');
   } catch (error) {
       console.log(error); 
-  }
+      Notify.failure('Erro ao excluir campanha!');
+    }
 }
 
 export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispatch: AppDispatch , id?: string) => {
-  Loading.circle()
+    Loading.circle()
     try {
         await api.post(`/donation/${id}`, values)
-
+        Notify.success('Doação feita com sucesso!');
+        
     } catch (error) {
         console.log(error);
+        Notify.failure('Erro ao fazer a doação!');
     }
     getCampaignDetails(dispatch, id as string)
     Loading.remove()

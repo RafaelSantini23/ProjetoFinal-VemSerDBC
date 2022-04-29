@@ -4,6 +4,7 @@ import api from "../../api";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Notify } from "notiflix";
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle();
@@ -43,6 +44,12 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     } catch (error: any) {
        
         if(error.response) {
+
+            if(error.response.data.message) {
+                Notify.failure(error.response.data.message);
+            } else {
+                Notify.failure('Erro ao cadastrar usuário!');
+            }
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);

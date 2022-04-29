@@ -114,7 +114,7 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
 
             {  editModal && (
             <div>
-                <Modal height="850px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
+                <Modal height="auto" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
             </div> )}
 
 

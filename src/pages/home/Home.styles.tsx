@@ -79,7 +79,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 420px;
+  width: 430px;
 
   
 `

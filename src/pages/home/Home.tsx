@@ -57,6 +57,9 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
 
   // const id = decoded.sub
 
+  console.log(campaignList.length);
+  
+
   
 
 
@@ -130,7 +133,7 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
       
       <div>
         <button disabled={page < 1} onClick={() => pagination('prev')}> previous </button>
-        <button onClick={() => pagination('next')}> next </button>
+        <button disabled={campaignList.length < 0} onClick={() => pagination('next')}> next </button>
       </div>
     </Container>
     </>

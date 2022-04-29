@@ -25,6 +25,7 @@ input[type=file] {
   border-radius: .2em;
   background: none;
   transition: 1s;
+  width: 100%;
 }
 
 ::-webkit-file-upload-button {

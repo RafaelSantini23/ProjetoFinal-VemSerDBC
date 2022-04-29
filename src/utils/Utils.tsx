@@ -4,7 +4,7 @@ import { NavigateFunction } from "react-router-dom";
 import { createNumberMask } from "text-mask-addons";
 import { ImgCampanha } from "../pages/home/Home.styles";
 
-// Regex
+// Regex para nome não permitindo espaço no inicio apenas
 export const validaNome = /^[a-zA-Z]+$/;
 
 export const validaEmail = /^.{3}\w+([-+.']\w+)*@?(dbccompany.com.br)$/
