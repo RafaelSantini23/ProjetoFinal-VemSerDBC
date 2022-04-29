@@ -52,7 +52,6 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
 
     coverPhoto: Yup.mixed()
     .nullable()
-    .required('Campo Obrigatório!')
     .test('fileSize', 'Tamanho máximo de 5MB', (value) => !value || (value && value.size <= 4000000))
     .test('fileFormat', 'Formato inválido!', (value) => !value || (value && suportedFormats.includes(value.type))),
     

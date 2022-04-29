@@ -7,6 +7,6 @@ export interface UsersCreateDTO {
       password: string;
       name?: string;
       confirmPassword?: string;
-      profilePhoto?: FileDTO | string;
+      profilePhoto?: FileDTO | string | null;
   }
 }

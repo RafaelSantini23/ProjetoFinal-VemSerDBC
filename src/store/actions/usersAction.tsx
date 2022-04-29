@@ -4,6 +4,7 @@ import api from "../../api";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Notify } from "notiflix";
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle();
@@ -13,7 +14,10 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     formData.append('email', values.email)
     formData.append('name', values.login)
     formData.append('password', values.password)
-    formData.append('profilePhoto', values.profilePhoto as File)
+    if(values.profilePhoto) {
+        formData.append('profilePhoto', values.profilePhoto as File)
+    }
+
     
 
    
@@ -43,6 +47,12 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     } catch (error: any) {
        console.log(error)
         if(error.response) {
+
+            if(error.response.data.message === "Email already exists.") {
+                Notify.failure('Email existente!');
+            } else {
+                Notify.failure('Erro ao cadastrar usuário!');
+            }
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);

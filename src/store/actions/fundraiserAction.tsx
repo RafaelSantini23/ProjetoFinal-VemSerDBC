@@ -4,6 +4,10 @@ import api from "../../api";
 import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { Notify } from "notiflix";
+
 
 
 export const createCampaign = async (values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
@@ -12,7 +16,9 @@ export const createCampaign = async (values: FundraiserDTO['campaign'], navigate
     
     formData.append('goal', values.goal as string)
     formData.append('endingDate', values.endingDate  as string)
-    formData.append('coverPhoto', values.coverPhoto  as string)
+    if(values.coverPhoto) {
+        formData.append('coverPhoto', values.coverPhoto  as string)
+    }
     formData.append('description', values.description)
     formData.append('categories', values.categories  as string)
     formData.append('title', values.title)
@@ -22,18 +28,22 @@ export const createCampaign = async (values: FundraiserDTO['campaign'], navigate
       await api.post('/fundraiser/save', formData);
   
       navigate('/campanhas')
+      Notify.success('Campanha criada com sucesso!');
   } catch (error) {
       console.log(error); 
-  }
+      Notify.failure('Erro ao excluir campanha!');
+    }
 }
 
 export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispatch: AppDispatch , id?: string) => {
-  Loading.circle()
+    Loading.circle()
     try {
         await api.post(`/donation/${id}`, values)
-
+        Notify.success('Doação feita com sucesso!');
+        
     } catch (error) {
         console.log(error);
+        Notify.failure('Erro ao fazer a doação!');
     }
     getCampaignDetails(dispatch, id as string)
     Loading.remove()
@@ -104,12 +114,25 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
     }
 }
 
-export const deleteCampaign = async (id: number, navigate: NavigateFunction) => {
+export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     try {
-        await api.delete(`/fundraiser/${id}`)
+        confirmAlert({
+            title: 'Confirme para deletar',
+            message: 'Você tem certeza ao fazer isso.',
+            buttons: [
+              {
+                label: 'Sim',
+                onClick: async () => ( await api.delete(`/fundraiser/${id}`),navigate('/campanhas'), Notify.success('Campanha excluida com sucesso!'))
+              },
+              {
+                label: 'Não',
+                onClick: () => navigate(`/details/${id}`)
+              }
+            ]
+          });
        
-       navigate('/campanhas')
     } catch (error) {
+        Notify.failure('Erro ao excluir a campanha!')
         console.log(error);
     }
 }

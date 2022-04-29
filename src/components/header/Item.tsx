@@ -22,7 +22,7 @@ function Item({ auth, dispatch }: AuthDTO & DispatchProp ) {
   return (
       <>
             <ItemStyles>
-                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas">Explore</LinkStyle>
+                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setNavigateTo(false)}>Explore</LinkStyle>
             </ItemStyles>
             <ItemStyles>
                 <Search />

@@ -30,7 +30,7 @@ import Modal from "../../components/modal/Modal";
 import api from "../../api";
 
 
-function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & DispatchProp) {
+function Details({campaign, dispatch, loadingDetails, loadingDonate}: FundraiserDetailsDTO & DispatchProp) {
   const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);
@@ -59,6 +59,7 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
   if(loadingDetails) {
     return <>{Loading.circle()}</>
   }
+ 
 
   return (
     <Container>
@@ -113,7 +114,7 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
 
             {  editModal && (
             <div>
-                <Modal height="850px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
+                <Modal height="auto" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
             </div> )}
 
 
@@ -127,6 +128,7 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
 const mapStateToProps = (state: RootState) => ({
   campaign: state.fundraiserReducer.campaign,
   loadingDetails: state.fundraiserReducer.loadingDetails,
+  loadingDonate: state.fundraiserReducer.loadingDonate,
  })
 
 export default connect(mapStateToProps)(Details)

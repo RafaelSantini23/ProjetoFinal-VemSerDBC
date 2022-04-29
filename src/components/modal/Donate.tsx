@@ -13,7 +13,7 @@ import { Params, useNavigate, useParams } from "react-router-dom";
 function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
   const navigate = useNavigate()
   const { id }: Readonly<Params<string>> = useParams();
-
+  
 
   return (
     <div>
@@ -57,7 +57,8 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  donate: state.fundraiserReducer.donate
+  donate: state.fundraiserReducer.donate,
+  loadingDetails: state.fundraiserReducer.loadingDetails,
 })
 
 
