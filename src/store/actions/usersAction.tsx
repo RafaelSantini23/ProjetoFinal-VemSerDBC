@@ -45,7 +45,7 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         handleLogin(dispatch, login,  navigate);
         
     } catch (error: any) {
-       
+       console.log(error)
         if(error.response) {
 
             if(error.response.data.message === "Email already exists.") {

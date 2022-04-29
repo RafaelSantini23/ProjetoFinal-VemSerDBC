@@ -18,7 +18,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
 
   const SignupSchema = Yup.object().shape({
     login: Yup.string()
-      .min(4, 'Minimo 4 caracteres!')
+      .min(2, 'Minimo 4 caracteres!')
       .max(50, 'Too Long!')
       .matches(validaNome, 'Nome inválido!')
       .required('Campo Obrigatório!'),

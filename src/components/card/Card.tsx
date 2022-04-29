@@ -54,7 +54,7 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
                 {converteBRL(item.currentValue)}</TotalSpan>
                 </p>
               <p>Meta: <span>{converteBRL(item.goal)}</span></p>
-              <small>Última data de alteração: {formataData(item.lastUpdate)}</small>
+              <small>Alterado {formataData(item.lastUpdate)}</small>
               {item?.totalContribution && <TotalContribution> Valor contribuido: {converteBRL(item?.totalContribution)} </TotalContribution>}
             </DivCampanha>
           </LinkContainer>

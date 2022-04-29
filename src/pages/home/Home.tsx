@@ -1,21 +1,21 @@
 import { 
-  ButtonContainer,
-  ButtonHome,
   Container,
-  ContainerMyCampaign,
+  DivSelects,
+  ButtonHome,
+  DefaultSelect,
+  DivHeaderTitle,
+  ButtonContainer,
   TituloCampanhas,
+  ContainerMyCampaign,
 } from "./Home.styles";
 import 'moment/locale/pt-br'
 import Card from "../../components/card/Card";
-import { ButtonForm } from "../../Global.styles";
-import Theme from "../../theme";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { Loading } from "notiflix";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
-import Select, { MultiValue } from 'react-select'
 import api from "../../api";
 import { CategoryDTO } from "../../models/CategoryDTO";
 
@@ -82,20 +82,28 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
   const campaignsList = async (value: string) => {
     setTypeName(value)
     getCampaign(dispatch, value, page)
+    setValue(null)
+    setStatus(null)
   }
   
   const filterCampaigns = (value: string | string[]) => {
     let campaignFilter: FundraiserListDTO['campaignList'] = []
-    if (value === 'completas') {
-      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
-      setValue(null)
-    }else if (value === 'abertas') {
-      campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
-      setValue(null)
-    } else if (value as string[] && value.length > 0) {
-      campaignFilter = campaignList.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
-    } else {
-      campaignFilter = campaignListTemp
+      switch(true) {
+        case value === 'atingidas':
+          campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue >= item.goal) 
+          setValue(null)
+          break;
+        case value === 'nao-atingidas':
+          campaignFilter = campaignListTemp.filter((item: campaign) => item.currentValue < item.goal)
+          setValue(null)
+          break;
+        case value as string[] && value.length > 0:
+          campaignFilter = campaignList.filter((item: CategoryDTO) => item.categories.find(category => value.includes(category.name)))
+          break;
+        default:
+          campaignFilter = campaignListTemp
+          setValue(null)
+          setStatus(null)
     }
     Loading.circle()
     const campaign = {
@@ -110,25 +118,28 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
 
   const optionsFilter = [
     { value: '', label: 'Todos'},
-    { value: 'abertas', label: 'Abertas'},
-    { value: 'completas', label: 'Concluídas'},
+    { value: 'atingidas', label: 'Atingidas'},
+    { value: 'nao-atingidas', label: 'Não Atingidas'},
   ]
 
   return (
     <>
-      <ContainerMyCampaign>
-        <ButtonContainer>
-        {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
-        : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
-      }
-         <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
-
-         </ButtonContainer>
-      </ContainerMyCampaign>
+    <ContainerMyCampaign>
+      <ButtonContainer>
+      {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
+      : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
+        } 
+      <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
+      </ButtonContainer>
+      <DivSelects>
+        <DefaultSelect width='220px' placeholder='Status' options={optionsFilter} value={status} onChange={(event: any) => (filterCampaigns(event.value), setStatus(event))} />
+        <DefaultSelect width='400px' placeholder='Categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
+      </DivSelects>
+    </ContainerMyCampaign>
+    <DivHeaderTitle>
+    <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
+    </DivHeaderTitle>
     <Container>  
-      <Select placeholder='Selecione a(s) categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
-      <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
-      <Select placeholder='Selecione o status' options={optionsFilter} value={status} onChange={(event: any) => (filterCampaigns(event.value), setStatus(event))} />
       <Card/>
       
       <div>
