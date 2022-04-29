@@ -3,13 +3,10 @@ import { AppDispatch } from "..";
 import api from "../../api";
 import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
-import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { loadingMessageCSS } from "react-select/dist/declarations/src/components/Menu";
-import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
-import { CategoryDTO } from "../../models/CategoryDTO";
 
-export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
+
+export const createCampaign = async (values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
   
     const formData = new FormData()
     
@@ -22,58 +19,44 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
     formData.append('automaticClose', values.automaticClose  as string)
 
   try {
-      
-      const { data } = await api.post('/fundraiser/save', formData);
+      await api.post('/fundraiser/save', formData);
   
-      const campaign = {
-          type: 'SET_CAMPAIGN',
-          campaign: data
-      }
-
-      dispatch(campaign);
-
       navigate('/campanhas')
   } catch (error) {
       console.log(error); 
   }
 }
 
-export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO['donate'], id?: string) => {
+export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispatch: AppDispatch , id?: string) => {
+  Loading.circle()
     try {
-        const { data } = await api.post(`/donation/${id}`, values)
-
-        const donation = {
-            type: 'SET_DONATION',
-           
-                donate: {
-                    message: '',
-                    value: data.value
-                },   
-        }
-        dispatch(donation);
+        await api.post(`/donation/${id}`, values)
 
     } catch (error) {
         console.log(error);
     }
+    getCampaignDetails(dispatch, id as string)
+    Loading.remove()
 }
 
 export const getCampaign = async (dispatch: AppDispatch, value: string, number: number) => {
+    Loading.circle()
     try {
-        const { data } = await api.get(`/fundraiser/${value}/${number}`)
-        const {content} = data
+      const { data } = await api.get(`/fundraiser/${value}/${number}`)
+      const {content} = data
 
-        const campaignList = {
-            type: 'SET_CAMPAIGN_LIST',
-            campaignList: content,
-            campaignListTemp: content,
-            loading: false
-        }
-        console.log(data);
-    
-        dispatch(campaignList)
-        Loading.remove()
+      const campaignList = {
+          type: 'SET_CAMPAIGN_LIST',
+          campaignList: content,
+          campaignListTemp: content,
+          loading: false
+      }
+      console.log(data);
+  
+      dispatch(campaignList)
+      Loading.remove()
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
 }
 
@@ -113,7 +96,7 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
 
 
     try {
-        const { data } = await api.post(`/fundraiser/${id}`, formData)
+        await api.post(`/fundraiser/${id}`, formData)
 
     } catch (error) {
         console.log(error);
@@ -123,7 +106,7 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
 
 export const deleteCampaign = async (id: number, navigate: NavigateFunction) => {
     try {
-       const { data } = await api.delete(`/fundraiser/${id}`)
+        await api.delete(`/fundraiser/${id}`)
        
        navigate('/campanhas')
     } catch (error) {

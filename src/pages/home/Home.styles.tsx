@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const ContainerCampanhas = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
-  padding:  20px 120px;
+  padding: 20px;
   gap: 50px;
   position: relative;
 `;

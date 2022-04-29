@@ -7,11 +7,11 @@ import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
 import { connect, DispatchProp } from "react-redux"
-import { Params, useParams } from "react-router-dom";
+import { Params, useNavigate, useParams } from "react-router-dom";
 
 
 function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
-
+  const navigate = useNavigate()
   const { id }: Readonly<Params<string>> = useParams();
 
 
@@ -30,7 +30,7 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
                 value: convertMoney(values.value as string),
             }
 
-            donateForCampaign(dispatch, donateCampaign, id)
+            donateForCampaign(donateCampaign, dispatch, id)
             
             onClick?.()
 
