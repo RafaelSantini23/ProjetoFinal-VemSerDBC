@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
 import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
+import DefaultCapa from '../../imgs/dbc.png'
 
 
 function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
@@ -39,7 +40,7 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
-              <ImgCampanha src={convertImage64(item.coverPhoto)} alt="foto" />
+              <ImgCampanha src={item.coverPhoto ? convertImage64(item.coverPhoto) : DefaultCapa } alt="foto" />
               <h2>{firstUpper(item.title)}</h2>
               <DivCategoria>
                 <span>{item.categories.map(category => (

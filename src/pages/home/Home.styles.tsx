@@ -10,9 +10,14 @@ export const DivSelects = styled.div`
   width: 100%;
   background: transparent;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: absolute;
   bottom: 0;
+`;
+
+export const DefaultSelect = styled(Select)`
+  min-width: 220px;
+  max-width: max-content;
 `;
 
 export const DivHeaderTitle = styled.div`
@@ -22,12 +27,6 @@ export const DivHeaderTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const DefaultSelect = styled(Select)<{
-  width?: string
-}>`
-  width: ${props => props.width};
 `;
 
 export const Container = styled.div`

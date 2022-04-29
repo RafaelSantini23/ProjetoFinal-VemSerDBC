@@ -35,13 +35,15 @@ export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
     display: flex;
     justify-content: center;
     align-items: center;
-    
     cursor: pointer;
     border: 0;
     transition: 0.8s;
     margin-top: ${props => props.marginTop};
     &:hover {
         filter: brightness(0.9);
+        background-color: ${Theme.colors.secondary};
+    }
+    :disabled {
         background-color: ${Theme.colors.secondary};
     }
     
@@ -116,7 +118,8 @@ export const TotalContribution = styled.small`
 `
 
 export const ContainerOwner = styled.div`
-
+    display: flex;
+    width: 100%;
 
 `
 
@@ -128,5 +131,10 @@ export const NotContributors = styled.h1`
     height: 100%;
 `
 export const categories = styled.span`
+
+`
+
+export const CampaignInfo = styled.div`
+
 
 `

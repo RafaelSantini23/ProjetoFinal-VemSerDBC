@@ -127,8 +127,8 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
       <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
       </ButtonContainer>
       <DivSelects>
-        <DefaultSelect width='220px' placeholder='Status' options={optionsFilter} value={status} onChange={(event: any) => (filterCampaigns(event.value), setStatus(event))} />
-        <DefaultSelect width='400px' placeholder='Categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
+        <DefaultSelect  placeholder='Status' options={optionsFilter} value={status} onChange={(event: any) => (filterCampaigns(event.value), setStatus(event))} />
+        <DefaultSelect  placeholder='Categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
       </DivSelects>
     </ContainerMyCampaign>
     <DivHeaderTitle>
@@ -138,8 +138,8 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
       <Card/>
       
       <div>
-        <button disabled={page < 1} onClick={() => pagination('prev')}> previous </button>
-        <button disabled={campaignList.length < 1} onClick={() => pagination('next')}> next </button>
+        <button disabled={page < 1} onClick={() => pagination('prev')}> Anterior </button>
+        <button disabled={campaignList.length <= 0} onClick={() => pagination('next')}> Próxima </button>
       </div>
     </Container>
     </>
@@ -151,6 +151,7 @@ const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
  categorys: state.fundraiserReducer.categorys,
  loading: state.fundraiserReducer.loading,
+ 
 })
 
 export default connect(mapStateToProps)(Home)

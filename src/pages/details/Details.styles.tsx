@@ -71,6 +71,8 @@ export const InfoCampanha = styled.div`
   top: 1%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  
   background-color: white;
   width: 330px;
   height: 400px;

@@ -13,6 +13,7 @@ import PreviewImage from "../PreviewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { FileContainer } from "./EditCampaign.styles";
 
 
 
@@ -115,8 +116,11 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
+                <FileContainer>
+
                 <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
                 {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
+                </FileContainer>
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}
