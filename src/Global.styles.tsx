@@ -3,11 +3,8 @@ import { Field } from 'formik';
 import Theme from './theme';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
-<<<<<<< HEAD
-import ReactDatePicker from 'react-datepicker';
-=======
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
->>>>>>> e715db0cdb71fd80adf18f06c99023efba275fe6
+import ReactDatePicker from 'react-datepicker';
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
