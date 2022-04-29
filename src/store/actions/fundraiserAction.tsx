@@ -1,12 +1,13 @@
 import { NavigateFunction } from "react-router-dom";
+import Qs from "qs";
 import { AppDispatch } from "..";
-import api from "../../api";
+import { confirmAlert } from 'react-confirm-alert';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Notify } from "notiflix";
 import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import { Notify } from "notiflix";
+import api from "../../api";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 
@@ -41,28 +42,37 @@ export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispa
         await api.post(`/donation/${id}`, values)
         Notify.success('Doação feita com sucesso!');
         
-        Loading.remove()
+        getCampaignDetails(dispatch, id as string)
     } catch (error) {
         console.log(error);
         Notify.failure('Erro ao fazer a doação!');
     }
-    getCampaignDetails(dispatch, id as string)
+    Loading.remove()
 }
 
-export const getCampaign = async (dispatch: AppDispatch, value: string, number: number) => {
+export const getCampaign = async (dispatch: AppDispatch, value: string, number: number, category?: string[]) => {
     Loading.circle()
+    let data;
     try {
+       if (value === 'byCategories') { 
+             data = await api.get(`/fundraiser/${value}/${number}`, {
+                params: {
+                    categories: category
+                },
+                paramsSerializer: params => {
+                    return Qs.stringify(params, {arrayFormat: 'repeat'})
+                }
+            }) 
+         } else {
+             data = await api.get(`/fundraiser/${value}/${number}`)
+         }
 
-      const { data } = await api.get(`/fundraiser/${value}/${number}`)
-      console.log(data);
-      
-      const {content} = data
-
+      const {content, totalPages} = data.data
       const campaignList = {
           type: 'SET_CAMPAIGN_LIST',
           campaignList: content,
           campaignListTemp: content,
-          totalPages: data.totalPages,
+          totalPages: totalPages,
           loading: false
       }
       console.log(data);

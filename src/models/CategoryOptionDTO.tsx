@@ -1,6 +1,6 @@
 export interface CategoryOptionDTO {
-  
-    value: string,
-    label: string
-  
+    categorys: {
+        value: string,
+        label: string
+    }[]
 }
