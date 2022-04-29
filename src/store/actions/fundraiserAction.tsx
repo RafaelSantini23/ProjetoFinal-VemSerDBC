@@ -4,6 +4,10 @@ import api from "../../api";
 import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { Notify } from "notiflix";
+
 
 
 export const createCampaign = async (values: FundraiserDTO['campaign'], navigate: NavigateFunction ) => {
@@ -104,12 +108,25 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
     }
 }
 
-export const deleteCampaign = async (id: number, navigate: NavigateFunction) => {
+export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     try {
-        await api.delete(`/fundraiser/${id}`)
+        confirmAlert({
+            title: 'Confirme para deletar',
+            message: 'Você tem certeza ao fazer isso.',
+            buttons: [
+              {
+                label: 'Sim',
+                onClick: async () => ( await api.delete(`/fundraiser/${id}`),navigate('/campanhas'), Notify.success('Campanha excluida com sucesso!'))
+              },
+              {
+                label: 'Não',
+                onClick: () => navigate(`/details/${id}`)
+              }
+            ]
+          });
        
-       navigate('/campanhas')
     } catch (error) {
+        Notify.failure('Erro ao excluir a campanha!')
         console.log(error);
     }
 }
