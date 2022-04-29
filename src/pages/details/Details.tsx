@@ -30,7 +30,7 @@ import Modal from "../../components/modal/Modal";
 import api from "../../api";
 
 
-function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & DispatchProp) {
+function Details({campaign, dispatch, loadingDetails, loadingDonate}: FundraiserDetailsDTO & DispatchProp) {
   const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);
@@ -47,8 +47,7 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
    const findOwner = campaign?.fundraiserCreator?.userId === idContributor
 
    console.log(loadingDetails);
-   
-
+  
 
 
    const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
@@ -62,12 +61,14 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
     getCampaignDetails(dispatch, id as string)
   },[])
 
+  console.log('donate', loadingDonate);
   
 
   
   if(loadingDetails) {
     return <>{Loading.circle()}</>
   }
+ 
 
   return (
     <Container>
@@ -136,6 +137,7 @@ function Details({campaign, dispatch, loadingDetails}: FundraiserDetailsDTO & Di
 const mapStateToProps = (state: RootState) => ({
   campaign: state.fundraiserReducer.campaign,
   loadingDetails: state.fundraiserReducer.loadingDetails,
+  loadingDonate: state.fundraiserReducer.loadingDonate,
  })
 
 export default connect(mapStateToProps)(Details)

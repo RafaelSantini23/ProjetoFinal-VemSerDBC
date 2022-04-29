@@ -15,7 +15,6 @@ export const changeModal = (modal: string, onClick: () => void, colabs: any ) =>
     switch(modal) {
         case 'donate':
             return <Donate onClick={onClick}  />
-
         case 'editCampaign':
             return <EditCampaign onClick={onClick}   />
         case 'cardColabs':

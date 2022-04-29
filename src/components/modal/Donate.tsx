@@ -7,13 +7,13 @@ import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
 import { connect, DispatchProp } from "react-redux"
-import { Params, useParams } from "react-router-dom";
+import { Params, useNavigate, useParams } from "react-router-dom";
 
 
 function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
 
   const { id }: Readonly<Params<string>> = useParams();
-
+  
 
   return (
     <div>
@@ -31,7 +31,6 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
             }
 
             donateForCampaign(dispatch, donateCampaign, id)
-            
             onClick?.()
 
           }}
@@ -57,7 +56,8 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  donate: state.fundraiserReducer.donate
+  donate: state.fundraiserReducer.donate,
+  loadingDetails: state.fundraiserReducer.loadingDetails,
 })
 
 

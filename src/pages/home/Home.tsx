@@ -105,8 +105,6 @@ function Home({ campaignList, campaignListTemp, categorys, dispatch, loading}: F
     <>
       <ContainerMyCampaign>
         <ButtonContainer>
-
-
         {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAll'))}>{buttonName}</ButtonHome>
         : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
       }

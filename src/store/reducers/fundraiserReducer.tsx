@@ -23,6 +23,7 @@ export const INITIAL_STATE = {
     campaignListTemp: [],
     loading: true,
     loadingDetails: true,
+    loadingDonate: true,
     categorys: [],
 }
 
@@ -44,10 +45,13 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         }
     }
 
+
+
     if(action.type === 'SET_DONATE') {
         return {
             ...state,
-            donate: action.donate
+            donate: action.donate,
+            loadingDonate: action.loadingDonate
         }
     }
 

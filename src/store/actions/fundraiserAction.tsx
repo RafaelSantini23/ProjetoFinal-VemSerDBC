@@ -39,6 +39,7 @@ export const createCampaign = async (dispatch: AppDispatch, values: FundraiserDT
 }
 
 export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCreateDTO['donate'], id?: string) => {
+   
     try {
         const { data } = await api.post(`/donation/${id}`, values)
 
@@ -47,10 +48,12 @@ export const donateForCampaign = async (dispatch: AppDispatch, values: DonateCre
            
                 donate: {
                     message: '',
-                    value: data.value
+                    value: data.value,
+                    loadingDonate: false
                 },   
         }
         dispatch(donation);
+        
 
     } catch (error) {
         console.log(error);

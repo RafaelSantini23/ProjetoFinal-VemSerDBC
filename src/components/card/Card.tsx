@@ -7,7 +7,7 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
 import { AppDispatch, RootState } from "../../store";
 import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import { converteBRL, formataCorTotal, formataData, convertImage64 } from "../../utils/Utils"
+import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper } from "../../utils/Utils"
 import { Meta, MetaAtingida } from "./Card.styles";
 
 
@@ -23,7 +23,8 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   const setLoading = () => {
     const loading = {
       type: 'SET_LOADING',
-      loadingDetails: true
+      loadingDetails: true,
+      loadingDonate: true
   }
   dispatch(loading)
   }
@@ -39,10 +40,10 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
               <ImgCampanha src={convertImage64(item.coverPhoto)} alt="foto" />
-              <h2>{item.title}</h2>
+              <h2>{firstUpper(item.title)}</h2>
               <DivCategoria>
                 <span>{item.categories.map(category => (
-                  <span key={category.categoryId}>{category.name} </span>
+                  <span key={category.categoryId}>{firstUpper(category.name)} </span>
                 ))}</span>
                 <small>ID da campanha: {item.fundraiserId}</small>
               </DivCategoria>

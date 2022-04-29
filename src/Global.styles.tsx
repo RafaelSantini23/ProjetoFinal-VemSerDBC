@@ -127,3 +127,6 @@ export const NotContributors = styled.h1`
     justify-content: center;
     height: 100%;
 `
+export const categories = styled.span`
+
+`

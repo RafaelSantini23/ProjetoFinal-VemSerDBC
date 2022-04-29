@@ -14,5 +14,6 @@ export interface FundraiserDetailsDTO {
     goal: number,
     title: string,
   },
+  loadingDonate: boolean,
   loadingDetails: boolean
 }
