@@ -56,10 +56,10 @@ export const Content = styled.div<{height?: string}>`
 
 `
 
-export const ModalPrincipal = styled.div`
+export const ModalPrincipal = styled.div<{ width?: string }>`
     background-color: #fff;
     color: #000;
-    width: 40%;
+    width: ${props => props.width};
     height: 55%;
     border-radius: 20px;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);

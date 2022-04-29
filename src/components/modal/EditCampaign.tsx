@@ -13,7 +13,7 @@ import PreviewImage from "../PreviewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { FileContainer } from "./EditCampaign.styles";
+import { FileContainer, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
 
 
 
@@ -83,66 +83,71 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
           }}
             >
           {props => (
-            <Form>
-              <DivValidate>
-                <LabelForm htmlFor="title">Titulo</LabelForm>
-                <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
-                {props.errors.title && props.touched.title ? (
-                  <SpanError>{props.errors.title}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-                <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
-                <Field as={InputCurrency} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
-                {props.errors.goal && props.touched.goal ? (
-                  <SpanError>{props.errors.goal as string}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-              <LabelForm htmlFor='automaticClose'>
-                <Field type="checkbox" defaultChecked={campaign.automaticClose === true ? true : false} name="automaticClose" id="automaticClose" />
-                Encerrar a campanha após atingir a meta?
-              </LabelForm>
-                {props.errors.automaticClose && props.touched.automaticClose ? (
-                  <SpanError>{props.errors.automaticClose}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-                <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
-                <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
-                {props.errors.endingDate && props.touched.endingDate ? (
-                  <SpanError>{props.errors.endingDate}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-                <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
-                <FileContainer>
+            <FormStyled>
+                <FirstColumn>
+                     <DivValidate>
+                        <LabelForm htmlFor="title">Titulo</LabelForm>
+                        <InputStyle id="title" name="title" placeholder="Digite o titulo da campanha" type="title"/>
+                        {props.errors.title && props.touched.title ? (
+                          <SpanError>{props.errors.title}</SpanError>
+                          ) : null}
+                      </DivValidate>
+                      <DivValidate>
+                        <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
+                        <Field as={InputCurrency} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
+                        {props.errors.goal && props.touched.goal ? (
+                          <SpanError>{props.errors.goal as string}</SpanError>
+                          ) : null}
+                      </DivValidate>
+                      <DivValidate>
+                      <LabelForm htmlFor='automaticClose'>
+                        <Field type="checkbox" defaultChecked={campaign.automaticClose === true ? true : false} name="automaticClose" id="automaticClose" />
+                        Encerrar a campanha após atingir a meta?
+                      </LabelForm>
+                        {props.errors.automaticClose && props.touched.automaticClose ? (
+                          <SpanError>{props.errors.automaticClose}</SpanError>
+                          ) : null}
+                      </DivValidate>
+                      <DivValidate>
+                        <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
+                        <InputStyle name="endingDate" id="endingDate"  placeholder="Digite a data de encerramento da campanha" />
+                        {props.errors.endingDate && props.touched.endingDate ? (
+                          <SpanError>{props.errors.endingDate}</SpanError>
+                          ) : null}
+                      </DivValidate>
+                      <DivValidate>
+                          <LabelForm htmlFor='description'>Descrição</LabelForm>
+                          <Field as={DescriptionStyle} name="description" id="description"  placeholder="Digite a descrição da campanha" />
+                          {props.errors.description && props.touched.description ? (
+                            <SpanError>{props.errors.description}</SpanError>
+                            ) : null}
+                        </DivValidate>
+                  </FirstColumn>
+                  <SecondColumn>
+                        <DivValidate>
+                          <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
+                          <FileContainer>
 
-                <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
-                {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
-                </FileContainer>
-                {props.errors.coverPhoto && props.touched.coverPhoto ? (
-                  <SpanError>{props.errors.coverPhoto}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-                <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                <Field component={CreatableSelect} defaultValue={categoryList} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)">
-                  
-                </Field>
-                {props.errors.categories && props.touched.categories ? (
-                  <SpanError>{props.errors.categories as string}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <DivValidate>
-                <LabelForm htmlFor='description'>Descrição</LabelForm>
-                <Field as={DescriptionStyle} name="description" id="description"  placeholder="Digite a descrição da campanha" />
-                {props.errors.description && props.touched.description ? (
-                  <SpanError>{props.errors.description}</SpanError>
-                  ) : null}
-              </DivValidate>
-              <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Atualizar</ButtonForm>
-            </Form>  
+                          <input name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>
+                          {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
+                          </FileContainer>
+                          {props.errors.coverPhoto && props.touched.coverPhoto ? (
+                            <SpanError>{props.errors.coverPhoto}</SpanError>
+                            ) : null}
+                        </DivValidate>
+                        <DivValidate>
+                          <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
+                          <Field component={CreatableSelect} defaultValue={categoryList} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)">
+                            
+                          </Field>
+                          {props.errors.categories && props.touched.categories ? (
+                            <SpanError>{props.errors.categories as string}</SpanError>
+                            ) : null}
+                        </DivValidate>
+                       
+                        <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Atualizar</ButtonForm>
+                  </SecondColumn>
+            </FormStyled>  
           )}          
         </Formik>
       </CampaignForm>

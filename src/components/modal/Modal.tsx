@@ -19,6 +19,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode,
     typeModal?: string,
     height: string,
+    width?: string,
     values?: [],
     onClick?: any,
     id?: string,
@@ -26,7 +27,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 }
 
-function Modal({ id = 'modal',  onClick, height, typeModal, colabs }: ButtonProps ) {
+function Modal({ id = 'modal',  onClick, height, width, typeModal, colabs }: ButtonProps ) {
     
 
     const handleOutsideClick = (e: any) => {
@@ -37,11 +38,11 @@ function Modal({ id = 'modal',  onClick, height, typeModal, colabs }: ButtonProp
 
   return (
     <ModalContainer id={id} onClick={handleOutsideClick} >
-        <ModalPrincipal >
+        <ModalPrincipal width={`${width}`}>
         <HeaderModal>
             <ButtonClose onClick={onClick}> <IconClose /> </ButtonClose> 
         </HeaderModal>
-        <Content height={`${height}`} >
+        <Content height={`${height}`}  >
                 <>
                     {typeModal &&  changeModal?.(typeModal, onClick, colabs) }              
                 </> 

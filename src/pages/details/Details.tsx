@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
-import { ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
+import { ButtonForm, ButtonOwner, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
@@ -103,13 +103,15 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
 
             {  modalDonation && (
             <div>
-                <Modal height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
+                <Modal  height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
             </div> ) }
 
              { findOwner ? 
-               (<ContainerOwner>
-              <ButtonForm disabled={campaign.contributors.length > 0} colors={`${Theme.colors.dark}`} onClick={() => setEditModal(true)}> Editar </ButtonForm> 
-              <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonForm>  
+               (
+               <ContainerOwner>
+
+              <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
+              <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>  
               
               
               </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
@@ -118,7 +120,7 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
 
             {  editModal && (
             <div>
-                <Modal height="1550px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
+                <Modal width="1050px"  height="690px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
             </div> )}
 
 
