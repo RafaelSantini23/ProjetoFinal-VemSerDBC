@@ -5,6 +5,7 @@ import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { Notify } from "notiflix";
+import { DispatchProp } from "react-redux";
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle();
@@ -61,6 +62,35 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         Loading.remove()
     
     }
+}
+
+
+export const getUserProfile = async (dispatch: AppDispatch) => {
+    try {
+        const { data } = await api.get('/user/profile');
+
+        const userProfile = {
+            type: 'SET_USER',
+            user: data,
+            loading: false
+        }
+
+        dispatch(userProfile);
+        console.log(userProfile);
+        
+
+    } catch (error) {
+        
+    }  
+}
+export const setButton = (dispatch: AppDispatch, condition: boolean, path?: string, navigate?: NavigateFunction) => {
+    const newState = {
+        type: 'CHANGE_BUTTON',
+        navigateTo: condition
+    }
+
+    dispatch(newState)
+    navigate?.(path as string)
 }
 
 

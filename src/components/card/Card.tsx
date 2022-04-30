@@ -40,7 +40,7 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="100px"> Meta atingida</MetaAtingida> )}
               </Meta>
-              <ImgCampanha src={item.coverPhoto ? convertImage64(item.coverPhoto) : DefaultCapa } alt="foto" />
+              <ImgCampanha src={!item.coverPhoto || item.coverPhoto === 'null' ? DefaultCapa : convertImage64(item.coverPhoto) } alt="foto" />
               <h2>{firstUpper(item.title)}</h2>
               <DivCategoria>
                 <span>{item.categories.map(category => (

@@ -11,8 +11,6 @@ export const NavBar = styled.nav`
     display: flex;
     width: 100%;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-
-
 `
 
 
@@ -36,8 +34,5 @@ export const ItemStyles = styled.li`
 export const ItensStyle = styled.div`
     display: flex;
     align-items: center;
-
-
-
 `
 

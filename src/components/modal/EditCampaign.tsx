@@ -9,34 +9,36 @@ import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, 
 import { InputCurrency } from "./Modal.styles";
 import * as Yup from 'yup';
 import CreatableSelect from 'react-select/creatable';
-import PreviewImage from "../previewimage/PreviewImage";
+import PreviewImage from "../previewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
 import pt from "date-fns/locale/pt";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import DefaultCapa from '../../imgs/dbc.png'
 
 
-function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & DispatchProp & any) {
+
+function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserDTO & DispatchProp & any) {
   const navigate = useNavigate()
-  const [dateValue, setDateValue] = useState<null | Date>(new Date (moment(campaign.endingDate).utc() as any));
-    const handleChange = (value: any, setFieldValue: any) => {
+  const [dateValue, setDateValue] = useState<null | Date>(new Date(moment(campaign.endingDate).utc() as any));
+
+  const handleChange = (value: any, setFieldValue: any) => {
       
         let list = value.map((item: any) => item.value)
 
         setFieldValue('categories', list)
-    };
+  };
 
 
     const formatDatePicker = (value: Date, setFieldValue: any) => {
       setDateValue(value);
+      console.log(value);
+      
       setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
     }
-
-    console.log(campaign.endingDate);
     
-
     const SignupSchema = Yup.object().shape({
         goal: Yup.string()
         .min(4, "Pelo menos 4 números!")
@@ -66,6 +68,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
     <div>
       <CampaignForm>
       <Formik
+      enableReinitialize={true}
         initialValues={{
           automaticClose: campaign.automaticClose,
           categories: campaign.categories.map((item: any) => (item.name)),
@@ -75,6 +78,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
           title: campaign.title,    
           coverPhoto: base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any,
           }}
+
           validationSchema={SignupSchema}
           onSubmit={(
             values: FundraiserDTO['campaign']  
@@ -88,7 +92,13 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                 title: values.title,
                 automaticClose: values.automaticClose,
               }
-            updateCampaign(campaignEdit, campaign.fundraiserId)
+
+            console.log(values.endingDate);
+              
+            updateCampaign(campaignEdit, dispatch, campaign.fundraiserId)
+
+            console.log('campanha',campaignEdit);
+            
             onClick?.()
           }}
             >
@@ -121,8 +131,8 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                       <DivValidate>
                         <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
                         <DatePickerStyled 
-                          selected={dateValue} 
-                          dateFormat="dd/MM/yyyy"
+                          selected={dateValue}
+                          dateFormat="dd/MM/yyyy" 
                           locale={pt} 
                           name="endingDate" 
                           id="endingDate"
@@ -148,7 +158,8 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                           <FileContainer>
 
                           <FileStyles name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
-                          {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
+
+                          {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto} />}  
                           </FileContainer>
                           {props.errors.coverPhoto && props.touched.coverPhoto ? (
                             <SpanError>{props.errors.coverPhoto}</SpanError>

@@ -12,13 +12,15 @@ import { createCampaign, getCategories } from "../../store/actions/fundraiserAct
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
-import PreviewImage from "../../components/previewimage/PreviewImage";
+import PreviewImage from "../../components/previewImage/PreviewImage";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt"
-import MaskedInput from "react-text-mask";
+import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
+import { UsersCreateDTO } from "../../models/UsersCreateDTO";
+import { setButton } from "../../store/actions/usersAction";
 
-function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any & DispatchProp) {
+function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & DispatchProp & CategoryOptionDTO) {
   const [dateValue, setDateValue] = useState<null | Date>(null);
   const suportedFormats = ['image/png', 'image/jpeg','image/jpg'];
   const navigate = useNavigate()
@@ -99,6 +101,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO & any &
               }
 
               createCampaign(campaign, navigate)
+              setButton(dispatch, false)
               setSubmitting(false);
               }}
               >

@@ -9,4 +9,5 @@ export interface UsersCreateDTO {
       confirmPassword?: string;
       profilePhoto?: FileDTO | string | null;
   }
+  navigateTo?: boolean;
 }

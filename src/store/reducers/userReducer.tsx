@@ -8,14 +8,24 @@ export const INITIAL_STATE = {
         login: '',
         password: '',
         profilePhoto: '' 
-    }
+    },
+    loading: true,
+    navigateTo: false,
 }
 
 const userReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) => {
     if (action.type === 'SET_USER') {
         return {
             ...state,
-            user: action.user
+            user: action.user,
+            loading: false
+        }
+    }
+
+    if(action.type === 'CHANGE_BUTTON') {
+        return {
+            ...state,
+            navigateTo: action.navigateTo
         }
     }
 

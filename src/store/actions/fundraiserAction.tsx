@@ -108,7 +108,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | num
 }
 
 
-export const updateCampaign = async (values: FundraiserDTO['campaign'], id: number) => {
+export const updateCampaign = async (values: FundraiserDTO['campaign'], dispatch: AppDispatch, id: number) => {
     const formData = new FormData()
     formData.append('goal', values.goal as string)
     formData.append('endingDate', values.endingDate)
@@ -118,19 +118,23 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], id: numb
     formData.append('title', values.title)
     formData.append('automaticClose', values.automaticClose  as string)
 
-
+    Loading.circle()
     try {
-        await api.post(`/fundraiser/${id}`, formData)
-
+       const { data } =  await api.post(`/fundraiser/${id}`, formData)
+       console.log(data);
+       
+       Loading.remove()
     } catch (error) {
         console.log(error);
         
     }
+
+    getCampaignDetails(dispatch, id)
 }
 
 export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     try {
-        
+
         confirmAlert({
             title: 'Confirme para deletar',
             message: 'Você tem certeza ao fazer isso.',
