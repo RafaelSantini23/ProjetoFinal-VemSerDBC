@@ -103,7 +103,7 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
           campaignsList('findAllFundraisersActive')
           setValue(null)
           setStatus(null)
-          break;
+        break;
     }
   }
 

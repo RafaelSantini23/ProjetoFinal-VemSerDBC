@@ -124,30 +124,7 @@ export const ContainerOwner = styled.div`
     width: 100%;
 `
 
-export const ButtonOwner = styled.div<{colors: string, disabled?: boolean}>`
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    font-weight: 500;
-    color: white;
-    background: ${props => props.colors};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    margin: 0 10px;
-    border: 0;
-    transition: 0.8s;
-    box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-    &:hover {
-        filter: brightness(0.9);
-        background-color: ${Theme.colors.secondary};
-    }
-    :disabled {
-        background-color: ${Theme.colors.secondary};
-    }
 
-`
 
 export const NotContributors = styled.h1`
     display: flex;

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
 import { Meta, MetaAtingida } from "../../components/card/Card.styles";
-import { ButtonForm, ButtonOwner, CampaignInfo, ContainerOwner } from "../../Global.styles";
+import { ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
@@ -24,6 +24,7 @@ import { Container,
   ImagemCampanha,
   ContainerDetails,
   IconDonate,
+  ButtonOwner,
 } from "./Details.styles"
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -59,6 +60,9 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
   if(loadingDetails) {
     return <>{Loading.circle()}</>
   }
+
+  console.log(campaign);
+  
  
 
   return (
@@ -110,7 +114,7 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
                (
                <ContainerOwner>
 
-                  <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
+                  <ButtonOwner disabled={campaign.contributors.length > 0}  colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
                   <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>  
             
               </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}

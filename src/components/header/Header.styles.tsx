@@ -4,15 +4,13 @@ import Theme from "../../theme";
 
 export const HeaderStyle = styled.header`
     display: flex;
-    height: 120px;
+    height: 80px;
     background-color: ${Theme.colors.dark};
 `
 export const NavBar = styled.nav`
     display: flex;
     width: 100%;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-
-
 `
 
 
@@ -36,8 +34,5 @@ export const ItemStyles = styled.li`
 export const ItensStyle = styled.div`
     display: flex;
     align-items: center;
-
-
-
 `
 
