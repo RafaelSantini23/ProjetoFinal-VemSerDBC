@@ -16,6 +16,7 @@ import { ImgModal } from "../modal/Modal.styles"
 import { ImgProfile } from "./Item.styles"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
 import { setButton } from "../../store/actions/usersAction"
+import { convertImage64 } from "../../utils/Utils"
 
 function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
     const navigate = useNavigate()
@@ -35,7 +36,7 @@ function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
   return (
       <>
             <ItemStyles>
-                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" >Explore</LinkStyle>
+                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore</LinkStyle>
             </ItemStyles>
             <ItemStyles>
                 <Search />
@@ -48,7 +49,7 @@ function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
             </ItemStyles>
             <ItemProfile>
                   <TituloProfile> { user.name }  </TituloProfile> 
-                  <ImgProfile src={user.profilePhoto ? user.profilePhoto : DefaultImage} />
+                  <ImgProfile src={user.profilePhoto  ? convertImage64(user.profilePhoto as string) : DefaultImage} />
             </ItemProfile>
       </>
   )

@@ -76,7 +76,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
           description: campaign.description,
           goal: converteBRL(campaign.goal),
           title: campaign.title,    
-          coverPhoto: base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any,
+          coverPhoto: campaign.coverPhoto ? base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any : null,
           }}
 
           validationSchema={SignupSchema}
@@ -158,8 +158,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                           <FileContainer>
 
                           <FileStyles name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
-
-                          {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto} />}  
+                          {props.values.coverPhoto  ? <PreviewImage file={props.values.coverPhoto} /> : <img src={DefaultCapa} width='100px' alt="imagem default" />  }  
                           </FileContainer>
                           {props.errors.coverPhoto && props.touched.coverPhoto ? (
                             <SpanError>{props.errors.coverPhoto}</SpanError>
