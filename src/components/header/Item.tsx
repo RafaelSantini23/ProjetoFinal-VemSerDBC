@@ -20,13 +20,6 @@ import { convertImage64 } from "../../utils/Utils"
 
 function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
     const navigate = useNavigate()
-    // const [ navigateTo, setNavigateTo ] = useState(false)
-    
-    // const navigateToPath = (path: string, condition: boolean) => {
-    //     setNavigateTo(condition)
-    //     navigate(path)
-    // }
-
     useEffect(() => {
         getUserProfile(dispatch)
         console.log(user);

@@ -17,6 +17,7 @@ import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from
 import pt from "date-fns/locale/pt";
 import { useEffect, useState } from "react";
 import DefaultCapa from '../../imgs/dbc.png'
+import MaskedInput from "react-text-mask";
 
 
 
@@ -133,6 +134,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                         <DatePickerStyled 
                           selected={dateValue}
                           dateFormat="dd/MM/yyyy" 
+                          customInput={(<MaskedInput mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} />)}
                           locale={pt} 
                           name="endingDate" 
                           id="endingDate"
