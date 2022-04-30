@@ -18,10 +18,9 @@ import pt from "date-fns/locale/pt";
 import { useState } from "react";
 
 
-
 function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & DispatchProp & any) {
   const navigate = useNavigate()
-  const [dateValue, setDateValue] = useState<null | Date>(null);
+  const [dateValue, setDateValue] = useState<null | Date>(new Date (moment(campaign.endingDate).utc() as any));
     const handleChange = (value: any, setFieldValue: any) => {
       
         let list = value.map((item: any) => item.value)
@@ -35,7 +34,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
       setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
     }
 
-    console.log(campaign);
+    console.log(campaign.endingDate);
     
 
     const SignupSchema = Yup.object().shape({
@@ -70,7 +69,7 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
         initialValues={{
           automaticClose: campaign.automaticClose,
           categories: campaign.categories.map((item: any) => (item.name)),
-          endingDate: campaign.endingDate,
+          endingDate: moment(campaign.endingDate, 'YYYY-MM-DD').format('DD/MM/YYYY'),
           description: campaign.description,
           goal: converteBRL(campaign.goal),
           title: campaign.title,    
@@ -123,10 +122,10 @@ function EditCampaign({ campaign, categoryList, onClick }: FundraiserDTO & Dispa
                         <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
                         <DatePickerStyled 
                           selected={dateValue} 
-                          dateFormat="dd/MM/yyyy" 
+                          dateFormat="dd/MM/yyyy"
                           locale={pt} 
                           name="endingDate" 
-                          id="endingDate" 
+                          id="endingDate"
                           minDate={new Date()}
                           placeholderText="Informe a data de encerramento da campanha"
                           onChange={(date: Date) => formatDatePicker(date, props.setFieldValue)}
