@@ -135,7 +135,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                           dateFormat="dd/MM/yyyy" 
                           locale={pt} 
                           name="endingDate" 
-                          id="endingDate" 
+                          id="endingDate"
                           minDate={new Date()}
                           placeholderText="Informe a data de encerramento da campanha"
                           onChange={(date: Date) => formatDatePicker(date, props.setFieldValue)}
