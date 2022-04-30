@@ -6,7 +6,7 @@ export interface FundraiserDTO {
     automaticClose: boolean | string | null,
     categories: any | string,
     endingDate: string,
-    coverPhoto?: string | null,
+    coverPhoto?: string | null | number,
     description: string,
     goal: number | string,
     title: string,

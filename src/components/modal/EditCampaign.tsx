@@ -17,6 +17,7 @@ import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from
 import pt from "date-fns/locale/pt";
 import { useEffect, useState } from "react";
 import DefaultCapa from '../../imgs/dbc.png'
+import MaskedInput from "react-text-mask";
 
 
 
@@ -76,7 +77,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
           description: campaign.description,
           goal: converteBRL(campaign.goal),
           title: campaign.title,    
-          coverPhoto: base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any,
+          coverPhoto: campaign.coverPhoto ? base64ToFile(convertImage64(campaign.coverPhoto), 'image/png') as any : null,
           }}
 
           validationSchema={SignupSchema}
@@ -133,6 +134,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                         <DatePickerStyled 
                           selected={dateValue}
                           dateFormat="dd/MM/yyyy" 
+                          customInput={(<MaskedInput mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} />)}
                           locale={pt} 
                           name="endingDate" 
                           id="endingDate"
@@ -158,8 +160,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                           <FileContainer>
 
                           <FileStyles name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
-
-                          {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto} />}  
+                          {props.values.coverPhoto  ? <PreviewImage file={props.values.coverPhoto} /> : <img src={DefaultCapa} width='100px' alt="imagem default" />  }  
                           </FileContainer>
                           {props.errors.coverPhoto && props.touched.coverPhoto ? (
                             <SpanError>{props.errors.coverPhoto}</SpanError>

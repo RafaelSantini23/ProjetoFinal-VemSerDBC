@@ -19,6 +19,7 @@ import pt from "date-fns/locale/pt"
 import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { setButton } from "../../store/actions/usersAction";
+import MaskedInput from "react-text-mask";
 
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & DispatchProp & CategoryOptionDTO) {
   const [dateValue, setDateValue] = useState<null | Date>(null);
@@ -131,9 +132,11 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
                 <LabelForm htmlFor='endingDate'>Data limite</LabelForm>
                 <DatePickerStyled 
                   selected={dateValue} 
+                  customInput={(<MaskedInput mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} />)}
                   dateFormat="dd/MM/yyyy" 
                   locale={pt} 
                   name="endingDate" 
+                  autoComplete="off"
                   id="endingDate" 
                   minDate={new Date()}
                   placeholderText="Informe a data de encerramento da campanha"
