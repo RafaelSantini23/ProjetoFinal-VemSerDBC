@@ -116,7 +116,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='confirmPassword'>Confirme a Senha</LabelForm>
-                          <InputStyle name="confirmPassword" id="confirmPassword"  placeholder="Digite novamente a sua senha" />
+                          <InputStyle name="confirmPassword" id="confirmPassword" type={passVisible ? "password" : "text"}  placeholder="Digite novamente a sua senha" />
                           {props.errors.confirmPassword && props.touched.confirmPassword ? (
                             <SpanError>{props.errors.confirmPassword}</SpanError>
                             ) : null}
