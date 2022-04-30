@@ -112,7 +112,9 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], dispatch
     const formData = new FormData()
     formData.append('goal', values.goal as string)
     formData.append('endingDate', values.endingDate)
-    formData.append('coverPhoto', values.coverPhoto  as string)
+    if(values.coverPhoto) {
+        formData.append('coverPhoto', values.coverPhoto  as string)
+    }
     formData.append('description', values.description)
     formData.append('categories', values.categories)
     formData.append('title', values.title)

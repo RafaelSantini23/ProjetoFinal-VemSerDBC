@@ -1,12 +1,11 @@
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Field, Formik } from "formik";
 import { connect, DispatchProp } from "react-redux";
-import { ButtonForm, CampaignForm, DatePickerStyled, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { ButtonForm, CampaignForm, DatePickerStyled, DivValidate, InputFormat, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { CheckCloseStyle, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
 import Theme from "../../theme";
 import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, validDate } from "../../utils/Utils";
-import { InputCurrency } from "./Modal.styles";
 import * as Yup from 'yup';
 import CreatableSelect from 'react-select/creatable';
 import PreviewImage from "../previewImage/PreviewImage";
@@ -15,7 +14,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
 import pt from "date-fns/locale/pt";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DefaultCapa from '../../imgs/dbc.png'
 import MaskedInput from "react-text-mask";
 
@@ -115,14 +114,14 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                       </DivValidate>
                       <DivValidate>
                         <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
-                        <Field as={InputCurrency} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
+                        <Field as={InputFormat} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
                         {props.errors.goal && props.touched.goal ? (
                           <SpanError>{props.errors.goal as string}</SpanError>
                           ) : null}
                       </DivValidate>
                       <DivValidate>
                       <LabelForm htmlFor='automaticClose'>
-                        <Field type="checkbox" defaultChecked={campaign.automaticClose === true ? true : false} name="automaticClose" id="automaticClose" />
+                        <Field type="checkbox" defaultChecked={campaign.automaticClose ? true : false} name="automaticClose" id="automaticClose" />
                         Encerrar a campanha após atingir a meta?
                       </LabelForm>
                         {props.errors.automaticClose && props.touched.automaticClose ? (

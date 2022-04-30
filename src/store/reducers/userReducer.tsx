@@ -22,6 +22,7 @@ const userReducer = (state: UsersCreateDTO = INITIAL_STATE, action: AnyAction) =
         }
     }
 
+
     if(action.type === 'CHANGE_BUTTON') {
         return {
             ...state,

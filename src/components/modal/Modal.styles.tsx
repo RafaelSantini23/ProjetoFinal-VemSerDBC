@@ -63,6 +63,16 @@ export const ModalPrincipal = styled.div<{ width?: string }>`
     height: 55%;
     border-radius: 20px;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+    animation: fadein .5s;
+   
+    @keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+  }
 
 `
 
@@ -135,4 +145,6 @@ export const InputCurrency = styled(MaskedInput)`
     background-color: #fff;
     border: 1px solid #ccc;
     margin-bottom: 15px;
-    `
+`
+
+

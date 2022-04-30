@@ -11,8 +11,9 @@ import { deleteCampaign, getCampaignDetails } from "../../store/actions/fundrais
 import { 
   converteBRL,
   convertImage64,
+  firstUpper,
   formataCorTotal,
-} from "../../utils/Utils"
+} from "../../utils/Utils";
 import { Container,
   MsgDesc,
   DivImagem,
@@ -25,10 +26,11 @@ import { Container,
   ContainerDetails,
   IconDonate,
   ButtonOwner,
-} from "./Details.styles"
+} from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
 import api from "../../api";
+import DefaultCapa from '../../imgs/dbc.png';
 
 
 function Details({campaign, dispatch, loadingDetails, loadingDonate}: FundraiserDetailsDTO & DispatchProp) {
@@ -36,7 +38,7 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const {id}: Readonly<Params<string>> = useParams()
+  const {id}: Readonly<Params<string>> = useParams();
 
   const token = localStorage.getItem('token');
 
@@ -70,17 +72,17 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
       
        {  isVisibel && (
             <div>
-                <Modal height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
+                <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
             </div> )   
             }
-      <h1>{campaign.title}</h1>
+      <h1>{firstUpper(campaign.title)}</h1>
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
           <Meta>
                 { campaign.currentValue >= campaign.goal && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
             </Meta>
-            <ImagemCampanha src={convertImage64(campaign.coverPhoto)} alt="capa" />
+            <ImagemCampanha src={campaign.coverPhoto ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <p>Categorias: {campaign.categories.map(category => (
               <span>{category.name}</span>
             ))}</p> 
@@ -99,15 +101,15 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
             <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL?.(campaign.currentValue)}</TotalTitle>
             <p>Meta</p>
             <h2>{converteBRL(campaign.goal)}</h2>
-            <p>Apoiadores</p>
-            <a onClick={() => setIsVisibel(true)}>{campaign.contributors.length}</a>
+            <p>Apoiadores {campaign.contributors.length}</p>
+            <ButtonForm colors={Theme.colors.dark} onClick={() => setIsVisibel(true)}> Visualizar Colaboradores</ButtonForm>
             </CampaignInfo>
 
             
 
             {  modalDonation && (
             <div>
-                <Modal  height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
+                <Modal width="250px"  height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
             </div> ) }
 
              { findOwner ? 

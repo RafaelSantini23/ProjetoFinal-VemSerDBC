@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { connect, DispatchProp } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { LinkStyle } from "../../Global.styles"
-import { AuthDTO } from "../../models/AuthDTO"
 import { RootState } from "../../store"
 import { handleLogout } from "../../store/actions/authAction"
 import { getUserProfile } from "../../store/actions/usersAction"
@@ -12,13 +11,12 @@ import Search from "../inputs/Search"
 import { ItemStyles } from "./Header.styles"
 import { ItemProfile, TituloProfile } from "./Item.styles"
 import DefaultImage from '../../imgs/defaultImage.jpeg'
-import { ImgModal } from "../modal/Modal.styles"
 import { ImgProfile } from "./Item.styles"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
 import { setButton } from "../../store/actions/usersAction"
-import { convertImage64 } from "../../utils/Utils"
+import { convertImage64, firstUpper } from "../../utils/Utils"
 
-function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
+function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp) {
     const navigate = useNavigate()
     useEffect(() => {
         getUserProfile(dispatch)
@@ -29,7 +27,7 @@ function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
   return (
       <>
             <ItemStyles>
-                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore</LinkStyle>
+                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
             </ItemStyles>
             <ItemStyles>
                 <Search />
@@ -41,8 +39,9 @@ function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
                 <Button onClick={() => handleLogout(dispatch, navigate)}> Logout </Button>
             </ItemStyles>
             <ItemProfile>
-                  <TituloProfile> { user.name }  </TituloProfile> 
-                  <ImgProfile src={user.profilePhoto  ? convertImage64(user.profilePhoto as string) : DefaultImage} />
+                { loading ? <div>Loading...</div> : <> <TituloProfile> { firstUpper(user.name as string) }  </TituloProfile> 
+                  <ImgProfile src={user.profilePhoto  ? convertImage64(user.profilePhoto as string) : DefaultImage} /> </> }
+                  
             </ItemProfile>
       </>
   )
@@ -51,7 +50,8 @@ function Item({ user, dispatch, navigateTo }:  UsersCreateDTO & DispatchProp) {
 const mapStateToProps = (state: RootState) => ({
     auth: state.authReducer.auth,
     user: state.userReducer.user,
-    navigateTo: state.userReducer.navigateTo
+    navigateTo: state.userReducer.navigateTo,
+    loading: state.userReducer.loading
 })
 
 export default connect(mapStateToProps)(Item)
