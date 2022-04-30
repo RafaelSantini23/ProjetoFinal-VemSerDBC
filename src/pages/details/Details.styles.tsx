@@ -14,6 +14,20 @@ export const Container = styled.div`
   
 `;
 
+export const TitleCampaign = styled.h1`
+  font-size: 24px;
+`
+
+export const Raised = styled.h3`
+  font-size: 18px;
+
+`
+
+export const Categories = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+`
+
 export const ContainerDetails = styled.div`
   display: flex;
   gap: 30px;
@@ -118,5 +132,14 @@ export const ButtonOwner = styled.button<{colors: string}>`
         background-color: #cccccc;
         color: #666666;
     }
+
+`
+
+export const Goal = styled.h2`
+  font-size: 18px;
+`
+
+export const ParagraphContributors = styled.p`
+  font-size: 18px;
 
 `

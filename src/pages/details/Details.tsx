@@ -2,19 +2,20 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
-import { Meta, MetaAtingida } from "../../components/card/Card.styles";
+import { CategoriesSpan, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
 import { ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
 import { deleteCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import { 
+import {
   converteBRL,
   convertImage64,
   firstUpper,
   formataCorTotal,
 } from "../../utils/Utils";
-import { Container,
+import {
+  Container,
   MsgDesc,
   DivImagem,
   TotalTitle,
@@ -26,6 +27,11 @@ import { Container,
   ContainerDetails,
   IconDonate,
   ButtonOwner,
+  TitleCampaign,
+  Categories,
+  Raised,
+  Goal,
+  ParagraphContributors,
 } from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -33,59 +39,50 @@ import api from "../../api";
 import DefaultCapa from '../../imgs/dbc.png';
 
 
-function Details({campaign, dispatch, loadingDetails, loadingDonate}: FundraiserDetailsDTO & DispatchProp) {
+function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & DispatchProp) {
   const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const {id}: Readonly<Params<string>> = useParams();
-
+  const { id }: Readonly<Params<string>> = useParams();
   const token = localStorage.getItem('token');
-
   const tokenn = token?.split('.')[1];
   const decoded = JSON.parse(window?.atob(tokenn as string));
   const idContributor = Number(decoded.sub)
-
   const findOwner = campaign?.fundraiserCreator?.userId === idContributor
-
   const findContributor = campaign.contributors?.find((item: UserDTO) => item.userId === idContributor)
 
-  
+
   useEffect(() => {
     const token = localStorage.getItem('token')
-    if(token) {
+    if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
     getCampaignDetails(dispatch, id as string)
-  },[])
-  
-  if(loadingDetails) {
+  }, [])
+
+  if (loadingDetails) {
     return <>{Loading.circle()}</>
   }
 
-  console.log(campaign);
-  
- 
-
   return (
     <Container>
-      
-       {  isVisibel && (
-            <div>
-                <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
-            </div> )   
-            }
-      <h1>{firstUpper(campaign.title)}</h1>
+      {isVisibel && (
+
+        <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
+      )
+      }
+      <TitleCampaign>{firstUpper(campaign.title)}</TitleCampaign>
       <ContainerDetails>
         <DivCampanha>
           <DivImagem>
-          <Meta>
-                { campaign.currentValue >= campaign.goal && ( <MetaAtingida mT='190px'> Meta atingida</MetaAtingida> )}
+            <Meta>
+              {campaign.currentValue >= campaign.goal && (<MetaAtingida mT='190px'> Meta atingida</MetaAtingida>)}
             </Meta>
             <ImagemCampanha src={campaign.coverPhoto ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
-            <p>Categorias: {campaign.categories.map(category => (
-              <span>{category.name}</span>
-            ))}</p> 
+            <Categories>Categorias: {campaign.categories.map(category => (
+              <CategoriesSpan>{firstUpper(category.name)} </CategoriesSpan>
+            ))}</Categories>
           </DivImagem>
           <DescCampanha>
             <HeaderDesc>Descrição</HeaderDesc>
@@ -94,45 +91,31 @@ function Details({campaign, dispatch, loadingDetails, loadingDonate}: Fundraiser
             </MsgDesc>
           </DescCampanha>
         </DivCampanha>
-          <InfoCampanha>
-            <CampaignInfo>
-
-            <h3>Arrecadado</h3>
+        <InfoCampanha>
+          <CampaignInfo>
+            <Raised>Arrecadado</Raised>
             <TotalTitle color={formataCorTotal(campaign.goal, campaign.currentValue)}>{converteBRL?.(campaign.currentValue)}</TotalTitle>
-            <p>Meta</p>
-            <h2>{converteBRL(campaign.goal)}</h2>
-            <p>Apoiadores {campaign.contributors.length}</p>
+            <MetaParagraph>Meta</MetaParagraph>
+            <Goal>{converteBRL(campaign.goal)}</Goal>
+            <ParagraphContributors>Apoiadores {campaign.contributors.length}</ParagraphContributors>
             <ButtonForm colors={Theme.colors.dark} onClick={() => setIsVisibel(true)}> Visualizar Colaboradores</ButtonForm>
-            </CampaignInfo>
+          </CampaignInfo>
+          {modalDonation && (
+            <Modal width="250px" height="150px" typeModal={"donate"} onClick={() => setModalDonation(false)} />
+          )}
+          {findOwner ?
+            (
+              <ContainerOwner>
+                <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner>
+                <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>
+              </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> {findContributor ? 'Doar novamente' : 'Doar'} <IconDonate />  </ButtonForm>}
+          {editModal && (
+            <Modal width="1050px" height="690px" typeModal='editCampaign' onClick={() => setEditModal(false)} />
+          )}
+        </InfoCampanha>
+      </ContainerDetails>
+    </Container>
 
-            
-
-            {  modalDonation && (
-            <div>
-                <Modal width="250px"  height="150px" typeModal={"donate"}  onClick={() => setModalDonation(false)} />
-            </div> ) }
-
-             { findOwner ? 
-               (
-               <ContainerOwner>
-
-                  <ButtonOwner disabled={campaign.contributors.length > 0}  colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner> 
-                  <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>  
-            
-              </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> { findContributor ? 'Doar novamente' : 'Doar' } <IconDonate />  </ButtonForm>}
-              
-
-
-            {  editModal && (
-            <div>
-                <Modal width="1050px"  height="690px" typeModal='editCampaign'  onClick={() => setEditModal(false)} />
-            </div> )}
-
-
-          </InfoCampanha>
-      </ContainerDetails> 
-    </Container> 
-     
   )
 }
 
@@ -140,6 +123,6 @@ const mapStateToProps = (state: RootState) => ({
   campaign: state.fundraiserReducer.campaign,
   loadingDetails: state.fundraiserReducer.loadingDetails,
   loadingDonate: state.fundraiserReducer.loadingDonate,
- })
+})
 
 export default connect(mapStateToProps)(Details)

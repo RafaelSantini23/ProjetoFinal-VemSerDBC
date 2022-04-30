@@ -181,3 +181,8 @@ export const InputFormat = styled(MaskedInput)`
     border: 1px solid #a8a8b3;
     font: 400 16px 'Roboto', sans-serif;
 `
+
+export const Error =  styled.p`
+    font-size: 24px;
+
+`
