@@ -19,6 +19,7 @@ import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import api from "../../api";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
+import { type } from "os";
 
 
 type campaign = {
@@ -38,6 +39,8 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
   const [typeName, setTypeName] = useState('findAllFundraisersActive')
   const [value, setValue] = useState(null)
   const [status, setStatus] = useState(null)
+  const [valueArray, setValueArray] = useState<string[]>([])
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -68,22 +71,18 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
     switch(direction) {
       case 'next':
         setPage(page + 1)
-        getCampaign(dispatch, typeName, page + 1)
+        getCampaign(dispatch, typeName, page + 1, valueArray)
         break;
       case 'prev':
         setPage(page - 1)
-        getCampaign(dispatch, typeName, page - 1)
+        getCampaign(dispatch, typeName, page - 1, valueArray)
         break;
     }
-    setValue(null)
-    setStatus(null)
   }
     
   const campaignsList = async (value: string, array?: string | string[]) => {
     setTypeName(value)
     getCampaign(dispatch, value, page, array as string[])
-    setValue(null)
-    setStatus(null)
   }
   
   const filterCampaigns = (value: string | string[]) => {
@@ -98,6 +97,7 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
           break;
         case value as string[] && value.length > 0:
           campaignsList('byCategories', value)
+          setValueArray(value as string[])
           break;
         default:
           campaignsList('findAllFundraisersActive')

@@ -75,8 +75,7 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
           totalPages: totalPages,
           loading: false
       }
-      console.log(data);
-  
+  console.log(data.data)
       dispatch(campaignList)
       Loading.remove()
     } catch (error) {

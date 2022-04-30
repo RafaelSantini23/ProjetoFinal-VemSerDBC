@@ -12,7 +12,8 @@ import { createCampaign, getCategories } from "../../store/actions/fundraiserAct
 import moment from "moment";
 import Theme from "../../theme";
 import { InputCurrency } from "../../components/modal/Modal.styles";
-import PreviewImage from "../../components/PreviewImage/PreviewImage";
+import PreviewImage from "../../components/previewImage/PreviewImage";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt"
 import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
