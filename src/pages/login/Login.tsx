@@ -1,17 +1,18 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux"
 import { Form, Formik, FormikHelpers } from "formik";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/authAction"
-import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
+import { ButtonForm, ContainerFormUser, ContainerGlobal, DivPassword, DivValidate, EyeInvisible, EyeVisible, IconPassword, InputStyle, LabelForm, LinkStyle, LogoDiv } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
 import { useNavigate } from "react-router-dom";
 import ThemeImg from '../../imgs/theme.png'
 import { ImgLogin, TitleLogin } from "./login.styles";
 import Theme from "../../theme";
 
-function Login({auth, dispatch}: AuthDTO & DispatchProp) {
+function Login({dispatch}: AuthDTO & DispatchProp) {
+    const [passVisible, setPassVisible] = useState(true)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -56,8 +57,12 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                         <InputStyle  name="login" id="login" placeholder="Digite o nome do usuário" />
                     </DivValidate>
                     <DivValidate>
-                        <LabelForm htmlFor='password'>Password</LabelForm>
-                        <InputStyle name="password" id="password"  placeholder="Digite a sua senha" />
+                    <DivPassword>
+                            <InputStyle name="password" id="password" type={passVisible ? "password" : "text"}  placeholder="Digite a sua senha"/>
+                            <IconPassword onClick={() => setPassVisible(!passVisible)}>
+                              {passVisible ? <EyeInvisible /> : <EyeVisible />}
+                            </IconPassword>
+                          </DivPassword>
                     </DivValidate>
                     <ButtonForm colors={`${Theme.colors.dark}`} marginTop="20px"  type='submit'>Entrar</ButtonForm>
                 </Form>            

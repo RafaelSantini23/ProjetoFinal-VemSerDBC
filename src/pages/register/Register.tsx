@@ -1,9 +1,24 @@
+import { useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from 'yup';
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
-import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, LogoDiv, SpanError } from "../../Global.styles";
+import {
+  LogoDiv,
+  SpanError,
+  LinkStyle,
+  LabelForm,
+  InputStyle,
+  EyeVisible,
+  ButtonForm,
+  DivPassword,
+  DivValidate,
+  IconPassword,
+  EyeInvisible,
+  ContainerGlobal,
+  ContainerFormUser,
+} from "../../Global.styles";
 import { registerUser } from "../../store/actions/usersAction";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
@@ -12,9 +27,9 @@ import Theme from "../../theme";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
 import ThemeImg from '../../imgs/theme.png';
 
-
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
+  const [passVisible, setPassVisible] = useState(true)
 
   const SignupSchema = Yup.object().shape({
     login: Yup.string()
@@ -43,7 +58,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
     <ContainerGlobal>
       <ContainerFormUser>
       <ImgLogin>
-            <img src={ThemeImg}  height={'250px'} alt="" />
+            <img src={ThemeImg}  height={'250px'} alt="theme" />
             <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
         </ImgLogin>
         <LinkStyle color={`${Theme.colors.dark}`} mT="20px" to="/">Voltar ao login</LinkStyle>
@@ -88,8 +103,13 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='password'>Senha</LabelForm>
+                          <DivPassword>
+                            <InputStyle name="password" id="password" type={passVisible ? "password" : "text"}  placeholder="Digite a sua senha"/>
+                            <IconPassword onClick={() => setPassVisible(!passVisible)}>
+                              {passVisible ? <EyeInvisible /> : <EyeVisible />}
+                            </IconPassword>
+                          </DivPassword>
                           <PasswordStrengthBar password={props.values.password} />
-                          <InputStyle name="password" id="password"  placeholder="Digite a sua senha"/>
                           {props.errors.password && props.touched.password ? (
                             <SpanError>{props.errors.password}</SpanError>
                             ) : null}
