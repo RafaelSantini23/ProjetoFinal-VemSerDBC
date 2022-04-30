@@ -5,6 +5,7 @@ import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Notify } from "notiflix";
 
 export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'] | UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle()
@@ -33,6 +34,7 @@ export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth']
 
     } catch (error) {
         console.log(error);
+        Notify.failure('Usuário não encontrado!');
         Loading.remove()
     }
 

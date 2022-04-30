@@ -135,4 +135,6 @@ export const InputCurrency = styled(MaskedInput)`
     background-color: #fff;
     border: 1px solid #ccc;
     margin-bottom: 15px;
-    `
+`
+
+

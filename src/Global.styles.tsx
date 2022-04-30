@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import ReactDatePicker from 'react-datepicker';
+import MaskedInput from 'react-text-mask';
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
@@ -151,3 +152,13 @@ export const DatePickerStyled = styled(ReactDatePicker)`
     background: #fff;
     border: 1px solid #a8a8b3;
 `;
+
+export const InputFormat = styled(MaskedInput)`
+    width: 350px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #a8a8b3;
+    font: 400 16px 'Roboto', sans-serif;
+`

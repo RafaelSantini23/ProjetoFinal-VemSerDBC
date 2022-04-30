@@ -10,4 +10,5 @@ export interface UsersCreateDTO {
       profilePhoto?: FileDTO | string | null;
   }
   navigateTo?: boolean;
+  loading?: boolean;
 }

@@ -5,7 +5,7 @@ import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { Notify } from "notiflix";
-import { DispatchProp } from "react-redux";
+
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle();
@@ -18,8 +18,6 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     if(values.profilePhoto) {
         formData.append('profilePhoto', values.profilePhoto as File)
     }
-
-    
 
    
     try {
@@ -77,10 +75,10 @@ export const getUserProfile = async (dispatch: AppDispatch) => {
 
         dispatch(userProfile);
         console.log(userProfile);
-        
+   
 
     } catch (error) {
-        
+        Notify.failure('error ao obter os dados do usuário!')
     }  
 }
 export const setButton = (dispatch: AppDispatch, condition: boolean, path?: string, navigate?: NavigateFunction) => {

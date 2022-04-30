@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { ButtonForm, DatePickerStyled, DivValidate, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import { ButtonForm, DatePickerStyled, DivValidate, InputFormat, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { DescriptionStyle, ContainerFormCampaign, ContainerCampaign, CreatableSelectStyle } from "./CreateCampaign.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { RootState } from "../../store";
@@ -117,7 +117,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='goal'>Meta da campanha</LabelForm>
-                <Field as={InputCurrency} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
+                <Field as={InputFormat} mask={numberMask}  name="goal" id="goal"  placeholder="Digite o valor a ser atingido"/>
                 {props.errors.goal && props.touched.goal ? (
                   <SpanError>{props.errors.goal as string}</SpanError>
                   ) : null}
