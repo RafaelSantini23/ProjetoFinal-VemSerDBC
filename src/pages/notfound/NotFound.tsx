@@ -1,8 +1,21 @@
-import { NotFoundPage } from "./NotFound.styles"
+import { NotFoundPage, NotFoundTitle } from "./NotFound.styles"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 function NotFound() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/campanhas')
+    }, 1200);
+  },[])
+
   return (
-    <NotFoundPage>NotFound</NotFoundPage>
+    <NotFoundPage>
+      <NotFoundTitle>Página não encontrada!</NotFoundTitle>
+    </NotFoundPage>
   )
 }
+
 export default NotFound
