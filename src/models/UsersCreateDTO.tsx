@@ -1,7 +1,7 @@
 import { FileDTO } from './FileDTO';
 
 export interface UsersCreateDTO {
-  user: {
+  user : {
       email: string;
       login: string;
       password: string;
@@ -11,4 +11,5 @@ export interface UsersCreateDTO {
   }
   navigateTo?: boolean;
   loading?: boolean;
+  setPass?: boolean;
 }

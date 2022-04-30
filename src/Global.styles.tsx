@@ -3,9 +3,10 @@ import { Field } from 'formik';
 import Theme from './theme';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import ReactDatePicker from 'react-datepicker';
 import MaskedInput from 'react-text-mask';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+
 
 export const ContainerGlobal = styled.div`
     width: ${Theme.containerPrincipal.width};
@@ -55,6 +56,24 @@ export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
 export const DivValidate = styled.div`
     position: relative;
     padding-bottom: 20px;
+`;
+
+export const DivPassword = styled.div`
+position: relative;
+`;
+
+export const IconPassword = styled.a`
+    position: absolute;
+    right: 2%;
+    bottom: 12%;
+`;
+
+export const EyeVisible = styled(AiOutlineEye)`
+    font-size: 20px;
+`;
+
+export const EyeInvisible = styled(AiOutlineEyeInvisible)`
+    font-size: 20px;
 `;
 
 export const SpanError = styled.span`

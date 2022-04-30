@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect, DispatchProp } from "react-redux"
 import { Form, Formik, FormikHelpers } from "formik";
 import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/authAction"
-import { ButtonForm, ContainerFormUser, ContainerGlobal, DivValidate, InputStyle, LabelForm, LinkStyle, LogoDiv, SpanError } from "../../Global.styles";
+import { ButtonForm, ContainerFormUser, ContainerGlobal, DivPassword, DivValidate, EyeInvisible, EyeVisible, IconPassword, InputStyle, LabelForm, LinkStyle, LogoDiv, SpanError } from "../../Global.styles";
 import Logo from '../../imgs/logo.svg'
 import { useNavigate } from "react-router-dom";
 import ThemeImg from '../../imgs/theme.png'
@@ -12,8 +12,8 @@ import { ImgLogin, TitleLogin } from "./login.styles";
 import Theme from "../../theme";
 import * as Yup from 'yup';
 
-function Login({auth, dispatch}: AuthDTO & DispatchProp) {
-
+function Login({dispatch}: AuthDTO & DispatchProp) {
+    const [passVisible, setPassVisible] = useState(true)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -72,9 +72,13 @@ function Login({auth, dispatch}: AuthDTO & DispatchProp) {
                             ) : null}
                     </DivValidate>
                     <DivValidate>
-                        <LabelForm htmlFor='password'>Password</LabelForm>
-                        <InputStyle name="password" id="password"  placeholder="Digite a sua senha" />
-                        {props.errors.password && props.touched.password ? (
+                    <DivPassword>
+                            <InputStyle name="password" id="password" type={passVisible ? "password" : "text"}  placeholder="Digite a sua senha"/>
+                            <IconPassword onClick={() => setPassVisible(!passVisible)}>
+                              {passVisible ? <EyeInvisible /> : <EyeVisible />}
+                            </IconPassword>
+                          </DivPassword>
+                          {props.errors.password && props.touched.password ? (
                             <SpanError>{props.errors.password}</SpanError>
                             ) : null}
                     </DivValidate>
