@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik"
-import { ButtonForm } from "../../Global.styles"
+import { ButtonForm, DivValidate, SpanError } from "../../Global.styles"
 import { DonateCreateDTO } from "../../models/DonateCreateDTO"
 import Theme from "../../theme"
 import { convertMoney, numberMask } from "../../utils/Utils"
@@ -8,13 +8,18 @@ import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
 import { connect, DispatchProp } from "react-redux"
 import { Params, useNavigate, useParams } from "react-router-dom";
+import * as Yup from 'yup';
 
 
-function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
+function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
   const navigate = useNavigate()
   const { id }: Readonly<Params<string>> = useParams();
   
-
+  const SignupSchema = Yup.object().shape({
+    value: Yup.string()
+    .min(4, 'Campo Obrigatório!')
+    .required('Campo Obrigatório!'),
+  });
   return (
     <div>
       <ContainerDonation>
@@ -22,7 +27,7 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
           initialValues={{
             value: '',
           }}
-
+          validationSchema={SignupSchema}
           onSubmit={(values: DonateCreateDTO['donate']) => {
 
             const donateCampaign = {
@@ -42,7 +47,13 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
 
               <label htmlFor="value"> Informe o valor: </label>
 
+              <DivValidate>
               <Field as={InputCurrency} mask={numberMask} id="value" name="value" />
+              {props.errors.value && props.touched.value ? (
+                <SpanError>{props.errors.value}</SpanError>
+                ) : null}
+                </DivValidate>
+
 
               <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Doar</ButtonForm>
 

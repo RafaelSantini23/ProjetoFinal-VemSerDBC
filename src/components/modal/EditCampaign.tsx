@@ -11,7 +11,6 @@ import CreatableSelect from 'react-select/creatable';
 import PreviewImage from "../previewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
 import pt from "date-fns/locale/pt";
 import { useState } from "react";

@@ -9,6 +9,7 @@ import { FundraiserDTO } from "../../models/FundraiserDTO";
 import api from "../../api";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NotFound from "../../pages/notfound/NotFound";
+import { Category } from "../../Types/Types";
 
 
 
@@ -163,9 +164,7 @@ export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     }
 }
 
-type Category = {
-    name: string
-}
+
 
 export const getCategories = async (dispatch: AppDispatch) => {
     try {

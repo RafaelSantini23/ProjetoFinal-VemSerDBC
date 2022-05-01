@@ -33,6 +33,7 @@ import {
   Goal,
   ParagraphContributors,
   SpanCategories,
+  ButtonNavigate,
 } from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -67,8 +68,12 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
+  console.log(campaign);
+  
+
   return (
     <Container>
+      <ButtonNavigate colors={`${Theme.colors.secondary}`} >Voltar para as campanhas</ButtonNavigate>
       {isVisibel && (
 
         <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />

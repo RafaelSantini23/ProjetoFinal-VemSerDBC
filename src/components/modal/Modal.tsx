@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, MouseEventHandler } from "react"
+import { ButtonProps } from "../../Types/Types";
 import { ButtonClose,
     Content,
     IconClose,
@@ -8,24 +8,8 @@ import { ButtonClose,
 } from "./Modal.styles"
 import { changeModal } from "./typeModal";
 
-
-
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-    children?: React.ReactNode,
-    typeModal?: string,
-    height: string,
-    width?: string,
-    values?: [],
-    onClick?: any,
-    id?: string,
-    colabs?: any,
-
-}
-
 function Modal({ id = 'modal',  onClick, height, width, typeModal, colabs }: ButtonProps ) {
     
-
     const handleOutsideClick = (e: any) => {
         if (e.target.id === id) {
             onClick?.()
