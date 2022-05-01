@@ -150,7 +150,7 @@ export const SpanCategories = styled.span`
 `
 
 export const ButtonNavigate = styled.button<{colors: string}>`
-    width: 10%;
+    width: 12%;
     height: 40px;
     border-radius: 8px;
     font-weight: 500;
