@@ -143,3 +143,8 @@ export const ParagraphContributors = styled.p`
   font-size: 18px;
 
 `
+
+export const SpanCategories = styled.span`
+  font-size: 18px;
+
+`

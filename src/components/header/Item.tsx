@@ -8,7 +8,7 @@ import { getUserProfile } from "../../store/actions/usersAction"
 import Theme from "../../theme"
 import Button from "../button/Button"
 import { ItemStyles } from "./Header.styles"
-import { ItemProfile, TituloProfile } from "./Item.styles"
+import { ButtonProfile, DivMenu, ItemProfile, TituloProfile } from "./Item.styles"
 import DefaultImage from '../../imgs/defaultImage.jpeg'
 import { ImgProfile } from "./Item.styles"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
@@ -25,6 +25,7 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
 
   return (
       <>
+      <DivMenu>
             <ItemStyles>
                     <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
             </ItemStyles>
@@ -32,9 +33,10 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
                    { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campanhas', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campanhas', navigate)}> Criar Campanhas </Button> } 
             </ItemStyles>
             <ItemStyles>
-                <Button onClick={() => handleLogout(dispatch, navigate)}> Logout </Button>
             </ItemStyles>
+      </DivMenu>
             <ItemProfile>
+                <ButtonProfile onClick={() => handleLogout(dispatch, navigate)}> Logout </ButtonProfile>
                 { loading ? <div>Loading...</div> : <> <TituloProfile> { firstUpper(user.name as string) }  </TituloProfile> 
                   <ImgProfile src={user.profilePhoto  ? convertImage64(user.profilePhoto as string) : DefaultImage} /> </> }
                   

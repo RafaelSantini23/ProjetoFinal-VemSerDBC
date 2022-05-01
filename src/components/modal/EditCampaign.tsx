@@ -21,7 +21,6 @@ import MaskedInput from "react-text-mask";
 
 
 function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserDTO & DispatchProp & any) {
-  const navigate = useNavigate()
   const [dateValue, setDateValue] = useState<null | Date>(new Date(moment(campaign.endingDate).utc() as any));
 
   const handleChange = (value: any, setFieldValue: any) => {

@@ -1,9 +1,10 @@
 import { ColabInfo, ColabName, ImgModal, ModalColab } from "./Modal.styles";
 import DefaultImage from '../../imgs/defaultImage.jpeg';
 import { NotContributors } from "../../Global.styles";
+import { ContainerModal } from "./CardColab.styles";
 
 type Colabs = {
-    colabs?: {
+    colabs: {
         id: string,
         name: string,
         photo: string;
@@ -13,18 +14,22 @@ type Colabs = {
 
 function CardColabs({colabs}: Colabs) {
   return (
-    <div>
+      
+    <ContainerModal width={colabs.length  > 4 ? 'scroll' : 'hidden' } >
         {colabs?.length ? colabs?.map((child) => (
+            <>
             <ModalColab>
                         <ColabInfo>
                             <ImgModal width='100px' src={child.photo ? child.photo : DefaultImage} alt="profile" />
                             <ColabName>
-                                {child.name}
+                                 {child.name}
                             </ColabName>
                         </ColabInfo>
-                    </ModalColab>
+            </ModalColab>
+            
+            </>
                 ) ) : <NotContributors> No colabs </NotContributors>}
-    </div>
+    </ContainerModal>
   )
 }
 export default CardColabs

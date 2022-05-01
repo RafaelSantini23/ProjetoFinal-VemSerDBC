@@ -17,8 +17,8 @@ export const NavBar = styled.nav`
 export const Lista = styled.ul`
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-between;
+    width: 98%;
     position: relative;
 `
 

@@ -20,7 +20,7 @@ function Donate({ donate, dispatch, onClick }: DonateCreateDTO & DispatchProp) {
       <ContainerDonation>
         <Formik
           initialValues={{
-            value: 0,
+            value: '',
           }}
 
           onSubmit={(values: DonateCreateDTO['donate']) => {
