@@ -5,6 +5,7 @@ import { createNumberMask } from "text-mask-addons";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt"
 import { ImgCampanha } from "../pages/home/Home.styles";
+import { CategoriesSpan } from "../components/card/Card.styles";
 
 // Regex
 export const validaNome = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/;
@@ -118,11 +119,16 @@ export const firstUpper = (value: string) => {
   );
 }
 
-export const cutCaracteres = (value: string) => {
-  if(value.length > 20) {
-   return value.slice(0, 20) + '...'
+export const cutCaracteres = (value: any) => {
+  if(value.length >= 8) {
+    value.slice(0,-105);
+  } else {
+    return value
   }
 }
+
+
+
 
 
 

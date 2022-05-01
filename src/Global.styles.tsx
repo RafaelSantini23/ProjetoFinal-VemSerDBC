@@ -54,7 +54,7 @@ export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
 `
 
 export const ButtonContributors = styled.button<{marginTop?: string, colors?: string}>`
-width: 60%;
+width: 45%;
 height: 40px;
 border-radius: 8px;
 font-weight: 500;

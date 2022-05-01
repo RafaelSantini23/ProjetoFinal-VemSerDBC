@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
 import { CategoriesSpan, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
-import { ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
+import { ButtonContributors, ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
 import { RootState } from "../../store";
@@ -32,6 +32,7 @@ import {
   Raised,
   Goal,
   ParagraphContributors,
+  SpanCategories,
 } from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -80,9 +81,9 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
             <Meta>
               {campaign.currentValue >= campaign.goal && (<MetaAtingida mT='190px'> Meta atingida</MetaAtingida>)}
             </Meta>
-            <ImagemCampanha src={campaign.coverPhoto !== 'null' ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
+            <ImagemCampanha src={campaign.coverPhoto  ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (
-              <CategoriesSpan>{firstUpper(category.name)} </CategoriesSpan>
+              <SpanCategories>{firstUpper(category.name)} </SpanCategories>
             ))}</Categories>
           </DivImagem>
           <DescCampanha>
@@ -99,10 +100,10 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
             <MetaParagraph>Meta</MetaParagraph>
             <Goal>{converteBRL(campaign.goal)}</Goal>
             <ParagraphContributors>Apoiadores {campaign.contributors.length}</ParagraphContributors>
-            <ButtonForm colors={Theme.colors.dark} onClick={() => setIsVisibel(true)}> Visualizar Colaboradores</ButtonForm>
+            <ButtonContributors colors={Theme.colors.dark} onClick={() => setIsVisibel(true)}> Apoiadores </ButtonContributors>
           </CampaignInfo>
           {modalDonation && (
-            <Modal width="250px" height="150px" typeModal={"donate"} onClick={() => setModalDonation(false)} />
+            <Modal width="450px" height="150px" typeModal={"donate"} onClick={() => setModalDonation(false)} />
           )}
           {findOwner ?
             (

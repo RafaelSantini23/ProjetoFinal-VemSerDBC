@@ -20,6 +20,11 @@ export const TitleCard = styled.h2`
 
 export const CategoriesSpan = styled.span`
     font-size: 18px;
+    display: block;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `
 
 export const CampanhaId = styled.small`
