@@ -1,4 +1,4 @@
-import { ButtonProps } from "../../Types/Types";
+import { ButtonProps } from "../../types/Types";
 import { ButtonClose,
     Content,
     IconClose,

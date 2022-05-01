@@ -69,7 +69,6 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
-  console.log(campaign);
   
 
   return (

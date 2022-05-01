@@ -1,18 +1,21 @@
+import { connect, DispatchProp } from "react-redux"
 import { Field, Form, Formik } from "formik"
-import { ButtonForm, DivValidate, SpanError } from "../../Global.styles"
+import * as Yup from 'yup';
+import {
+   ButtonForm, 
+   DivValidate, 
+   SpanError 
+} from "../../Global.styles"
 import { DonateCreateDTO } from "../../models/DonateCreateDTO"
-import Theme from "../../theme"
 import { convertMoney, numberMask } from "../../utils/Utils"
 import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
-import { connect, DispatchProp } from "react-redux"
 import { Params, useNavigate, useParams } from "react-router-dom";
-import * as Yup from 'yup';
+import Theme from "../../theme"
 
 
 function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
-  const navigate = useNavigate()
   const { id }: Readonly<Params<string>> = useParams();
   
   const SignupSchema = Yup.object().shape({

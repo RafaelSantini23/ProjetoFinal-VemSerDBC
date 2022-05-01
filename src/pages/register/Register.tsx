@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
+import { connect, DispatchProp } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import PasswordStrengthBar from "react-password-strength-bar";
 import * as Yup from 'yup';
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
-import PasswordStrengthBar from "react-password-strength-bar";
 import { validaNome, validaSenha, validaEmail } from "../../utils/Utils";
+import { registerUser } from "../../store/actions/usersAction";
+import { RootState } from "../../store";
 import {
-  LogoDiv,
   SpanError,
   LinkStyle,
   LabelForm,
@@ -19,12 +22,8 @@ import {
   ContainerGlobal,
   ContainerFormUser,
 } from "../../Global.styles";
-import { registerUser } from "../../store/actions/usersAction";
-import { RootState } from "../../store";
-import { connect, DispatchProp } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Theme from "../../theme";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
+import Theme from "../../theme";
 import ThemeImg from '../../imgs/theme.png';
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
@@ -55,14 +54,13 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
       .required('Campo Obrigatório!'),
 
     password: Yup.string()
-      .matches(validaSenha, 'Senha inválida!')
+      .matches(validaSenha, 'Deve conter: 8 Caracteres, 1 Letra Maiúscula e 1 Minúscula, 1 Número e 1 Símbolo! ')
       .required('Campo Obrigatório!'),
 
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Senhas diferentes!")
       .required('Campo Obrigatório!'),
   });
-
 
 
   return (
@@ -82,63 +80,92 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                   }}
                   validationSchema={SignupSchema}
                   onSubmit={(
-                      values: UsersCreateDTO['user'],
-                      { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
-                      ) => {
+                    values: UsersCreateDTO['user'],
+                    { setSubmitting }: FormikHelpers<UsersCreateDTO['user']>
+                    ) => {
 
-                        const user = {
-                          email: values.email,
-                          login: values.login,
-                          password: values.password,
-                          profilePhoto: values.profilePhoto
-                        }                        
-                        registerUser(dispatch, user, navigate);
-                        setSubmitting(false)
-                      }}
-                      >
-                  {props => ( 
+                      const user = {
+                        email: values.email,
+                        login: values.login,
+                        password: values.password,
+                        profilePhoto: values.profilePhoto
+                      }                        
+                      registerUser(dispatch, user, navigate);
+                      setSubmitting(false)
+                    }}
+                    >
+                {props => ( 
                   <Form>
                       <DivValidate>
                           <LabelForm htmlFor="email">Email</LabelForm>
-                          <InputStyle name="email" id="email" placeholder="Digite o seu e-mail" type="email"/>
+                          <InputStyle 
+                            name="email" 
+                            id="email" 
+                            placeholder="Digite o seu e-mail" 
+                            type="email"
+                          />
                           {props.errors.email && props.touched.email ? (
                             <SpanError>{props.errors.email}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
                           <LabelForm htmlFor='login'>Nome</LabelForm>
-                          <InputStyle  name="login" id="login" placeholder="Digite o seu nome"/>
+                          <InputStyle
+                            name="login"
+                            id="login" 
+                            placeholder="Digite o seu nome"
+                          />
                           {props.errors.login && props.touched.login ? (
                             <SpanError>{props.errors.login}</SpanError>
                             ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='password'>Senha</LabelForm>
-                          <DivPassword>
-                            <InputStyle name="password" id="password" type={passVisible ? "password" : "text"}  placeholder="Digite a sua senha"/>
-                            <IconPassword onClick={() => setPassVisible(!passVisible)}>
-                              {passVisible ? <EyeInvisible /> : <EyeVisible />}
-                            </IconPassword>
-                          </DivPassword>
-                          <PasswordStrengthBar password={props.values.password} />
-                          {props.errors.password && props.touched.password ? (
-                            <SpanError>{props.errors.password}</SpanError>
-                            ) : null}
+                        <LabelForm htmlFor='password'>Senha</LabelForm>
+                        <DivPassword>
+                          <InputStyle
+                            name="password"
+                            id="password"
+                            type={passVisible ? "password" : "text"}
+                            placeholder="Digite a sua senha" 
+                          />
+                          <IconPassword onClick={() => setPassVisible(!passVisible)}>
+                            {passVisible ? <EyeInvisible /> : <EyeVisible />}
+                          </IconPassword>
+                        </DivPassword>
+                        <PasswordStrengthBar
+                          password={props.values.password}
+                          scoreWords={['fraco', 'fraco', 'médio', 'bom', 'forte']}
+                          shortScoreWord='fraco'
+                          minLength={8}
+                        />
+                        {props.errors.password && props.touched.password ? (
+                          <SpanError>{props.errors.password}</SpanError>
+                        ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='confirmPassword'>Confirme a Senha</LabelForm>
-                          <InputStyle name="confirmPassword" id="confirmPassword" type={passVisible ? "password" : "text"}  placeholder="Digite novamente a sua senha" />
-                          {props.errors.confirmPassword && props.touched.confirmPassword ? (
-                            <SpanError>{props.errors.confirmPassword}</SpanError>
-                            ) : null}
+                        <LabelForm htmlFor='confirmPassword'>Confirme a Senha</LabelForm>
+                        <InputStyle 
+                          name="confirmPassword" 
+                          id="confirmPassword" 
+                          type={passVisible ? "password" : "text"}  
+                          placeholder="Digite novamente a sua senha" 
+                        />
+                        {props.errors.confirmPassword && props.touched.confirmPassword ? (
+                          <SpanError>{props.errors.confirmPassword}</SpanError>
+                          ) : null}
                       </DivValidate>
                       <DivValidate>   
-                            <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
-                            <input name="profilePhoto" id="profilePhoto" type="file" onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}/>
+                        <LabelForm htmlFor='profilePhoto'>Foto de Perfil</LabelForm>
+                        <input 
+                          name="profilePhoto" 
+                          id="profilePhoto" 
+                          type="file" 
+                          onChange={event => props.setFieldValue('profilePhoto', event.target.files?.[0])}
+                        />
                       </DivValidate>
                       <ButtonForm colors={`${Theme.colors.dark}`} type='submit'>Cadastrar</ButtonForm>
                   </Form>  
-                  )}          
+                )}          
               </Formik>
       </ContainerFormUser>
     </ContainerGlobal>
