@@ -24,7 +24,6 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
     const navigate = useNavigate()
     useEffect(() => {
         getUserProfile(dispatch)
-        console.log(user);
     }, [])
     
 

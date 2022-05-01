@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Form } from "formik";
+import Theme from "../../theme";
 
 
 
@@ -25,10 +26,17 @@ export const FormStyled = styled(Form)`
     width: 100%;
 `
 
-export const FileStyles = styled.input`
-    :visibility {
-        display: none;
-    }
-
+export const FileStyles = styled.input<{width: string}>`
+    cursor: pointer;
+    ::-webkit-file-upload-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
     
+}
+width: ${props => props.width};
+border-radius: 4px;
+
 `
+

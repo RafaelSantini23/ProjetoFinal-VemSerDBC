@@ -2,7 +2,7 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
-import { CategoriesSpan, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
+import { CategoriesSpan, Category, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
 import { ButtonContributors, ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
@@ -33,6 +33,7 @@ import {
   Goal,
   ParagraphContributors,
   SpanCategories,
+  ButtonNavigate,
 } from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -67,8 +68,11 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
+  
+
   return (
     <Container>
+      <ButtonNavigate colors={`${Theme.colors.secondary}`} >Voltar para as campanhas</ButtonNavigate>
       {isVisibel && (
 
         <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />
@@ -83,7 +87,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
             </Meta>
             <ImagemCampanha src={campaign.coverPhoto  ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (
-              <SpanCategories>{firstUpper(category.name)} </SpanCategories>
+              <Category>{firstUpper(category.name)} </Category>
             ))}</Categories>
           </DivImagem>
           <DescCampanha>

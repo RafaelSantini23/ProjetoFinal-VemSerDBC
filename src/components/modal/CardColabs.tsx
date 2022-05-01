@@ -1,7 +1,12 @@
-import { ColabInfo, ColabName, ImgModal, ModalColab } from "./Modal.styles";
-import DefaultImage from '../../imgs/defaultImage.jpeg';
+import { 
+    ColabInfo, 
+    ColabName, 
+    ImgModal, 
+    ModalColab 
+} from "./Modal.styles";
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
+import DefaultImage from '../../imgs/defaultImage.jpeg';
 
 type Colabs = {
     colabs: {

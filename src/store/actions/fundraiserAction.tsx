@@ -9,6 +9,7 @@ import { FundraiserDTO } from "../../models/FundraiserDTO";
 import api from "../../api";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NotFound from "../../pages/notfound/NotFound";
+import { Category } from "../../types/Types";
 
 
 
@@ -77,7 +78,6 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
           totalPages: totalPages,
           loading: false
       }
-  console.log(data.data)
       dispatch(campaignList)
       Loading.remove()
     } catch (error) {
@@ -128,7 +128,6 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], dispatch
     Loading.circle()
     try {
        const { data } =  await api.post(`/fundraiser/${id}`, formData)
-       console.log(data);
        
        Loading.remove()
     } catch (error) {
@@ -163,9 +162,7 @@ export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
     }
 }
 
-type Category = {
-    name: string
-}
+
 
 export const getCategories = async (dispatch: AppDispatch) => {
     try {

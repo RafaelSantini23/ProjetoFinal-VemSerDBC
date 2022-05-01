@@ -16,12 +16,12 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import { CategoryDTO } from "../../models/CategoryDTO";
 import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
-import api from "../../api";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
 import Pagination from '../../components/pagination/Pagination'
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { MultiValueProps } from "react-select";
+
 
 type campaign = {
   goal: number;
@@ -44,7 +44,6 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
   useEffect(() => {
     getCampaign(dispatch, 'findAllFundraisersActive', page)
     getCategories(dispatch)
-    console.log(categorys)
   },[])
 
   if (loading) {
