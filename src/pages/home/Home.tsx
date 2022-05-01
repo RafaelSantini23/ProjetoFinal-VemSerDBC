@@ -19,7 +19,6 @@ import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import api from "../../api";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
-import { type } from "os";
 
 
 type campaign = {
@@ -28,15 +27,15 @@ type campaign = {
 }
 
 type Home = {
-  campaignListTemp: FundraiserListDTO[];
+  campaignListFilter: FundraiserListDTO[];
   categorys: CategoryDTO[];
 }
 
 
-function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO & CategoryOptionDTO & DispatchProp)  {
+function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}: FundraiserListDTO & any & CategoryOptionDTO & DispatchProp)  {
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
-  const [typeName, setTypeName] = useState('findAllFundraisersActive')
+  const [routeName, setRouteName] = useState('findAllFundraisersActive')
   const [value, setValue] = useState(null)
   const [status, setStatus] = useState(null)
   const [valueArray, setValueArray] = useState<string[]>([])
@@ -51,29 +50,50 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
     return <>{Loading.circle()}</>
   }
 
-
-
-  
   const pagination = (direction: string) => {
     Loading.circle()
     switch(direction) {
       case 'next':
         setPage(page + 1)
-        getCampaign(dispatch, typeName, page + 1, valueArray)
+        getCampaign(dispatch, routeName, page + 1, valueArray)
         break;
       case 'prev':
         setPage(page - 1)
-        getCampaign(dispatch, typeName, page - 1, valueArray)
+        getCampaign(dispatch, routeName, page - 1, valueArray)
         break;
     }
   }
     
   const campaignsList = async (value: string, array?: string | string[]) => {
-    setTypeName(value)
+    setRouteName(value)
     getCampaign(dispatch, value, page, array as string[])
   }
   
-  const filterCampaigns = (value: string | string[]) => {
+  const filterAllCampaigns = (value: string | string[]) => {
+
+    if (routeName === 'userContributions' || routeName === 'userFundraisers') {
+      let listFilter = [];
+      switch(value) {
+        case 'atingidas':
+          listFilter = campaignListFilter.filter((campaign: any) => campaign.currentValue >= campaign.goal)
+          break;
+        case 'nao-atingidas':
+          listFilter = campaignListFilter.filter((campaign: any) => campaign.currentValue < campaign.goal)
+          break;
+        default:
+          listFilter = campaignListFilter
+        }
+      Loading.circle()
+      const filter = {
+        type: 'SET_CAMPAIGN_LIST',
+        campaignList: listFilter,
+        campaignListFilter: campaignListFilter
+      }
+
+      dispatch(filter)
+      Loading.remove()
+
+    } else {
       switch(true) {
         case value === 'atingidas':
           campaignsList('findAcchieved') 
@@ -86,15 +106,18 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
         case value as string[] && value.length > 0:
           campaignsList('byCategories', value)
           setValueArray(value as string[])
+          setStatus(null)
           break;
         default:
           campaignsList('findAllFundraisersActive')
           setValue(null)
           setStatus(null)
         break;
+      }
     }
   }
 
+ 
   const optionsFilter = [
     { value: '', label: 'Todos'},
     { value: 'atingidas', label: 'Atingidas'},
@@ -105,18 +128,20 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
     <>
     <ContainerMyCampaign>
       <ButtonContainer>
-      {buttonName === 'Todas as Campanhas' ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAllFundraisersActive'))}>{buttonName}</ButtonHome>
-      : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
-        } 
-      <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
+      {
+        buttonName === 'Todas as Campanhas'
+        ? <ButtonHome  onClick={() => (setButtonName('Minhas Campanhas'), campaignsList('findAllFundraisersActive'))}>{buttonName}</ButtonHome>
+        : <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userFundraisers'))}>{buttonName}</ButtonHome> 
+      } 
+      <ButtonHome  onClick={() => (setButtonName('Todas as Campanhas'), campaignsList('userContributions'))}>Minhas contribuições</ButtonHome>
       </ButtonContainer>
       <DivSelects>
-        <DefaultSelect  placeholder='Status' options={optionsFilter} value={status} onChange={(event: any) => (filterCampaigns(event.value), setStatus(event))} />
-        <DefaultSelect  placeholder='Categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable />
+        <DefaultSelect  placeholder='Status' options={optionsFilter} value={status} onChange={(event: any) => (filterAllCampaigns(event.value), setStatus(event))} />
+        {routeName !== 'userContributions' && routeName !== 'userFundraisers' ? <DefaultSelect  placeholder='Categoria(s)' options={categorys} value={value} onChange={(event: any) => (filterAllCampaigns(event.map((item: any) => item.value)), setValue(event))} isMulti isClearable /> : null}
       </DivSelects>
     </ContainerMyCampaign>
     <DivHeaderTitle>
-    <TituloCampanhas>{buttonName === 'Todas as Campanhas' ? 'Minhas Campanhas' : 'Todas as Campanhas'}</TituloCampanhas>
+    <TituloCampanhas>{routeName === 'userFundraisers' ? 'Minhas Campanhas' : routeName === 'userContributions' ? 'Minhas Contribuições' : 'Todas as Campanhas'}</TituloCampanhas>
     </DivHeaderTitle>
     <Container>  
       <Card/>
@@ -131,7 +156,7 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
 }
 
 const mapStateToProps = (state: RootState) => ({
- campaignListTemp: state.fundraiserReducer.campaignListTemp,
+ campaignListFilter: state.fundraiserReducer.campaignListFilter,
  campaignList: state.fundraiserReducer.campaignList,
  categorys: state.fundraiserReducer.categorys,
  loading: state.fundraiserReducer.loading,
