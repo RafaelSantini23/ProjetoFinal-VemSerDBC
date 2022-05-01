@@ -147,12 +147,12 @@ export const LogoDiv = styled.div`
     margin-bottom: 85px;
 `
 
-export const LinkStyle = styled(Link)<{mT?: string}>`
+export const LinkStyle = styled(Link)<{mt?: string}>`
     color: ${props => props.color};
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
-    margin-top: ${props => props.mT};
+    margin-top: ${props => props.mt};
     :hover {
         text-decoration: underline;
     }

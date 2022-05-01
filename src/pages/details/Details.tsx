@@ -91,7 +91,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
             </Meta>
             <ImagemCampanha src={campaign.coverPhoto  ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (
-              <Category>{firstUpper(category.name)} </Category>
+              <Category key={category.categoryId} >{firstUpper(category.name)} </Category>
             ))}</Categories>
           </DivImagem>
           <DescCampanha>

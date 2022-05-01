@@ -86,7 +86,7 @@ function Login({dispatch}: AuthDTO & DispatchProp) {
                 </Form>            
             }
             </Formik>
-            <LinkStyle color={`${Theme.colors.dark}`} mT='20px' to="/register">Não possuo cadastro</LinkStyle>
+            <LinkStyle color={`${Theme.colors.dark}`} mt='20px' to="/register">Não possuo cadastro</LinkStyle>
         </ContainerFormUser>
     </ContainerGlobal>
   )

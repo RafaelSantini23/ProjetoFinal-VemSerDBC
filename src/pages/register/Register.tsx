@@ -71,7 +71,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
             <img src={ThemeImg}  height={'250px'} alt="theme" />
             <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
         </ImgLogin>
-        <LinkStyle color={`${Theme.colors.dark}`} mT="20px" to="/">Voltar ao login</LinkStyle>
+        <LinkStyle color={`${Theme.colors.dark}`} mt="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
                     email: '',
