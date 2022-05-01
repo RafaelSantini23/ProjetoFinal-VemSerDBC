@@ -120,7 +120,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
                 <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>
               </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> {findContributor ? 'Doar novamente' : 'Doar'} <IconDonate />  </ButtonForm>}
           {editModal && (
-            <Modal width="1050px" height="690px" typeModal='editCampaign' onClick={() => setEditModal(false)} />
+            <Modal width="1050px" height="580px" typeModal='editCampaign' onClick={() => setEditModal(false)} />
           )}
         </InfoCampanha>
       </ContainerDetails>

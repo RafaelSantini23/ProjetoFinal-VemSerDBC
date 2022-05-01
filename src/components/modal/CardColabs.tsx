@@ -33,7 +33,7 @@ function CardColabs({colabs}: Colabs) {
             </ModalColab>
             
             </>
-                ) ) : <NotContributors> No colabs </NotContributors>}
+                ) ) : <NotContributors> Não há colaboradores </NotContributors>}
     </ContainerModal>
   )
 }

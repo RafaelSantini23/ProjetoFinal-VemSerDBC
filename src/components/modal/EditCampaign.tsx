@@ -169,7 +169,6 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                             <SpanError>{props.errors.categories as string}</SpanError>
                             ) : null}
                         </DivValidate>
-                       
                         <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Atualizar</ButtonForm>
                   </SecondColumn>
             </FormStyled>  
