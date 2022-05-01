@@ -18,7 +18,7 @@ import { CategoryDTO } from "../../models/CategoryDTO";
 import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
-
+import Pagination from '../../components/pagination/Pagination'
 
 
 type campaign = {
@@ -50,18 +50,11 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
     return <>{Loading.circle()}</>
   }
 
-  const pagination = (direction: string) => {
+  const pagination = (pageNumber: number) => {
     Loading.circle()
-    switch(direction) {
-      case 'next':
-        setPage(page + 1)
-        getCampaign(dispatch, routeName, page + 1, valueArray)
-        break;
-      case 'prev':
-        setPage(page - 1)
-        getCampaign(dispatch, routeName, page - 1, valueArray)
-        break;
-    }
+        setPage(pageNumber)
+        getCampaign(dispatch, routeName, pageNumber, valueArray)
+       
   }
     
   const campaignsList = async (value: string, array?: string | string[]) => {
@@ -145,11 +138,7 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
     </DivHeaderTitle>
     <Container>  
       <Card/>
-      
-      <div>
-        <button disabled={page < 1} onClick={() => pagination('prev')}> Anterior </button>
-        <button disabled={campaignList.length < 1} onClick={() => pagination('next')}> Próxima </button>
-      </div>
+    <Pagination paginate={pagination} page={page} />
     </Container>
     </>
   )
