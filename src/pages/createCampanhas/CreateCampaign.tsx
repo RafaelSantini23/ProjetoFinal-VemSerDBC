@@ -20,6 +20,7 @@ import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { setButton } from "../../store/actions/usersAction";
 import MaskedInput from "react-text-mask";
+import { FileStyles } from "../../components/modal/EditCampaign.styles";
 
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & DispatchProp & CategoryOptionDTO) {
   const [dateValue, setDateValue] = useState<null | Date>(null);
@@ -147,7 +148,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
-                <input  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>        
+                <FileStyles width="32%"  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>        
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}

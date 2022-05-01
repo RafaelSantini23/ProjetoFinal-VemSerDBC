@@ -16,9 +16,9 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import { CategoryDTO } from "../../models/CategoryDTO";
 import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
-import api from "../../api";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
+
 
 
 type campaign = {

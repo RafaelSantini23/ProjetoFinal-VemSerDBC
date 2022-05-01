@@ -2,7 +2,7 @@ import { Field, Formik } from "formik";
 import { connect, DispatchProp } from "react-redux";
 import { ButtonForm, CampaignForm, DatePickerStyled, DivValidate, InputFormat, InputStyle, LabelForm, SpanError } from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
-import { CheckCloseStyle, DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
+import { DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
 import Theme from "../../theme";
 import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, validDate } from "../../utils/Utils";
@@ -156,8 +156,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                         <DivValidate>
                           <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                           <FileContainer>
-
-                          <FileStyles name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
+                              <FileStyles width="40%"  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])  } />
                           {props.values.coverPhoto  ? <PreviewImage file={props.values.coverPhoto} /> : <img src={DefaultCapa} width='100px' alt="imagem default" />  }  
                           </FileContainer>
                           {props.errors.coverPhoto && props.touched.coverPhoto ? (

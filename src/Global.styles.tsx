@@ -50,6 +50,8 @@ export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
     :disabled {
         background-color: ${Theme.colors.secondary};
     }
+   
+    
     
 `
 

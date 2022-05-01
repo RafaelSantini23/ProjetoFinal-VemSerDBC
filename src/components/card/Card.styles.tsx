@@ -21,12 +21,21 @@ export const TitleCard = styled.h2`
 export const CategoriesSpan = styled.span`
     font-size: 18px;
     display: block;
-    width: 200px;
+    width: 400px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 `
-
+export const Category = styled.span`
+    background-color: gray;
+    width: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: white;
+    margin-right: 10px;
+    padding: 0 2px;
+    font-weight: 500;
+`
 export const CampanhaId = styled.small`
     font-size: 14px;
 `

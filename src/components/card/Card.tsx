@@ -8,7 +8,7 @@ import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContain
 import { AppDispatch, RootState } from "../../store";
 import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
 import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper, cutCaracteres } from "../../utils/Utils"
-import { CampanhaId, CategoriesSpan, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
+import { CampanhaId, CategoriesSpan, Category, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
 import DefaultCapa from '../../imgs/dbc.png'
 import { useState } from "react";
 
@@ -17,6 +17,9 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   const token = localStorage.getItem('token');
   const navigate = useNavigate()
   const [categories, setCategories] = useState<any>([])
+
+  
+  
 
   const tokenn = token?.split('.')[1];
   const decoded = JSON.parse(window?.atob(tokenn as string));
@@ -32,15 +35,6 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   dispatch(loading)
   }
 
-  
-  
-  console.log(categories);
-
-  console.log(campaignList);
-  
-  
-
-
   return (
     
         <ContainerCampanhas>
@@ -54,9 +48,8 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
               <TitleCard>{firstUpper(item.title)}</TitleCard>
               <DivCategoria>
                 <CategoriesSpan>{item.categories.map(category => (
-                  <span key={category.categoryId}>{firstUpper(category.name)} </span>
+                  <Category  key={category.categoryId}>{firstUpper(category.name)} </Category>
                 ))}</CategoriesSpan>
-                <CampanhaId>ID da campanha: {item.fundraiserId}</CampanhaId>
               </DivCategoria>
               <NameCreator>{item.fundraiserCreator.name}</NameCreator>
               <TotalRaised>Total Arrecadado: 
