@@ -1,8 +1,8 @@
-import Menu from "./Menu"
-import { HeaderStyle } from "./Header.styles"
-import { AuthDTO } from "../../models/AuthDTO"
 import { connect } from "react-redux"
+import { AuthDTO } from "../../models/AuthDTO"
 import { RootState } from "../../store";
+import { HeaderStyle } from "./Header.styles"
+import Menu from "./Menu"
 
 function Header({auth}: AuthDTO) {
 

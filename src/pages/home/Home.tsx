@@ -11,7 +11,7 @@ import {
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
 import { Loading } from "notiflix";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { getCampaign, getCategories } from "../../store/actions/fundraiserAction";
 import { CategoryDTO } from "../../models/CategoryDTO";
@@ -20,6 +20,8 @@ import api from "../../api";
 import Card from "../../components/card/Card";
 import 'moment/locale/pt-br'
 import Pagination from '../../components/pagination/Pagination'
+import { FundraiserDTO } from "../../models/FundraiserDTO";
+import { MultiValueProps } from "react-select";
 
 type campaign = {
   goal: number;
@@ -30,7 +32,6 @@ type Home = {
   campaignListFilter: FundraiserListDTO[];
   categorys: CategoryDTO[];
 }
-
 
 function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}: FundraiserListDTO & any & CategoryOptionDTO & DispatchProp)  {
   const [page, setPage] = useState(0)
@@ -68,10 +69,10 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
       let listFilter = [];
       switch(value) {
         case 'atingidas':
-          listFilter = campaignListFilter.filter((campaign: any) => campaign.currentValue >= campaign.goal)
+          listFilter = campaignListFilter.filter((campaign: campaign) => campaign.currentValue >= campaign.goal)
           break;
         case 'nao-atingidas':
-          listFilter = campaignListFilter.filter((campaign: any) => campaign.currentValue < campaign.goal)
+          listFilter = campaignListFilter.filter((campaign: campaign) => campaign.currentValue < campaign.goal)
           break;
         default:
           listFilter = campaignListFilter

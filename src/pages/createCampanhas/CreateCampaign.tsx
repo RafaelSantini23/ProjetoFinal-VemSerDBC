@@ -20,18 +20,19 @@ import { CategoryOptionDTO } from "../../models/CategoryOptionDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { setButton } from "../../store/actions/usersAction";
 import MaskedInput from "react-text-mask";
+import { CategoryDTO } from "../../models/CategoryDTO";
 
 function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & DispatchProp & CategoryOptionDTO) {
   const [dateValue, setDateValue] = useState<null | Date>(null);
   const suportedFormats = ['image/png', 'image/jpeg','image/jpg'];
   const navigate = useNavigate()
 
-  const handleChange = (value: any, setFieldValue: any) => {
+  const handleChange = (value: CategoryDTO['categories'], setFieldValue: Function) => {
     let list = value.map((item: any) => item.value)
     setFieldValue('categories', list)
   };
   
-  const formatDatePicker = (value: Date, setFieldValue: any) => {
+  const formatDatePicker = (value: Date, setFieldValue: Function) => {
     setDateValue(value);
     return setFieldValue('endingDate', moment(value).format('DD/MM/YYYY'))
   }
@@ -155,7 +156,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
               </DivValidate>
               <DivValidate>
                 <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
-                <Field component={CreatableSelectStyle} options={categorys} isMulti="true" onChange={(event: React.ChangeEvent) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
+                <Field component={CreatableSelectStyle} options={categorys} isMulti="true" onChange={(event: CategoryDTO['categories']) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
                 {props.errors.categories && props.touched.categories ? (
                   <SpanError>{props.errors.categories as string}</SpanError>
                   ) : null}

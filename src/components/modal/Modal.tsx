@@ -17,7 +17,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     height: string,
     width?: string,
     values?: [],
-    onClick?: any,
+    onClick: () => void,
     id?: string,
     colabs?: any,
 

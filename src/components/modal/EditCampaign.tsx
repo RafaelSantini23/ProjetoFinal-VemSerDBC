@@ -20,6 +20,10 @@ import MaskedInput from "react-text-mask";
 
 
 
+type CategoryName = {
+  name: string
+}
+
 function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserDTO & DispatchProp & any) {
   const [dateValue, setDateValue] = useState<null | Date>(new Date(moment(campaign.endingDate).utc() as any));
 
@@ -29,7 +33,6 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
 
         setFieldValue('categories', list)
   };
-
 
     const formatDatePicker = (value: Date, setFieldValue: any) => {
       setDateValue(value);
@@ -70,7 +73,7 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
       enableReinitialize={true}
         initialValues={{
           automaticClose: campaign.automaticClose,
-          categories: campaign.categories.map((item: any) => (item.name)),
+          categories: campaign.categories.map((item: CategoryName) => (item.name)),
           endingDate: moment(campaign.endingDate, 'YYYY-MM-DD').format('DD/MM/YYYY'),
           description: campaign.description,
           goal: converteBRL(campaign.goal),

@@ -1,19 +1,24 @@
 import { useEffect } from "react"
-import { connect, DispatchProp } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { connect, DispatchProp } from "react-redux"
 import { LinkStyle } from "../../Global.styles"
 import { RootState } from "../../store"
+import { setButton } from "../../store/actions/usersAction"
+import { ItemStyles } from "./Header.styles"
+import { ImgProfile } from "./Item.styles"
 import { handleLogout } from "../../store/actions/authAction"
 import { getUserProfile } from "../../store/actions/usersAction"
+import { UsersCreateDTO } from "../../models/UsersCreateDTO"
+import { convertImage64, firstUpper } from "../../utils/Utils"
+import {
+    DivMenu, 
+    ItemProfile, 
+    TituloProfile, 
+    ButtonProfile,
+} from "./Item.styles"
 import Theme from "../../theme"
 import Button from "../button/Button"
-import { ItemStyles } from "./Header.styles"
-import { ButtonProfile, DivMenu, ItemProfile, TituloProfile } from "./Item.styles"
 import DefaultImage from '../../imgs/defaultImage.jpeg'
-import { ImgProfile } from "./Item.styles"
-import { UsersCreateDTO } from "../../models/UsersCreateDTO"
-import { setButton } from "../../store/actions/usersAction"
-import { convertImage64, firstUpper } from "../../utils/Utils"
 
 function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp) {
     const navigate = useNavigate()

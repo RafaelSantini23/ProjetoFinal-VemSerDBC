@@ -1,13 +1,10 @@
-import { Loading } from "notiflix";
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import api from "../../api";
 import { Error, TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
-import { AppDispatch, RootState } from "../../store";
-import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper, cutCaracteres } from "../../utils/Utils"
+import { RootState } from "../../store";
+import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper} from "../../utils/Utils"
 import { CampanhaId, CategoriesSpan, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
 import DefaultCapa from '../../imgs/dbc.png'
 import { useState } from "react";

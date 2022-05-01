@@ -80,7 +80,7 @@ margin-top: ${props => props.marginTop};
 
 export const DivValidate = styled.div`
     position: relative;
-    padding-bottom: 20px;
+    height: 100px;
 `;
 
 export const DivPassword = styled.div`
@@ -103,8 +103,12 @@ export const EyeInvisible = styled(AiOutlineEyeInvisible)`
 
 export const SpanError = styled.span`
     position: absolute;
+    font-size: 14px;
+    width: 280px;
+    height: 30px;
+    padding-top: 4px;
     left: 1%;
-    bottom: 1%;
+    bottom: 0%;
     color: red;
 `;
 
