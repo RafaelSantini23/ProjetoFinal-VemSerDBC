@@ -34,6 +34,7 @@ import {
   ParagraphContributors,
   SpanCategories,
   ButtonNavigate,
+  ContainerButton,
 } from "./Details.styles";
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
@@ -73,7 +74,9 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
 
   return (
     <Container>
-      <ButtonNavigate colors={`${Theme.colors.secondary}`} >Voltar para as campanhas</ButtonNavigate>
+      <ContainerButton>
+        <ButtonNavigate colors={`${Theme.colors.secondary}`} onClick={() => navigate('/campanhas')} >Voltar para as campanhas</ButtonNavigate>
+      </ContainerButton>
       {isVisibel && (
 
         <Modal width="550px" height="550px" typeModal="cardColabs" colabs={campaign.contributors} onClick={() => setIsVisibel(false)} />

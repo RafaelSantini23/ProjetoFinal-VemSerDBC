@@ -174,3 +174,11 @@ export const ButtonNavigate = styled.button<{colors: string}>`
     }
 
 `
+
+export const ContainerButton = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+
+`

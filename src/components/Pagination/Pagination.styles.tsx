@@ -13,7 +13,10 @@ export const ItemPaginate = styled.li<{
   background-color: ${props => props.backColor};
   border-radius: 6px;
   min-width: 20px;
-  padding: 4px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   list-style-type: none;
   text-align: center;
   cursor: pointer;
@@ -31,6 +34,10 @@ export const ItemPaginate = styled.li<{
 
 export const NumPage = styled.a`
   color: black;
+  width: 100%;
+  height: 100%;
+  padding: 4px 8px;
+  text-align: center;
 `;
 
 export const ButtonPage = styled.button`
