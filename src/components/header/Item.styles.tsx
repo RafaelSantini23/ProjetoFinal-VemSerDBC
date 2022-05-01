@@ -13,6 +13,7 @@ export const ItemProfile = styled.li`
     align-items: center;
 `
 export const TituloProfile = styled.h2 `
+    width: 100%;
     margin: 0 10px;
     color: #fff;
     margin: 0 10px;
