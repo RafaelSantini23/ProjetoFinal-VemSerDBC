@@ -59,6 +59,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
       api.defaults.headers.common['Authorization'] = token
     }
     getCampaignDetails(dispatch, id as string)
+    console.log (campaign)
   }, [])
 
   if (loadingDetails) {

@@ -7,7 +7,6 @@ import { handleLogout } from "../../store/actions/authAction"
 import { getUserProfile } from "../../store/actions/usersAction"
 import Theme from "../../theme"
 import Button from "../button/Button"
-import Search from "../inputs/Search"
 import { ItemStyles } from "./Header.styles"
 import { ItemProfile, TituloProfile } from "./Item.styles"
 import DefaultImage from '../../imgs/defaultImage.jpeg'
@@ -28,9 +27,6 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
       <>
             <ItemStyles>
                     <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
-            </ItemStyles>
-            <ItemStyles>
-                <Search />
             </ItemStyles>
             <ItemStyles>
                    { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campanhas', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campanhas', navigate)}> Criar Campanhas </Button> } 

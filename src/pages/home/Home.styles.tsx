@@ -6,18 +6,19 @@ import Select from 'react-select'
 
 export const DivSelects = styled.div`
   display: flex;
-  height: 38px;
-  width: 100%;
-  background: transparent;
+  height: 44px;
+  background: #dbdbdb;
   align-items: center;
   justify-content: center;
   position: absolute;
   bottom: 0;
+  border-radius: 8px 8px 0 0;
 `;
 
 export const DefaultSelect = styled(Select)`
   min-width: 220px;
   max-width: max-content;
+  margin: 0 2px;
 `;
 
 export const DivHeaderTitle = styled.div`
