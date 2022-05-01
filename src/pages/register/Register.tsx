@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from 'yup';
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
@@ -30,6 +30,17 @@ import ThemeImg from '../../imgs/theme.png';
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
   const [passVisible, setPassVisible] = useState(true)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if(token) {
+       navigate('/campanhas')
+    } else {
+        navigate('/register')
+    }
+
+},[])
 
   const SignupSchema = Yup.object().shape({
     login: Yup.string()

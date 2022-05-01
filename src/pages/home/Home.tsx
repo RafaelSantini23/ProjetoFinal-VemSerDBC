@@ -42,10 +42,6 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
   const [valueArray, setValueArray] = useState<string[]>([])
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      api.defaults.headers.common['Authorization'] = token
-    }
     getCampaign(dispatch, 'findAllFundraisersActive', page)
     getCategories(dispatch)
     console.log(categorys)
@@ -55,15 +51,7 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
     return <>{Loading.circle()}</>
   }
 
-  // const token = localStorage.getItem('token');
 
-  // const tokenn = token?.split('.')[1];
-  // const decoded = JSON.parse(window?.atob(tokenn as string));
-
-  // const id = decoded.sub
-  
-  // console.log(totalPages);
-  
 
   
   const pagination = (direction: string) => {
@@ -135,7 +123,7 @@ function Home({ campaignList, categorys, dispatch, loading}: FundraiserListDTO &
       
       <div>
         <button disabled={page < 1} onClick={() => pagination('prev')}> Anterior </button>
-        <button disabled={campaignList.length <= 0} onClick={() => pagination('next')}> Próxima </button>
+        <button disabled={campaignList.length < 1} onClick={() => pagination('next')}> Próxima </button>
       </div>
     </Container>
     </>

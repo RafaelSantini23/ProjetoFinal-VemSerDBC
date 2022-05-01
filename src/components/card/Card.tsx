@@ -7,7 +7,7 @@ import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
 import { AppDispatch, RootState } from "../../store";
 import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper } from "../../utils/Utils"
+import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper, cutCaracteres } from "../../utils/Utils"
 import { CampanhaId, CategoriesSpan, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
 import DefaultCapa from '../../imgs/dbc.png'
 
@@ -44,7 +44,7 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
               <TitleCard>{firstUpper(item.title)}</TitleCard>
               <DivCategoria>
                 <CategoriesSpan>{item.categories.map(category => (
-                  <CategoriesSpan key={category.categoryId}>{firstUpper(category.name)} </CategoriesSpan>
+                  <CategoriesSpan key={category.categoryId}>{cutCaracteres(firstUpper(category.name))} </CategoriesSpan>
                 ))}</CategoriesSpan>
                 <CampanhaId>ID da campanha: {item.fundraiserId}</CampanhaId>
               </DivCategoria>

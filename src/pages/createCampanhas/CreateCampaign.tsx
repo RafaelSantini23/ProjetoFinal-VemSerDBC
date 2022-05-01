@@ -38,7 +38,6 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
 
 
   useEffect(() => {
-    isLoggedin(navigate)
     getCategories(dispatch)
   }, [])
 

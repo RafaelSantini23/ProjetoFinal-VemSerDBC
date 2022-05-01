@@ -58,7 +58,8 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     if (token) {
       api.defaults.headers.common['Authorization'] = token
     }
-    getCampaignDetails(dispatch, id as string)
+    
+    getCampaignDetails(dispatch, id as string, navigate)
   }, [])
 
   if (loadingDetails) {
@@ -79,7 +80,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
             <Meta>
               {campaign.currentValue >= campaign.goal && (<MetaAtingida mT='190px'> Meta atingida</MetaAtingida>)}
             </Meta>
-            <ImagemCampanha src={campaign.coverPhoto ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
+            <ImagemCampanha src={campaign.coverPhoto !== 'null' ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (
               <CategoriesSpan>{firstUpper(category.name)} </CategoriesSpan>
             ))}</Categories>

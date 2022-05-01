@@ -12,30 +12,52 @@ import { RootState } from './store';
 import { isAuth } from './store/actions/authAction';
 import Details from './pages/details/Details';
 import NotFound from './pages/notfound/NotFound';
+import PrivateRoute from './privateRoute';
 
-function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
+function Routers({ auth, dispatch }: AuthDTO & DispatchProp) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    
-    if(token) {
+    if (token) {
       api.defaults.headers.common['Authorization'] = token;
       isAuth(dispatch, auth)
     }
-    
+
   }, [])
+
 
   return (
     <BrowserRouter >
-    <Header />
+      <Header />
       <Routes>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={
+          <PrivateRoute>
+            <NotFound />
+          </PrivateRoute>
+        }
+        />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/campanhas" element={<Home />} />
-        <Route path="/create-campanhas" element={<CreateCampanhas />} />
-        <Route path="/details" element={<Details />}>
-          <Route path=":id" element={<Details />} />
+        <Route path="/campanhas" element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        } />
+        <Route path="/create-campanhas" element={
+          <PrivateRoute>
+            <CreateCampanhas />
+          </PrivateRoute>
+        } />
+        <Route path="/details" element={
+          <PrivateRoute>
+            <Details />
+          </PrivateRoute>
+        }>
+          <Route path=":id" element={
+            <PrivateRoute>
+              <Details />
+            </PrivateRoute>
+          } />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -43,7 +65,7 @@ function Routers({auth, dispatch}: AuthDTO & DispatchProp) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  auth: state.authReducer.auth  
+  auth: state.authReducer.auth
 })
 
 

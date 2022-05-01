@@ -1,11 +1,7 @@
 import React, { ButtonHTMLAttributes, MouseEventHandler } from "react"
 import { ButtonClose,
     Content,
-    ImgModal,
-    ColabName,
-    ColabInfo,
     IconClose,
-    ModalColab,
     HeaderModal,
     ModalContainer,
     ModalPrincipal,
