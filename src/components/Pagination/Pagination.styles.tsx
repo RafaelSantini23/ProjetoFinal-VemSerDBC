@@ -38,7 +38,7 @@ export const ButtonPage = styled.button`
   min-width: 20px;
   border-radius: 8px;
   padding: 4px 8px;
-  margin: 0 6px;
+  margin: 0 5px;
   text-align: center;
   cursor: pointer;
   color: black;
@@ -50,6 +50,11 @@ export const ButtonPage = styled.button`
     background-color: ${Theme.colors.dark};
     border-radius: 5px;
     color: white;
+  }
+
+  :disabled {
+    background-color: #898b8d;
+    color: #5e6166;
   }
 
 `;
