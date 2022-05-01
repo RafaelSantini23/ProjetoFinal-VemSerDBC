@@ -19,8 +19,10 @@ import {
 import Theme from "../../theme"
 import Button from "../button/Button"
 import DefaultImage from '../../imgs/defaultImage.jpeg'
+import { FundraiserListDTO } from "../../models/FundraiserListDTO"
 
-function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp) {
+
+function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp & FundraiserListDTO) {
     const navigate = useNavigate()
     useEffect(() => {
         getUserProfile(dispatch)
@@ -41,9 +43,8 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
       </DivMenu>
             <ItemProfile>
                 <ButtonProfile onClick={() => handleLogout(dispatch, navigate)}> Logout </ButtonProfile>
-                { loading ? <div>Loading...</div> : <> <TituloProfile> { firstUpper(user.name as string) }  </TituloProfile> 
+                { loading ? <div>Carregando...</div> : <> <TituloProfile> { firstUpper(user.name as string) }  </TituloProfile> 
                   <ImgProfile src={user.profilePhoto  ? convertImage64(user.profilePhoto as string) : DefaultImage} /> </> }
-                  
             </ItemProfile>
       </>
   )
@@ -53,7 +54,8 @@ const mapStateToProps = (state: RootState) => ({
     auth: state.authReducer.auth,
     user: state.userReducer.user,
     navigateTo: state.userReducer.navigateTo,
-    loading: state.userReducer.loading
+    loading: state.userReducer.loading,
+    campaignList: state.fundraiserReducer.campaignList,
 })
 
 export default connect(mapStateToProps)(Item)

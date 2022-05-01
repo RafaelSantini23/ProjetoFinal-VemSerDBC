@@ -147,14 +147,14 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
                   <SpanError>{props.errors.endingDate}</SpanError>
                   ) : null}
               </DivValidate>
-              <DivValidate>
+              {/* <DivValidate>
                 <LabelForm htmlFor='coverPhoto'>Foto de capa</LabelForm>
                 <FileStyles width="32%"  name="coverPhoto" id="coverPhoto" type="file" onChange={event => props.setFieldValue('coverPhoto', event.target.files?.[0])}/>        
                 {props.errors.coverPhoto && props.touched.coverPhoto ? (
                   <SpanError>{props.errors.coverPhoto}</SpanError>
                   ) : null}
                   {props.values.coverPhoto && <PreviewImage file={props.values.coverPhoto}/>} 
-              </DivValidate>
+              </DivValidate> */}
               <DivValidate>
                 <LabelForm htmlFor='categories'>Categorias da campanha</LabelForm>
                 <Field component={CreatableSelectStyle} options={categorys} isMulti="true" onChange={(event: CategoryDTO['categories']) => handleChange(event, props.setFieldValue)} name="categories" id="categories" placeholder="Digite a(s) categoria(s)" />
@@ -169,8 +169,7 @@ function CreateCampaign({ campaign, dispatch, categorys }: FundraiserDTO  & Disp
                   <SpanError>{props.errors.description}</SpanError>
                   ) : null}
               </DivValidate>
-              
-              <ButtonForm colors={`${Theme.colors.dark}`}   type='submit'>Cadastrar</ButtonForm>
+              <ButtonForm colors={`${Theme.colors.dark}`}  type='submit'>Cadastrar</ButtonForm>
             </Form>  
             )}          
           </Formik>

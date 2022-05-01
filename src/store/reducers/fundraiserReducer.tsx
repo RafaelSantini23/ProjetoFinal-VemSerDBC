@@ -26,6 +26,8 @@ export const INITIAL_STATE = {
     loadingDonate: true,
     categorys: [],
     totalPages: 0,
+    error: false,
+    errorDetails: false,
 }
 
 const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -63,7 +65,8 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             campaignList: action.campaignList,
             campaignListFilter: action.campaignListFilter,
             loading: action.loading,
-            totalPages: action.totalPages
+            totalPages: action.totalPages,
+            error: action.error
         }
     }
 
@@ -72,6 +75,15 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             ...state,
             categorys: action.categorys
         }
+    }
+
+    if(action.type === 'SET_ERROR') {
+        return {
+            ...state,
+            error: action.error,
+            loading: action.loading
+        }
+    
     }
 
     

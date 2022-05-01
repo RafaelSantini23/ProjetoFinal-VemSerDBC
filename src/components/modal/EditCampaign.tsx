@@ -68,7 +68,6 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
     <div>
       <CampaignForm>
       <Formik
-      enableReinitialize={true}
         initialValues={{
           automaticClose: campaign.automaticClose,
           categories: campaign.categories.map((item: CategoryName) => (item.name)),
@@ -92,12 +91,11 @@ function EditCampaign({ campaign, categoryList, onClick, dispatch }: FundraiserD
                 title: values.title,
                 automaticClose: values.automaticClose,
               }
-
               
-            updateCampaign(campaignEdit, dispatch, campaign.fundraiserId)
+              updateCampaign(campaignEdit, dispatch, campaign.fundraiserId)
 
             
-            onClick?.()
+              onClick?.()
           }}
             >
           {props => (

@@ -10,6 +10,7 @@ import api from "../../api";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import NotFound from "../../pages/notfound/NotFound";
 import { Category } from "../../types/Types";
+import { DispatchProp } from "react-redux";
 
 
 
@@ -76,11 +77,14 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
           campaignList: content,
           campaignListFilter: content,
           totalPages: totalPages,
-          loading: false
+          loading: false,
+          error: false
       }
       dispatch(campaignList)
       Loading.remove()
     } catch (error) {
+        Loading.remove()
+      isError(dispatch)
       console.log(error)
     }
 }
@@ -128,11 +132,11 @@ export const updateCampaign = async (values: FundraiserDTO['campaign'], dispatch
     Loading.circle()
     try {
        const { data } =  await api.post(`/fundraiser/${id}`, formData)
-       
+       Notify.success('Campanha atualizada com sucesso!');
        Loading.remove()
     } catch (error) {
         console.log(error);
-        
+        Notify.failure('Erro ao atualizar campanha!');
     }
 
     getCampaignDetails(dispatch, id)
@@ -184,4 +188,15 @@ export const getCategories = async (dispatch: AppDispatch) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+export const isError = (dispatch: AppDispatch) => {
+    const error = {
+        type: 'SET_ERROR',
+        loading: false,
+        error: true
+    }
+
+    dispatch(error)
 }

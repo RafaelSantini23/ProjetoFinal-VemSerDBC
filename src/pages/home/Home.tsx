@@ -7,6 +7,7 @@ import {
   ButtonContainer,
   TituloCampanhas,
   ContainerMyCampaign,
+  PaginationContainer,
 } from "./Home.styles";
 import { RootState } from "../../store";
 import { connect, DispatchProp } from "react-redux";
@@ -21,6 +22,9 @@ import 'moment/locale/pt-br'
 import Pagination from '../../components/pagination/Pagination'
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { MultiValueProps } from "react-select";
+import { NotFoundPage } from "../notfound/NotFound.styles";
+
+
 
 
 type campaign = {
@@ -33,7 +37,7 @@ type Home = {
   categorys: CategoryDTO[];
 }
 
-function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}: FundraiserListDTO & any & CategoryOptionDTO & DispatchProp)  {
+function Home({ campaignList, campaignListFilter, categorys, dispatch, loading, error}: FundraiserListDTO & any & CategoryOptionDTO & DispatchProp)  {
   const [page, setPage] = useState(0)
   const [buttonName, setButtonName] = useState('Minhas Campanhas')
   const [routeName, setRouteName] = useState('findAllFundraisersActive')
@@ -44,17 +48,22 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
   useEffect(() => {
     getCampaign(dispatch, 'findAllFundraisersActive', page)
     getCategories(dispatch)
+
+
   },[])
 
   if (loading) {
     return <>{Loading.circle()}</>
   }
 
+  if(error) {
+    return ( <h1>Error </h1> )
+  }
+
   const pagination = (pageNumber: number) => {
-    Loading.circle()
+        Loading.circle()
         setPage(pageNumber)
         getCampaign(dispatch, routeName, pageNumber, valueArray)
-       
   }
     
   const campaignsList = async (value: string, array?: string | string[]) => {
@@ -137,9 +146,13 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
     <TituloCampanhas>{routeName === 'userFundraisers' ? 'Minhas Campanhas' : routeName === 'userContributions' ? 'Minhas Contribuições' : 'Todas as Campanhas'}</TituloCampanhas>
     </DivHeaderTitle>
     <Container>  
-      <Card/>
-    <Pagination paginate={pagination} page={page} />
+      <Card   />
+      
     </Container>
+      { campaignList.length > 0 ?
+      <PaginationContainer> 
+       <Pagination  paginate={pagination} page={page}/> </PaginationContainer> : null
+       }
     </>
   )
 }
@@ -149,7 +162,8 @@ const mapStateToProps = (state: RootState) => ({
  campaignList: state.fundraiserReducer.campaignList,
  categorys: state.fundraiserReducer.categorys,
  loading: state.fundraiserReducer.loading,
- totalPages: state.fundraiserReducer.totalPages
+ totalPages: state.fundraiserReducer.totalPages,
+ error: state.fundraiserReducer.error
 })
 
 export default connect(mapStateToProps)(Home)

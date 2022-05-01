@@ -82,7 +82,8 @@ margin-top: ${props => props.marginTop};
 
 export const DivValidate = styled.div`
     position: relative;
-    height: 100px;
+    /* height: 100px; */
+    padding-bottom: 20px;
 `;
 
 export const DivPassword = styled.div`
@@ -105,6 +106,13 @@ export const EyeInvisible = styled(AiOutlineEyeInvisible)`
 
 export const SpanError = styled.span`
     position: absolute;
+    left: 1%;
+    bottom: 1%;
+    color: red;
+`;
+
+export const ErrorPass = styled.span`
+    position: absolute;
     font-size: 14px;
     width: 280px;
     height: 30px;
@@ -112,7 +120,8 @@ export const SpanError = styled.span`
     left: 1%;
     bottom: 0%;
     color: red;
-`;
+
+`
 
 export const InputStyle = styled(Field)`
     width: 350px;
@@ -185,12 +194,9 @@ export const NotContributors = styled.h1`
     height: 100%;
 `
 export const categories = styled.span`
-
 `
 
 export const CampaignInfo = styled.div`
-
-
 `
 
 
@@ -214,6 +220,16 @@ export const InputFormat = styled(MaskedInput)`
 `
 
 export const Error =  styled.p`
-    font-size: 24px;
+    font-size: 32px;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+`
 
+export const ErrorDiv = styled.div`
+    width: 100%;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
 `

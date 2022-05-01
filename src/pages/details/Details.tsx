@@ -43,6 +43,7 @@ import DefaultCapa from '../../imgs/dbc.png';
 
 
 function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & DispatchProp) {
+  
   const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
   const [modalDonation, setModalDonation] = useState(false);

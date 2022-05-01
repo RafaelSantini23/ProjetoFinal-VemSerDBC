@@ -41,11 +41,11 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const ContainerCampanhas = styled.div`
+export const ContainerCampanhas = styled.div<{gap: string}>`
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 20px;
-  gap: 50px;
+  gap: ${props => props.gap};
   position: relative;
 `;
 
@@ -131,4 +131,12 @@ export const ButtonHome = styled.button<{colors?: string}>`
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
 
 
+`
+
+export const PaginationContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5E5E5;
 `

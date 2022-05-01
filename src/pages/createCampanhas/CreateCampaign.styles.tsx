@@ -24,6 +24,7 @@ export const ContainerFormCampaign = styled.div`
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+    height: 100%;
 `;
 
 export const DivButton = styled.div`
@@ -50,4 +51,5 @@ export const CreatableSelectStyle = styled(CreatableSelect)`
     max-width: 350px;
 
 `
+
 

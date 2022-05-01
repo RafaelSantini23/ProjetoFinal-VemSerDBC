@@ -21,6 +21,7 @@ import {
   EyeInvisible,
   ContainerGlobal,
   ContainerFormUser,
+  ErrorPass,
 } from "../../Global.styles";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
 import Theme from "../../theme";
@@ -139,7 +140,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                           minLength={8}
                         />
                         {props.errors.password && props.touched.password ? (
-                          <SpanError>{props.errors.password}</SpanError>
+                          <ErrorPass>{props.errors.password}</ErrorPass>
                         ) : null}
                       </DivValidate>
                       <DivValidate>

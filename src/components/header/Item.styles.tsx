@@ -16,11 +16,11 @@ export const TituloProfile = styled.h2 `
     width: 100%;
     margin: 0 10px;
     color: #fff;
-    margin: 0 10px;
+    font-size: 20px;
 `
 
 export const ButtonProfile = styled.button`
-    width: 30%;
+    width: 25%;
     height: 40px;
     border-radius: 8px;
     font-weight: 500;

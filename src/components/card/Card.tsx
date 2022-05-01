@@ -1,6 +1,6 @@
 import { connect, DispatchProp } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Error, TotalContribution } from "../../Global.styles";
+import { Error, ErrorDiv, TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
 import { AppDispatch, RootState } from "../../store";
@@ -12,12 +12,7 @@ import { useState } from "react";
 
 
 function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate()
-  const [categories, setCategories] = useState<any>([])
-
-  
-  
+  const token = localStorage.getItem('token');  
 
   const tokenn = token?.split('.')[1];
   const decoded = JSON.parse(window?.atob(tokenn as string));
@@ -34,15 +29,16 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   }
 
   return (
+    <>
     
-        <ContainerCampanhas>
-         { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
+    <ContainerCampanhas gap={campaignList.length > 0 ? '50px' : '0px'}>
+    { campaignList.length ? campaignList.map((item) => (
+          <LinkContainer data-aos="fade-up" key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
             <DivCampanha>
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mT="80px"> Meta Atingida</MetaAtingida> )}
               </Meta>
-              <ImgCampanha src={!item.coverPhoto || item.coverPhoto === 'null' ? DefaultCapa : convertImage64(item.coverPhoto) } alt="foto" />
+              <ImgCampanha src={item.coverPhoto ? convertImage64(item.coverPhoto) : DefaultCapa} alt="Imagem campanha" />
               <TitleCard>{firstUpper(item.title)}</TitleCard>
               <DivCategoria>
                 <CategoriesSpan>{item.categories.map(category => (
@@ -59,9 +55,11 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
               {item?.totalContribution && <TotalContribution> Valor contribuido: {converteBRL(item?.totalContribution)} </TotalContribution>}
             </DivCampanha>
           </LinkContainer>
-        )): <Error>Nenhuma campanha encontrada</Error>}
-        </ContainerCampanhas>
+        
 
+        ) ) :( <ErrorDiv> <Error>Nenhuma campanha encontrada</Error> </ErrorDiv>)}
+        </ContainerCampanhas>
+        </>
   )
 }
 

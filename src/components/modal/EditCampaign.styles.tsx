@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { Form } from "formik";
-import Theme from "../../theme";
-
 
 
 export const FileContainer = styled.div`
