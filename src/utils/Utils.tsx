@@ -118,6 +118,12 @@ export const firstUpper = (value: string) => {
   );
 }
 
+export const cutCaracteres = (value: string) => {
+  if(value.length > 20) {
+   return value.slice(0, 20) + '...'
+  }
+}
+
 
 
 

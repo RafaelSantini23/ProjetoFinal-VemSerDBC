@@ -41,10 +41,6 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading}:
   const [valueArray, setValueArray] = useState<string[]>([])
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      api.defaults.headers.common['Authorization'] = token
-    }
     getCampaign(dispatch, 'findAllFundraisersActive', page)
     getCategories(dispatch)
     console.log(categorys)

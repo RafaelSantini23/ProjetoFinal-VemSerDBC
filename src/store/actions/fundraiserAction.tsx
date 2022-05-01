@@ -8,6 +8,7 @@ import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import api from "../../api";
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import NotFound from "../../pages/notfound/NotFound";
 
 
 
@@ -84,18 +85,18 @@ export const getCampaign = async (dispatch: AppDispatch, value: string, number: 
     }
 }
 
-export const getCampaignDetails = async (dispatch: AppDispatch, id: string | number) => {
+export const getCampaignDetails = async (dispatch: AppDispatch, id: string | number, navigate?: NavigateFunction) => {
     try {
-        const { data } = await api.get(`/fundraiser/fundraiserDetails/${id}`);
+        const response = await api.get(`/fundraiser/fundraiserDetails/${id}`);
 
         const list: any = []
-        data.categories.map((item: any) => (
+        response.data.categories.map((item: any) => (
             list.push({ value: item.name, label: item.name })
         ))
 
         const campaign = {
             type: 'SET_CAMPAIGN',
-            campaign: data,
+            campaign: response.data,
             loading: false,
             loadingDetails:false,
             categoryList: list
@@ -103,7 +104,10 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | num
         
         dispatch(campaign);
         Loading.remove()
-    } catch (error) {
+    } catch (error: any) {
+            if(error.response.status === 400) {
+                navigate?.('/notfound')
+            } 
         console.log(error)
     }
 }

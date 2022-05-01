@@ -53,6 +53,31 @@ export const ButtonForm = styled.button<{marginTop?: string, colors?: string}>`
     
 `
 
+export const ButtonContributors = styled.button<{marginTop?: string, colors?: string}>`
+width: 60%;
+height: 40px;
+border-radius: 8px;
+font-weight: 500;
+background: ${props => props.colors};
+color: #fff;
+padding: 0 32px;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+border: 0;
+transition: 0.8s;
+margin-top: ${props => props.marginTop};
+&:hover {
+    filter: brightness(0.9);
+    background-color: ${Theme.colors.secondary};
+}
+:disabled {
+    background-color: ${Theme.colors.secondary};
+}
+
+`
+
 export const DivValidate = styled.div`
     position: relative;
     padding-bottom: 20px;
