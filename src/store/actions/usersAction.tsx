@@ -42,7 +42,7 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         }
 
         handleLogin(dispatch, login,  navigate);
-        
+        Notify.success('Conta cadastrada com sucesso!')
     } catch (error: any) {
        console.log(error)
         if(error.response) {

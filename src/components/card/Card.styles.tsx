@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 
-export const MetaAtingida = styled.h1<{mT: string}>`
+export const MetaAtingida = styled.h1<{mt: string}>`
     position: absolute;
-    margin-top: ${props => props.mT};
+    margin-top: ${props => props.mt};
     color: #fff;
     text-shadow: 2px 2px black;
 `

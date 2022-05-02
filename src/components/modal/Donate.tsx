@@ -34,7 +34,6 @@ function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
           onSubmit={(values: DonateCreateDTO['donate']) => {
 
             const donateCampaign = {
-                message: 'teste',
                 value: convertMoney(values.value as string),
             }
 
