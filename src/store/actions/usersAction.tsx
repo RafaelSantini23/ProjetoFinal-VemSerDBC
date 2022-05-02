@@ -1,10 +1,10 @@
 import { NavigateFunction } from "react-router-dom";
+import { Notify } from "notiflix";
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { AppDispatch } from "..";
-import api from "../../api";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
 import { handleLogin } from "./authAction";
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Notify } from "notiflix";
+import api from "../../api";
 
 
 export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO['user'], navigate: NavigateFunction ) => {
@@ -19,20 +19,16 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
         formData.append('profilePhoto', values.profilePhoto as File)
     }
 
-   
     try {
-
         const response = await api.post('/user/register', formData);
         
         const user = {
             type: 'SET_USER',
             user: response.data
         }
-         
         
         dispatch(user);
-        
-
+    
         const login = {
             login: values.email, 
             password: values.password,
@@ -62,7 +58,6 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
     }
 }
 
-
 export const getUserProfile = async (dispatch: AppDispatch) => {
     try {
         const { data } = await api.get('/user/profile');
@@ -74,8 +69,6 @@ export const getUserProfile = async (dispatch: AppDispatch) => {
         }
 
         dispatch(userProfile);
-        console.log(userProfile);
-   
 
     } catch (error) {
         Notify.failure('error ao obter os dados do usuário!')

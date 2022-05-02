@@ -1,6 +1,4 @@
 import { AnyAction} from "redux";
-import { FundraiserDTO } from "../../models/FundraiserDTO";
-import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 
 export const INITIAL_STATE = {
     campaign: {

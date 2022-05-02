@@ -2,6 +2,8 @@ import { connect, DispatchProp } from "react-redux";
 import { Error, ErrorDiv, TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
 import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper } from "../../utils/Utils"
+import { RootState } from "../../store";
+import DefaultCapa from '../../images/dbc.png'
 import {
   TotalSpan,  
   DivCampanha, 
@@ -10,7 +12,6 @@ import {
   LinkContainer, 
   ContainerCampanhas,
 } from "../../pages/home/Home.styles";
-import { RootState } from "../../store";
 import {
   Meta, 
   Category, 
@@ -23,7 +24,6 @@ import {
   MetaParagraph, 
   CategoriesSpan, 
 } from "./Card.styles";
-import DefaultCapa from '../../images/dbc.png'
 
 
 function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {

@@ -1,16 +1,14 @@
 import { NavigateFunction } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert';
+import { Notify } from "notiflix";
 import Qs from "qs";
 import { AppDispatch } from "..";
-import { confirmAlert } from 'react-confirm-alert';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Notify } from "notiflix";
 import { DonateCreateDTO } from "../../models/DonateCreateDTO";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
-import api from "../../api";
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import NotFound from "../../pages/notfound/NotFound";
 import { Category } from "../../types/Types";
-import { DispatchProp } from "react-redux";
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import api from "../../api";
 
 
 
