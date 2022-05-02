@@ -1,18 +1,18 @@
 import { connect, DispatchProp } from "react-redux"
 import { Field, Form, Formik } from "formik"
+import { Params, useParams } from "react-router-dom";
 import * as Yup from 'yup';
+import { DonateCreateDTO } from "../../models/DonateCreateDTO"
+import { convertMoney, numberMask } from "../../utils/Utils"
+import { donateForCampaign } from "../../store/actions/fundraiserAction"
+import { RootState } from "../../store"
+import Theme from "../../theme"
+import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import {
    ButtonForm, 
    DivValidate, 
    SpanError 
 } from "../../Global.styles"
-import { DonateCreateDTO } from "../../models/DonateCreateDTO"
-import { convertMoney, numberMask } from "../../utils/Utils"
-import { ContainerDonation, InputCurrency } from "./Modal.styles"
-import { donateForCampaign } from "../../store/actions/fundraiserAction"
-import { RootState } from "../../store"
-import { Params, useParams } from "react-router-dom";
-import Theme from "../../theme"
 
 
 function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {

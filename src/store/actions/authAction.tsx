@@ -1,11 +1,11 @@
 
 import { NavigateFunction } from "react-router-dom";
+import { Notify } from "notiflix";
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { AppDispatch } from "..";
-import api from "../../api";
 import { AuthDTO } from "../../models/AuthDTO";
 import { UsersCreateDTO } from "../../models/UsersCreateDTO";
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Notify } from "notiflix";
+import api from "../../api";
 
 export const handleLogin = async (dispatch: AppDispatch, values: AuthDTO['auth'] | UsersCreateDTO['user'], navigate: NavigateFunction ) => {
     Loading.circle()

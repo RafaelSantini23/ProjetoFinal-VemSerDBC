@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { Field } from 'formik';
-import Theme from './theme';
-import { Link } from 'react-router-dom';
-import InputMask from 'react-input-mask';
-import ReactDatePicker from 'react-datepicker';
-import MaskedInput from 'react-text-mask';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { Field } from 'formik';
+import styled from 'styled-components';
+import InputMask from 'react-input-mask';
+import MaskedInput from 'react-text-mask';
+import ReactDatePicker from 'react-datepicker';
+import Theme from './theme';
 
 
 export const ContainerGlobal = styled.div`

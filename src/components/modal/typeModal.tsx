@@ -1,15 +1,6 @@
 import CardColabs from "./CardColabs";
-import Donate from "./Donate";
 import EditCampaign from "./EditCampaign";
-
-type Colabs = {
-    colabs?: {
-        id: string,
-        name: string,
-        photo: string;
-    }[],
-}
-
+import Donate from "./Donate";
 
 export const changeModal = (modal: string, onClick: () => void, colabs: any ) => {
     switch(modal) {

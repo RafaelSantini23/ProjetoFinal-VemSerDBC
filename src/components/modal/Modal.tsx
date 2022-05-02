@@ -1,4 +1,5 @@
 import { ButtonProps } from "../../types/Types";
+import { changeModal } from "./typeModal";
 import { ButtonClose,
     Content,
     IconClose,
@@ -6,7 +7,6 @@ import { ButtonClose,
     ModalContainer,
     ModalPrincipal,
 } from "./Modal.styles"
-import { changeModal } from "./typeModal";
 
 function Modal({ id = 'modal',  onClick, height, width, typeModal, colabs }: ButtonProps ) {
     
