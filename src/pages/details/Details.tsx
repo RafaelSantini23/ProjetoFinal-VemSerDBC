@@ -40,9 +40,10 @@ import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
 import api from "../../api";
 import DefaultCapa from '../../images/dbc.png';
+import Error from "../../components/error/Error";
 
 
-function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & DispatchProp) {
+function Details({ campaign, dispatch, loadingDetails, errorDetails }: FundraiserDetailsDTO & DispatchProp) {
   
   const navigate = useNavigate()
   const [isVisibel, setIsVisibel] = useState(false);
@@ -70,7 +71,9 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
-
+  if(errorDetails) {
+    return <> <Error /> </>
+  }
   
 
   
@@ -136,6 +139,7 @@ const mapStateToProps = (state: RootState) => ({
   campaign: state.fundraiserReducer.campaign,
   loadingDetails: state.fundraiserReducer.loadingDetails,
   loadingDonate: state.fundraiserReducer.loadingDonate,
+  errorDetails: state.fundraiserReducer.errorDetails,
 })
 
 export default connect(mapStateToProps)(Details)
