@@ -82,7 +82,6 @@ margin-top: ${props => props.marginTop};
 
 export const DivValidate = styled.div`
     position: relative;
-    /* height: 100px; */
     padding-bottom: 20px;
 `;
 

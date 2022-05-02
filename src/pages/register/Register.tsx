@@ -24,6 +24,7 @@ import {
   ErrorPass,
 } from "../../Global.styles";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
+import { setButton } from "../../store/actions/usersAction";
 import Theme from "../../theme";
 import ThemeImg from '../../images/theme.png';
 
@@ -69,7 +70,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
       <ContainerFormUser>
       <ImgLogin>
             <img src={ThemeImg}  height={'250px'} alt="theme" />
-            <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
+            <TitleLogin> Sistema de arrecadações Colabore</TitleLogin>
         </ImgLogin>
         <LinkStyle color={`${Theme.colors.dark}`} mt="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
@@ -92,6 +93,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                         profilePhoto: values.profilePhoto
                       }                        
                       registerUser(dispatch, user, navigate);
+                      setButton(dispatch, false)
                       setSubmitting(false)
                     }}
                     >
@@ -110,7 +112,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
                             ) : null}
                       </DivValidate>
                       <DivValidate>
-                          <LabelForm htmlFor='login'>Nome</LabelForm>
+                          <LabelForm htmlFor='login'>Nome Completo</LabelForm>
                           <InputStyle
                             name="login"
                             id="login" 

@@ -6,6 +6,11 @@ export const MetaAtingida = styled.h1<{mt: string}>`
     margin-top: ${props => props.mt};
     color: #fff;
     text-shadow: 2px 2px black;
+    box-shadow: 0px 4px 12px rgba(129, 216, 89, 0.24);
+    background-color: #406e25;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
 `
 
 export const Meta = styled.div`

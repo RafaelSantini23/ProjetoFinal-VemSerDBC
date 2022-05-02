@@ -90,7 +90,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
         <DivCampanha>
           <DivImagem>
             <Meta>
-              {campaign.currentValue >= campaign.goal && (<MetaAtingida mT='190px'> Meta atingida</MetaAtingida>)}
+              {campaign.currentValue >= campaign.goal && (<MetaAtingida mt='190px'> Meta atingida</MetaAtingida>)}
             </Meta>
             <ImagemCampanha src={campaign.coverPhoto  ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (

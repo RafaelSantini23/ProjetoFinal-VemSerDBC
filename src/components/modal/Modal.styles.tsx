@@ -90,8 +90,8 @@ export const IconClose = styled(IoMdClose)`
 `
 
 export const ImgModal = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
 `
 

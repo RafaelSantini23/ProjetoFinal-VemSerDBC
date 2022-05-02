@@ -46,9 +46,9 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   return (
     <>
     
-    <ContainerCampanhas gap={campaignList.length > 0 ? '50px' : '0px'}>
+    <ContainerCampanhas gap={campaignList.length > 1 ? '50px' : '0px'}>
     { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer data-aos="fade-up" key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
             <DivCampanha>
               <Meta>
                   { item.currentValue >= item.goal && ( <MetaAtingida mt="80px"> Meta Atingida</MetaAtingida> )}

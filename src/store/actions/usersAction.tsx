@@ -29,8 +29,7 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
             user: response.data
         }
          
-        Loading.remove();
-
+        
         dispatch(user);
         
 
@@ -40,8 +39,9 @@ export const registerUser = async (dispatch: AppDispatch, values: UsersCreateDTO
             isLogged: true,
             loading: false
         }
-
+        
         handleLogin(dispatch, login,  navigate);
+        Loading.remove();
         Notify.success('Conta cadastrada com sucesso!')
     } catch (error: any) {
        console.log(error)
