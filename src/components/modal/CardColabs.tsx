@@ -6,19 +6,19 @@ import {
 } from "./Modal.styles";
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
-import { convertImage64 } from "../../utils/Utils";
+import { convertImage64, firstUpper } from "../../utils/Utils";
 import { Colabs } from "../../types/Types";
 import DefaultImage from '../../images/defaultImage.jpeg';
 
 function CardColabs({colabs}: Colabs) {
   return (
     <ContainerModal width={colabs.length  > 4 ? 'scroll' : 'hidden' } >
-        {colabs?.length ? colabs?.map((child) => (
-            <ModalColab key={child.id}>
+        {colabs?.length ? colabs?.map((child, index) => (
+            <ModalColab key={index}>
                         <ColabInfo>
                             <ImgModal src={child.profilePhoto ? convertImage64(child.profilePhoto) : DefaultImage} alt="profile" />
                             <ColabName>
-                                 {child.name}
+                                 {firstUpper(child.name)}
                             </ColabName>
                         </ColabInfo>
             </ModalColab>

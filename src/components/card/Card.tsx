@@ -60,7 +60,7 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
                   <Category  key={category.categoryId}>{firstUpper(category.name)} </Category>
                 ))}</CategoriesSpan>
               </DivCategoria>
-              <NameCreator>{item.fundraiserCreator.name}</NameCreator>
+              <NameCreator>{firstUpper(item.fundraiserCreator.name as string)}</NameCreator>
               <TotalRaised>Total Arrecadado: 
                 <TotalSpan color={formataCorTotal(item.goal as number, item.currentValue as number)}>
                 {converteBRL(item.currentValue)}</TotalSpan>

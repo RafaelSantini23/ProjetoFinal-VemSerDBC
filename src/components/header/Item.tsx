@@ -36,7 +36,7 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
                     <LinkStyle color={`${Theme.colors.light}`} to="/campaigns" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
             </ItemStyles>
             <ItemStyles>
-                   { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campaigns', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campanhas', navigate)}> Criar Campanhas </Button> } 
+                   { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campaigns', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campaigns', navigate)}> Criar Campanhas </Button> } 
             </ItemStyles>
             <ItemStyles>
             </ItemStyles>

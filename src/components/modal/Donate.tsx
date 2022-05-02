@@ -20,7 +20,7 @@ function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
   
   const SignupSchema = Yup.object().shape({
     value: Yup.string()
-    .min(4, 'Campo Obrigatório!')
+    .min(2, 'Campo Obrigatório!')
     .required('Campo Obrigatório!'),
   });
   return (
