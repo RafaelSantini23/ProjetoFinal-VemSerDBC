@@ -173,6 +173,8 @@ export const ButtonNavigate = styled.button<{colors: string}>`
         color: #666666;
     }
 
+    
+
 `
 
 export const ContainerButton = styled.div`

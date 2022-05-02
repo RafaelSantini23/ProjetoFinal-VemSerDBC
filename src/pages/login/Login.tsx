@@ -11,6 +11,7 @@ import ThemeImg from '../../imgs/theme.png'
 import { ImgLogin, TitleLogin } from "./login.styles";
 import Theme from "../../theme";
 import * as Yup from 'yup';
+import { setButton } from "../../store/actions/usersAction";
 
 function Login({dispatch}: AuthDTO & DispatchProp) {
     const [passVisible, setPassVisible] = useState(true)
@@ -41,7 +42,7 @@ function Login({dispatch}: AuthDTO & DispatchProp) {
     <ContainerGlobal>
         <ImgLogin>
             <img src={ThemeImg}  height={'250px'} alt="" />
-            <TitleLogin> Sistema de arrecadações DevSer</TitleLogin>
+            <TitleLogin> Sistema de arrecadações Colabore</TitleLogin>
         </ImgLogin>
         <ContainerFormUser>
 
@@ -56,6 +57,7 @@ function Login({dispatch}: AuthDTO & DispatchProp) {
                     { setSubmitting }: FormikHelpers<AuthDTO['auth']>
                     ) => {
                         handleLogin(dispatch,values, navigate)
+                        setButton(dispatch,false)
                         setSubmitting(false);
                     }}
                     >

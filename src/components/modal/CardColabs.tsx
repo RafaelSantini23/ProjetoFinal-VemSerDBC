@@ -7,12 +7,13 @@ import {
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
 import DefaultImage from '../../imgs/defaultImage.jpeg';
+import { convertImage64 } from "../../utils/Utils";
 
 type Colabs = {
     colabs: {
         id: string,
         name: string,
-        photo: string;
+        profilePhoto: string;
     }[],
 }
 
@@ -25,7 +26,7 @@ function CardColabs({colabs}: Colabs) {
             <>
             <ModalColab>
                         <ColabInfo>
-                            <ImgModal width='100px' src={child.photo ? child.photo : DefaultImage} alt="profile" />
+                            <ImgModal src={child.profilePhoto ? convertImage64(child.profilePhoto) : DefaultImage} alt="profile" />
                             <ColabName>
                                  {child.name}
                             </ColabName>

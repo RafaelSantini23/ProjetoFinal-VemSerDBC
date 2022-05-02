@@ -3,6 +3,7 @@ import Theme from "../../theme";
 
 export const ImgProfile = styled.img<{src?: any}>`
     height: 60px;
+    width: 70px;
     border-radius: 100%;
     src: url(${props => props.src});
 `
