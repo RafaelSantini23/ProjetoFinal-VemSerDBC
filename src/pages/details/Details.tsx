@@ -2,7 +2,7 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
-import { CategoriesSpan, Category, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
+import { Category, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
 import { ButtonContributors, ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
@@ -39,7 +39,7 @@ import {
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
 import api from "../../api";
-import DefaultCapa from '../../imgs/dbc.png';
+import DefaultCapa from '../../images/dbc.png';
 
 
 function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & DispatchProp) {
@@ -70,7 +70,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
-  console.log(campaign);
+
   
 
   
@@ -78,7 +78,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
   return (
     <Container>
       <ContainerButton>
-        <ButtonNavigate colors={`${Theme.colors.secondary}`} onClick={() => navigate('/campanhas')} >Voltar para as campanhas</ButtonNavigate>
+        <ButtonNavigate colors={`${Theme.colors.secondary}`} onClick={() => navigate('/campaigns')} >Voltar para as campanhas</ButtonNavigate>
       </ContainerButton>
       {isVisibel && (
 
@@ -90,11 +90,11 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
         <DivCampanha>
           <DivImagem>
             <Meta>
-              {campaign.currentValue >= campaign.goal && (<MetaAtingida mT='190px'> Meta atingida</MetaAtingida>)}
+              {campaign.currentValue >= campaign.goal && (<MetaAtingida mt='190px'> Meta atingida</MetaAtingida>)}
             </Meta>
             <ImagemCampanha src={campaign.coverPhoto  ? convertImage64(campaign.coverPhoto) : DefaultCapa} alt="capa" />
             <Categories>Categorias: {campaign.categories.map(category => (
-              <Category>{firstUpper(category.name)} </Category>
+              <Category key={category.categoryId} >{firstUpper(category.name)} </Category>
             ))}</Categories>
           </DivImagem>
           <DescCampanha>

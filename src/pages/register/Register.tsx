@@ -24,9 +24,9 @@ import {
   ErrorPass,
 } from "../../Global.styles";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
-import Theme from "../../theme";
-import ThemeImg from '../../imgs/theme.png';
 import { setButton } from "../../store/actions/usersAction";
+import Theme from "../../theme";
+import ThemeImg from '../../images/theme.png';
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
     const token = localStorage.getItem('token');
 
     if(token) {
-       navigate('/campanhas')
+       navigate('/campaigns')
     } else {
         navigate('/register')
     }
@@ -72,7 +72,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
             <img src={ThemeImg}  height={'250px'} alt="theme" />
             <TitleLogin> Sistema de arrecadações Colabore</TitleLogin>
         </ImgLogin>
-        <LinkStyle color={`${Theme.colors.dark}`} mT="20px" to="/">Voltar ao login</LinkStyle>
+        <LinkStyle color={`${Theme.colors.dark}`} mt="20px" to="/">Voltar ao login</LinkStyle>
           <Formik
                   initialValues={{
                     email: '',

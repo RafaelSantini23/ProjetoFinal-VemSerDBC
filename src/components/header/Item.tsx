@@ -9,6 +9,7 @@ import { ImgProfile } from "./Item.styles"
 import { handleLogout } from "../../store/actions/authAction"
 import { getUserProfile } from "../../store/actions/usersAction"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
+import { FundraiserListDTO } from "../../models/FundraiserListDTO"
 import { convertImage64, firstUpper } from "../../utils/Utils"
 import {
     DivMenu, 
@@ -18,8 +19,7 @@ import {
 } from "./Item.styles"
 import Theme from "../../theme"
 import Button from "../button/Button"
-import DefaultImage from '../../imgs/defaultImage.jpeg'
-import { FundraiserListDTO } from "../../models/FundraiserListDTO"
+import DefaultImage from '../../images/defaultImage.jpeg'
 
 
 function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp & FundraiserListDTO) {
@@ -33,10 +33,10 @@ function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & Dispatc
       <>
       <DivMenu>
             <ItemStyles>
-                    <LinkStyle color={`${Theme.colors.light}`} to="/campanhas" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
+                    <LinkStyle color={`${Theme.colors.light}`} to="/campaigns" onClick={() => setButton(dispatch,false)} >Explore </LinkStyle>
             </ItemStyles>
             <ItemStyles>
-                   { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campanhas', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campanhas', navigate)}> Criar Campanhas </Button> } 
+                   { navigateTo ? <Button onClick={() => setButton(dispatch, false, '/campaigns', navigate)}> Voltar As Campanhas </Button> : <Button onClick={() => setButton(dispatch, true, 'create-campanhas', navigate)}> Criar Campanhas </Button> } 
             </ItemStyles>
             <ItemStyles>
             </ItemStyles>

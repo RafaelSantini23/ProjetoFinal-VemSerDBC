@@ -1,21 +1,36 @@
+import { useState } from "react";
 import { Field, Formik } from "formik";
 import { connect, DispatchProp } from "react-redux";
-import { ButtonForm, CampaignForm, DatePickerStyled, DivValidate, InputFormat, InputStyle, LabelForm, SpanError } from "../../Global.styles";
+import * as Yup from 'yup';
+import moment from "moment";
+import MaskedInput from "react-text-mask";
+import CreatableSelect from 'react-select/creatable';
+import {
+  SpanError,
+  LabelForm,
+  InputStyle,
+  ButtonForm,
+  InputFormat,
+  DivValidate,
+  CampaignForm,
+  DatePickerStyled,
+} from "../../Global.styles";
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { DescriptionStyle } from "../../pages/createCampanhas/CreateCampaign.styles";
 import { RootState } from "../../store";
-import Theme from "../../theme";
 import { base64ToFile,  converteBRL,  convertImage64, convertMoney, numberMask, validDate } from "../../utils/Utils";
-import * as Yup from 'yup';
-import CreatableSelect from 'react-select/creatable';
-import PreviewImage from "../previewImage/PreviewImage";
 import { updateCampaign } from "../../store/actions/fundraiserAction";
-import moment from "moment";
-import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
+import {
+  FileContainer,
+  FileStyles,
+  FirstColumn,
+  FormStyled,
+  SecondColumn 
+} from "./EditCampaign.styles";
+import Theme from "../../theme";
 import pt from "date-fns/locale/pt";
-import { useState } from "react";
-import DefaultCapa from '../../imgs/dbc.png'
-import MaskedInput from "react-text-mask";
+import DefaultCapa from '../../images/dbc.png'
+import PreviewImage from "../previewImage/PreviewImage";
 
 
 

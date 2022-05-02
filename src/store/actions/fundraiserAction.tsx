@@ -31,7 +31,7 @@ export const createCampaign = async (values: FundraiserDTO['campaign'], navigate
   try {
       await api.post('/fundraiser/save', formData);
   
-      navigate('/campanhas')
+      navigate('/campaigns')
       Notify.success('Campanha criada com sucesso!');
   } catch (error) {
       console.log(error); 
@@ -152,7 +152,7 @@ export const deleteCampaign = (id: number, navigate: NavigateFunction) => {
             buttons: [
               {
                 label: 'Sim',
-                onClick: async () => ( await api.delete(`/fundraiser/${id}`),navigate('/campanhas'), Notify.success('Campanha excluida com sucesso!'))
+                onClick: async () => ( await api.delete(`/fundraiser/${id}`),navigate('/campaigns'), Notify.success('Campanha excluida com sucesso!'))
               },
               {
                 label: 'Não',

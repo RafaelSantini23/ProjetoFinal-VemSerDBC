@@ -6,8 +6,8 @@ import {
 } from "./Modal.styles";
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
-import DefaultImage from '../../imgs/defaultImage.jpeg';
 import { convertImage64 } from "../../utils/Utils";
+import DefaultImage from '../../images/defaultImage.jpeg';
 
 type Colabs = {
     colabs: {

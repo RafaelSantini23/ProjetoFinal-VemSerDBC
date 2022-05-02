@@ -1,14 +1,29 @@
 import { connect, DispatchProp } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Error, ErrorDiv, TotalContribution } from "../../Global.styles";
 import { FundraiserListDTO } from "../../models/FundraiserListDTO";
-import { ContainerCampanhas, DivCampanha, DivCategoria, ImgCampanha, LinkContainer, TotalSpan,  } from "../../pages/home/Home.styles";
-import { AppDispatch, RootState } from "../../store";
-import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
-import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper, cutCaracteres } from "../../utils/Utils"
-import { CategoriesSpan, Category, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
-import DefaultCapa from '../../imgs/dbc.png'
-import { useState } from "react";
+import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper } from "../../utils/Utils"
+import {
+  TotalSpan,  
+  DivCampanha, 
+  ImgCampanha, 
+  DivCategoria, 
+  LinkContainer, 
+  ContainerCampanhas,
+} from "../../pages/home/Home.styles";
+import { RootState } from "../../store";
+import {
+  Meta, 
+  Category, 
+  GoalSpan, 
+  TitleCard, 
+  LastUpdate, 
+  NameCreator, 
+  TotalRaised,
+  MetaAtingida, 
+  MetaParagraph, 
+  CategoriesSpan, 
+} from "./Card.styles";
+import DefaultCapa from '../../images/dbc.png'
 
 
 function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
@@ -31,12 +46,12 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
   return (
     <>
     
-    <ContainerCampanhas gap={campaignList.length > 0 ? '50px' : '0px'}>
+    <ContainerCampanhas gap={campaignList.length > 1 ? '50px' : '0px'}>
     { campaignList.length ? campaignList.map((item) => (
-          <LinkContainer data-aos="fade-up" key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
+          <LinkContainer key={item.fundraiserId} to={`/details/${item.fundraiserId}`} onClick={() => setLoading()}>
             <DivCampanha>
               <Meta>
-                  { item.currentValue >= item.goal && ( <MetaAtingida mT="80px"> Meta Atingida</MetaAtingida> )}
+                  { item.currentValue >= item.goal && ( <MetaAtingida mt="80px"> Meta Atingida</MetaAtingida> )}
               </Meta>
               <ImgCampanha src={item.coverPhoto ? convertImage64(item.coverPhoto) : DefaultCapa} alt="Imagem campanha" />
               <TitleCard>{firstUpper(item.title)}</TitleCard>
