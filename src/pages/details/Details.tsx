@@ -70,6 +70,9 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
+  console.log(campaign);
+  
+
   
 
   return (
@@ -118,7 +121,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
               <ContainerOwner>
                 <ButtonOwner disabled={campaign.contributors.length > 0} colors={`${Theme.colors.warning}`} onClick={() => setEditModal(true)}> Editar </ButtonOwner>
                 <ButtonOwner colors={`${Theme.colors.danger}`} onClick={() => deleteCampaign(campaign.fundraiserId, navigate)}> Deletar </ButtonOwner>
-              </ContainerOwner>) : <ButtonForm colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> {findContributor ? 'Doar novamente' : 'Doar'} <IconDonate />  </ButtonForm>}
+              </ContainerOwner>) : <ButtonForm disabled={campaign.automaticClose && campaign.currentValue >= campaign.goal} colors={`${Theme.colors.dark}`} onClick={() => setModalDonation(true)}> {findContributor ? 'Doar novamente' : 'Doar'} <IconDonate />  </ButtonForm>}
           {editModal && (
             <Modal width="1050px" height="580px" typeModal='editCampaign' onClick={() => setEditModal(false)} />
           )}

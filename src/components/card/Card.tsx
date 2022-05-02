@@ -65,6 +65,6 @@ function Card({campaignList, dispatch}: FundraiserListDTO & DispatchProp) {
 
 const mapStateToProps = (state: RootState) => ({
   campaignList: state.fundraiserReducer.campaignList,
- })
+})
 
 export default connect(mapStateToProps)(Card)
