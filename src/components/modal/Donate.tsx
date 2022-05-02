@@ -13,6 +13,8 @@ import {
    DivValidate, 
    SpanError 
 } from "../../Global.styles"
+import { confirmAlert } from "react-confirm-alert";
+import { Notify } from "notiflix";
 
 
 function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
@@ -36,10 +38,22 @@ function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
                 value: convertMoney(values.value as string),
             }
 
-            donateForCampaign(donateCampaign, dispatch, id as string)
+            confirmAlert({
+              title: 'Confirme para doar',
+              message: 'Deseja realmente doar este valor?',
+              buttons: [
+                {
+                  label: 'Sim',
+                  onClick: () => (donateForCampaign(donateCampaign, dispatch, id as string), onClick?.(), Notify.success('Doação realizada com sucesso!')),
+                },
+                {
+                  label: 'Não',
+                  onClick: () => (Notify.success('Cancelado!')),
+                }
+              ]
+            });
             
-            onClick?.()
-
+            
           }}
         >
           {props => (

@@ -41,7 +41,6 @@ export const donateForCampaign = async (values: DonateCreateDTO['donate'], dispa
     Loading.circle()
     try {
         await api.post(`/donation/${id}`, values)
-        Notify.success('Doação feita com sucesso!');
         
         getCampaignDetails(dispatch, id as string)
     } catch (error) {
