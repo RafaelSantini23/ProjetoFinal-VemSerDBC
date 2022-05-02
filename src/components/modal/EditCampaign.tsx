@@ -14,7 +14,7 @@ import moment from "moment";
 import { FileContainer, FileStyles, FirstColumn, FormStyled, SecondColumn } from "./EditCampaign.styles";
 import pt from "date-fns/locale/pt";
 import { useState } from "react";
-import DefaultCapa from '../../imgs/dbc.png'
+import DefaultCapa from '../../images/dbc.png'
 import MaskedInput from "react-text-mask";
 
 

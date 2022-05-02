@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Field } from "formik";
 import Theme from '../../theme';
-import ImgCampanhaPrincipal from '../../imgs/background.png';
+import ImgCampanhaPrincipal from '../../images/background.png';
 import CreatableSelect from 'react-select/creatable';
 
 

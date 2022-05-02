@@ -7,7 +7,7 @@ function NotFound() {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate('/campanhas')
+      navigate('/campaigns')
     }, 1200);
   },[])
 

@@ -160,7 +160,7 @@ export const ButtonNavigate = styled.button<{colors: string}>`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: 0 10px;
+    margin: 10px;
     border: 0;
     transition: 0.8s;
     box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ImgCampanhaPrincipal from '../../imgs/background.png'
+import ImgCampanhaPrincipal from '../../images/background.png'
 
 
 export const NotFoundPage = styled.div`

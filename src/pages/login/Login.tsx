@@ -5,9 +5,9 @@ import { RootState } from "../../store"
 import { AuthDTO } from "../../models/AuthDTO";
 import { handleLogin } from "../../store/actions/authAction"
 import { ButtonForm, ContainerFormUser, ContainerGlobal, DivPassword, DivValidate, EyeInvisible, EyeVisible, IconPassword, InputStyle, LabelForm, LinkStyle, LogoDiv, SpanError } from "../../Global.styles";
-import Logo from '../../imgs/logo.svg'
+import Logo from '../../images/logo.svg'
 import { useNavigate } from "react-router-dom";
-import ThemeImg from '../../imgs/theme.png'
+import ThemeImg from '../../images/theme.png'
 import { ImgLogin, TitleLogin } from "./login.styles";
 import Theme from "../../theme";
 import * as Yup from 'yup';
@@ -20,7 +20,7 @@ function Login({dispatch}: AuthDTO & DispatchProp) {
         const token = localStorage.getItem('token');
 
         if(token) {
-           navigate('/campanhas')
+           navigate('/campaigns')
         } else {
             navigate('/')
         }

@@ -23,6 +23,7 @@ import Pagination from '../../components/pagination/Pagination'
 import { FundraiserDTO } from "../../models/FundraiserDTO";
 import { MultiValueProps } from "react-select";
 import { NotFoundPage } from "../notfound/NotFound.styles";
+import Error from "../../components/error/Error";
 
 
 
@@ -57,7 +58,7 @@ function Home({ campaignList, campaignListFilter, categorys, dispatch, loading, 
   }
 
   if(error) {
-    return ( <h1>Error </h1> )
+    return ( <Error /> )
   }
 
   const pagination = (pageNumber: number) => {

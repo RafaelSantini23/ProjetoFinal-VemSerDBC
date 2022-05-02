@@ -25,7 +25,7 @@ import {
 } from "../../Global.styles";
 import { ImgLogin, TitleLogin } from "../login/login.styles";
 import Theme from "../../theme";
-import ThemeImg from '../../imgs/theme.png';
+import ThemeImg from '../../images/theme.png';
 
 function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Register({ user, dispatch }: UsersCreateDTO & DispatchProp) {
     const token = localStorage.getItem('token');
 
     if(token) {
-       navigate('/campanhas')
+       navigate('/campaigns')
     } else {
         navigate('/register')
     }

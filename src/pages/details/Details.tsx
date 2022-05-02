@@ -39,7 +39,7 @@ import {
 import Theme from "../../theme";
 import Modal from "../../components/modal/Modal";
 import api from "../../api";
-import DefaultCapa from '../../imgs/dbc.png';
+import DefaultCapa from '../../images/dbc.png';
 
 
 function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & DispatchProp) {
@@ -75,7 +75,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
   return (
     <Container>
       <ContainerButton>
-        <ButtonNavigate colors={`${Theme.colors.secondary}`} onClick={() => navigate('/campanhas')} >Voltar para as campanhas</ButtonNavigate>
+        <ButtonNavigate colors={`${Theme.colors.secondary}`} onClick={() => navigate('/campaigns')} >Voltar para as campanhas</ButtonNavigate>
       </ContainerButton>
       {isVisibel && (
 

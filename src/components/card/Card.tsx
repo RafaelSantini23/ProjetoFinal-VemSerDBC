@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getCampaign, getCampaignDetails } from "../../store/actions/fundraiserAction";
 import { converteBRL, formataCorTotal, formataData, convertImage64, firstUpper, cutCaracteres } from "../../utils/Utils"
 import { CategoriesSpan, Category, GoalSpan, LastUpdate, Meta, MetaAtingida, MetaParagraph, NameCreator, TitleCard, TotalRaised } from "./Card.styles";
-import DefaultCapa from '../../imgs/dbc.png'
+import DefaultCapa from '../../images/dbc.png'
 import { useState } from "react";
 
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import ImgCampanhaPrincipal from '../../imgs/background.png'
+import ImgCampanhaPrincipal from '../../images/background.png'
 import Theme from "../../theme";
 import Select from 'react-select'
 

@@ -6,7 +6,7 @@ import {
 } from "./Modal.styles";
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
-import DefaultImage from '../../imgs/defaultImage.jpeg';
+import DefaultImage from '../../images/defaultImage.jpeg';
 
 type Colabs = {
     colabs: {
