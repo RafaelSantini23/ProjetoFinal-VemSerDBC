@@ -16,3 +16,11 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     colabs?: any,
 
 }
+
+export type Colabs = {
+    colabs: {
+        id: number,
+        name: string,
+        profilePhoto: string;
+    }[],
+}

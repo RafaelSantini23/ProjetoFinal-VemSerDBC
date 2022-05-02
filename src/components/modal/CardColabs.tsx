@@ -7,16 +7,8 @@ import {
 import { NotContributors } from "../../Global.styles";
 import { ContainerModal } from "./CardColab.styles";
 import { convertImage64 } from "../../utils/Utils";
+import { Colabs } from "../../types/Types";
 import DefaultImage from '../../images/defaultImage.jpeg';
-
-type Colabs = {
-    colabs: {
-        id: number,
-        name: string,
-        profilePhoto: string;
-    }[],
-}
-
 
 function CardColabs({colabs}: Colabs) {
   return (
