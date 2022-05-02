@@ -2,7 +2,7 @@ import { Loading } from "notiflix";
 import { useEffect, useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { Params, useNavigate, useParams } from "react-router-dom";
-import { CategoriesSpan, Category, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
+import { Category, Meta, MetaAtingida, MetaParagraph } from "../../components/card/Card.styles";
 import { ButtonContributors, ButtonForm, CampaignInfo, ContainerOwner } from "../../Global.styles";
 import { FundraiserDetailsDTO } from "../../models/FundraiserDetailsDTO";
 import { UserDTO } from "../../models/UserDTO";
@@ -70,7 +70,7 @@ function Details({ campaign, dispatch, loadingDetails }: FundraiserDetailsDTO & 
     return <>{Loading.circle()}</>
   }
 
-  console.log(campaign);
+
   
 
   

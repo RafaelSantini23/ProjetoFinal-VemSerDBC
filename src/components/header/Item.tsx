@@ -9,6 +9,7 @@ import { ImgProfile } from "./Item.styles"
 import { handleLogout } from "../../store/actions/authAction"
 import { getUserProfile } from "../../store/actions/usersAction"
 import { UsersCreateDTO } from "../../models/UsersCreateDTO"
+import { FundraiserListDTO } from "../../models/FundraiserListDTO"
 import { convertImage64, firstUpper } from "../../utils/Utils"
 import {
     DivMenu, 
@@ -19,7 +20,6 @@ import {
 import Theme from "../../theme"
 import Button from "../button/Button"
 import DefaultImage from '../../images/defaultImage.jpeg'
-import { FundraiserListDTO } from "../../models/FundraiserListDTO"
 
 
 function Item({ user, dispatch, navigateTo, loading }:  UsersCreateDTO & DispatchProp & FundraiserListDTO) {

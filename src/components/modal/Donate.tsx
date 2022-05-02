@@ -11,9 +11,8 @@ import { convertMoney, numberMask } from "../../utils/Utils"
 import { ContainerDonation, InputCurrency } from "./Modal.styles"
 import { donateForCampaign } from "../../store/actions/fundraiserAction"
 import { RootState } from "../../store"
-import { Params, useNavigate, useParams } from "react-router-dom";
+import { Params, useParams } from "react-router-dom";
 import Theme from "../../theme"
-import { Loading } from "notiflix";
 
 
 function Donate({ dispatch, onClick }: DonateCreateDTO & DispatchProp) {
