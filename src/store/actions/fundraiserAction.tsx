@@ -109,6 +109,7 @@ export const getCampaignDetails = async (dispatch: AppDispatch, id: string | num
         dispatch(campaign);
         Loading.remove()
     } catch (error: any) {
+        isErrorDetails(dispatch)
             if(error.response.status === 400) {
                 navigate?.('/notfound')
             } 
@@ -195,8 +196,20 @@ export const isError = (dispatch: AppDispatch) => {
     const error = {
         type: 'SET_ERROR',
         loading: false,
-        error: true
+        error: true,
     }
 
     dispatch(error)
+}
+
+export const isErrorDetails = (dispatch: AppDispatch) => {
+    const errorDetails = {
+        type: 'SET_ERROR_DETAILS',
+        loadingDetails: false,
+        errorDetails: true,
+    }
+
+    dispatch(errorDetails)
+
+
 }
