@@ -12,7 +12,7 @@ import DefaultImage from '../../images/defaultImage.jpeg';
 
 function CardColabs({colabs}: Colabs) {
   return (
-    <ContainerModal width={colabs.length  > 4 ? 'scroll' : 'hidden' } >
+    <ContainerModal width={colabs.length  > 6 ? 'scroll' : 'hidden' } >
         {colabs?.length ? colabs?.map((child, index) => (
             <ModalColab key={index}>
                         <ColabInfo>
