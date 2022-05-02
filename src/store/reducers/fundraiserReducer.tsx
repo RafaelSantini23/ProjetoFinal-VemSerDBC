@@ -35,6 +35,7 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
             campaign: action.campaign,
             loadingDetails: action.loadingDetails,
             categoryList: action.categoryList,
+            errorDetails: action.errorDetails
         }
     }
 
@@ -79,7 +80,17 @@ const fundraiserReducer = (state = INITIAL_STATE, action: AnyAction) => {
         return {
             ...state,
             error: action.error,
-            loading: action.loading
+            loading: action.loading,
+            errorDetails: action.errorDetails
+        }
+    
+    }
+
+    if(action.type === 'SET_ERROR_DETAILS') {
+        return {
+            ...state,
+            errorDetails: action.errorDetails,
+            loadingDetails: action.loadingDetails
         }
     
     }
