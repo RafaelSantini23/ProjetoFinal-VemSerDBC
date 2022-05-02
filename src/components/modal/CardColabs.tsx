@@ -24,7 +24,7 @@ function CardColabs({colabs}: Colabs) {
     <ContainerModal width={colabs.length  > 4 ? 'scroll' : 'hidden' } >
         {colabs?.length ? colabs?.map((child) => (
             <>
-            <ModalColab>
+            <ModalColab key={child.id}>
                         <ColabInfo>
                             <ImgModal src={child.profilePhoto ? convertImage64(child.profilePhoto) : DefaultImage} alt="profile" />
                             <ColabName>
